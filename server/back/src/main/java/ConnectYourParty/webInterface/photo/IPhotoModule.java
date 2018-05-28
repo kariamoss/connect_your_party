@@ -7,6 +7,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 @Path("/photo")
 public interface IPhotoModule {
@@ -21,4 +23,9 @@ public interface IPhotoModule {
     @Path("getPhotos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPhotos();
+
+    @GET()
+    @Path("getPhotoServices")
+    @Produces("application/json")
+    public Response getPhotoServices();
 }
