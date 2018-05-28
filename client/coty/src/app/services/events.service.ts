@@ -14,7 +14,7 @@ export class EventService{
     this.eventSubject.next(this.events.slice());
   }
 
-  addEvent(event: Event) {
+  addEvent(event: EventModel) {
     this.events.push(event);
     this.emitEvents();
   }

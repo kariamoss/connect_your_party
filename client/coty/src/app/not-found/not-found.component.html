@@ -1,4 +1,13 @@
-<p>
-  not-found works!
-</p>
-<button mat-raised-button>Not found mamene</button>
+<div class="error">
+  <mat-icon>warning</mat-icon>
+  Erreur : cette page n'existe pas
+</div>
+
+<div class="redirect">
+<a routerLink="/events"  id="back">
+  <button mat-raised-button>
+    <mat-icon>arrow_back</mat-icon>
+    Retour aux événements
+  </button>
+</a>
+</div>
