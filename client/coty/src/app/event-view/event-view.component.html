@@ -1,5 +1,6 @@
-<p>
-  event-view works!
-</p>
 
-<app-event-card></app-event-card>
+<ul>
+  <li *ngFor="let event of events; let i = index">
+  <app-event-card [id]="event.id"></app-event-card>
+  </li>
+</ul>
