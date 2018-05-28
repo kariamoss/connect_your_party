@@ -10,21 +10,33 @@ import java.util.List;
 
 import static javax.ws.rs.core.Response.serverError;
 
+import javax.ws.rs.core.Response;
+import java.io.File;
+
 public class PhotoModule implements IPhotoModule {
 
     @Override
-    public String addPhoto() {
+    public Response addPhoto() {
         PhotoChooser photoChooser = new PhotoChooser();
+        //IPhotoService photoService = photoChooser.getService();
         //photoService.addPhoto(url);
-        return "salut";
+        return Response.ok().build();
     }
 
     @Override
-    public String getPhotos() {
-        PhotoChooser photoChooser = new PhotoChooser();
+    public Response getPhotos() {
+        //PhotoChooser photoChooser = new PhotoChooser();
+        //IPhotoService photoService = photoChooser.getService();
         //photoService.getPhotos(url);
-        return "Vla tes photos";
-}
+        File photo = findPhoto();
+        Response.ResponseBuilder response = Response.ok((Object) photo);
+        response.header("Content-Disposition", "attachment;filename=photo.jpg");
+        return response.build();
+    }
+
+    public File findPhoto(){
+        return new File("/home/luquamateo/si4/connectyourparty/image.jpg");
+    }
 
     @Override
     public Response getPhotoServices() {
