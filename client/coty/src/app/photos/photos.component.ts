@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {ParametersService} from "../services/parameters.service";
 
 @Component({
   selector: 'app-photos',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PhotosComponent implements OnInit {
 
-  constructor() { }
+  id: number;
+
+  constructor(private route: ActivatedRoute,
+              private parameters: ParametersService) { }
 
   ngOnInit() {
+    this.id = this.parameters.sharedId;
   }
 
 }

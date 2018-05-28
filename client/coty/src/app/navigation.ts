@@ -7,15 +7,16 @@ import {EventDetailsComponent} from "./event-details/event-details.component";
 
 export const appRoutes: Routes = [
 
-  { path: '', component:  NotFoundComponent},
-  { path: 'events', component: EventViewComponent},
-  { path: 'events/:id', component: EventComponent,
+  {path: '', component: NotFoundComponent},
+  {path: 'events', component: EventViewComponent},
+  {
+    path: 'events/:id', component: EventComponent,
     children: [
-      { path: '', component: EventDetailsComponent},
-      { path: 'details', component: EventDetailsComponent},
-      { path: 'photos', component: PhotosComponent},
+      {path: '', component: EventDetailsComponent},
+      {path: 'details', component: EventDetailsComponent},
+      {path: 'photos', component: PhotosComponent},
     ]
   },
-  { path: 'not-found', component:  NotFoundComponent},
-  { path: '**', redirectTo: 'not-found' }
+  {path: 'not-found', component: NotFoundComponent},
+  {path: '**', redirectTo: 'not-found'}
 ];
