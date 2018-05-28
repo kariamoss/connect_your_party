@@ -8,15 +8,16 @@ import java.util.List;
 
 public class PhotoChooser implements Chooser<IPhotoService> {
 
-    List<IPhotoService> servicePhotoList;
+    private List<IPhotoService> servicePhotoList;
 
     public PhotoChooser(){
         servicePhotoList = new ArrayList<>();
-        servicePhotoList.add(new DriveService());
+        DriveService driveService = new DriveService();
+        servicePhotoList.add(driveService);
     }
 
     @Override
-    public IPhotoService getService(){
-        return servicePhotoList.get(0);
+    public List<IPhotoService> getServices() {
+        return servicePhotoList;
     }
 }

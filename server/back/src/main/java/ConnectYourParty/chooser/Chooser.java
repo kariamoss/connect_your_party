@@ -1,6 +1,8 @@
 package ConnectYourParty.chooser;
 
 
+import java.util.List;
+
 public interface Chooser<T>{
-    T getService();
+    List<T> getServices();
 }
