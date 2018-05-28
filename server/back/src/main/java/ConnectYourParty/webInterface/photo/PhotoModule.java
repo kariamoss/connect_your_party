@@ -24,10 +24,10 @@ public class PhotoModule implements IPhotoModule {
 
     @Override
     public Response addPhoto(Photo photo) {
-        logger.log(Level.INFO,photo.hello);
-        PhotoChooser photoChooser = new PhotoChooser();
-        //IPhotoService photoService = photoChooser.getService();
-        //photoService.addPhoto(url);
+        if(!photo.check()){
+            Response.status(Response.Status.BAD_REQUEST).entity("missing information").build();
+        }
+        logger.log(Level.INFO,photo.toString());
         return Response.ok().build();
 
     }
