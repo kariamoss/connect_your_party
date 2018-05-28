@@ -1,0 +1,8 @@
+<ul>
+  <li *ngFor="let service of services; let i = index">
+    <button mat-raised-button (click)="closeDialog()">
+      <img src="{{service.icon}}"/>
+      {{service.name}}
+    </button>
+  </li>
+</ul>

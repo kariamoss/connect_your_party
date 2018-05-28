@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EventModel} from "../../model/EventModel";
 import {EventService} from "../services/events.service";
 
 @Component({
@@ -10,7 +9,6 @@ import {EventService} from "../services/events.service";
 export class EventCardComponent implements OnInit {
 
   title;
-  desc;
   participants: number;
   location;
   color;
