@@ -1,4 +1,4 @@
-package ConnectYourParty.webInterface.chooser;
+package ConnectYourParty.chooser;
 
 
 public interface Chooser<T>{

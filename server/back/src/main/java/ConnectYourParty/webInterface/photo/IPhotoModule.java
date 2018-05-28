@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 public interface IPhotoModule {
 
     @POST()
-    @Path("addPhotos")
+    @Path("addPhoto")
     public String addPhoto();
 
     @GET()

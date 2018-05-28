@@ -1,8 +1,9 @@
-package ConnectYourParty.webInterface.chooser;
+package ConnectYourParty.chooser;
 
-import ConnectYourParty.webInterface.services.photo.IPhotoService;
-import ConnectYourParty.webInterface.services.photo.DriveService;
+import ConnectYourParty.services.photo.IPhotoService;
+import ConnectYourParty.services.photo.DriveService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoChooser implements Chooser<IPhotoService> {
@@ -10,11 +11,12 @@ public class PhotoChooser implements Chooser<IPhotoService> {
     List<IPhotoService> servicePhotoList;
 
     public PhotoChooser(){
+        servicePhotoList = new ArrayList<>();
         servicePhotoList.add(new DriveService());
     }
 
     @Override
     public IPhotoService getService(){
-        return servicePhotoList.get(1);
+        return servicePhotoList.get(0);
     }
 }

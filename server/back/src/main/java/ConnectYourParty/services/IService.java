@@ -1,4 +1,4 @@
-package ConnectYourParty.webInterface.services;
+package ConnectYourParty.services;
 
 import java.net.URL;
 

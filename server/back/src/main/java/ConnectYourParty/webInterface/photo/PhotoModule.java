@@ -1,7 +1,7 @@
 package ConnectYourParty.webInterface.photo;
 
-import ConnectYourParty.webInterface.chooser.PhotoChooser;
-import ConnectYourParty.webInterface.services.photo.IPhotoService;
+import ConnectYourParty.chooser.PhotoChooser;
+import ConnectYourParty.services.photo.IPhotoService;
 
 public class PhotoModule implements IPhotoModule {
 

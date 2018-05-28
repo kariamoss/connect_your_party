@@ -1,7 +1,6 @@
-package ConnectYourParty.webInterface.services.photo;
+package ConnectYourParty.services.photo;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 public class DriveService implements IPhotoService {
