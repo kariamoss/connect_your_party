@@ -1,19 +1,25 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.chooser.PhotoChooser;
+import ConnectYourParty.requestObjects.Photo;
 import ConnectYourParty.services.photo.IPhotoService;
+import org.json.JSONObject;
 
 import javax.ws.rs.core.Response;
-import java.io.File;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PhotoModule implements IPhotoModule {
 
+    Logger logger = Logger.getLogger(PhotoModule.class.getName());
+
+
     @Override
-    public Response addPhoto() {
-        PhotoChooser photoChooser = new PhotoChooser();
-        IPhotoService photoService = photoChooser.getService();
-        //photoService.addPhoto(url);
+    public Response addPhoto(Photo photo) {
+        logger.log(Level.INFO,photo.hello);
         return Response.ok().build();
+
     }
 
     @Override
