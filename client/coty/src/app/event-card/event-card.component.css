@@ -1,0 +1,21 @@
+.example-card {
+  max-width: 200px;
+}
+
+.example-header-image {
+  background-image: url('https://www.contrepoints.org/wp-content/uploads/2017/04/Ren%C3%A9_Coty-1929.jpg');
+  background-size: cover;
+}
+
+mat-card{
+  padding-top : 10px;
+  padding-bottom: 10px;
+}
+
+mat-icon{
+  vertical-align: middle;
+}
+
+mat-card-title{
+  padding-top: 10px;
+}

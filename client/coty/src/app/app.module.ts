@@ -6,18 +6,23 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import {RouterModule} from "@angular/router";
 import {appRoutes} from "./navigation";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatButtonModule} from "@angular/material";
+import {MatButtonModule, MatCardModule, MatIconModule} from "@angular/material";
+import { EventCardComponent } from './event-card/event-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    EventCardComponent,
+    NotFoundComponent,
+    EventCardComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
