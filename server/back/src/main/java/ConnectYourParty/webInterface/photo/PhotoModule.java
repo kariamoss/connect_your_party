@@ -2,6 +2,7 @@ package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.chooser.PhotoChooser;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
+import ConnectYourParty.webInterface.CorsAdder;
 
 import javax.ws.rs.core.Response;
 
@@ -21,7 +22,7 @@ public class PhotoModule implements IPhotoModule {
 
         PhotoChooser chooser = new PhotoChooser();
         chooser.addPhoto(photo);
-        return Response.ok().build();
+        return CorsAdder.addCors(Response.ok()).build();
 
     }
 
@@ -33,6 +34,7 @@ public class PhotoModule implements IPhotoModule {
         File photo = findPhoto();
         Response.ResponseBuilder response = Response.ok((Object) photo);
         response.header("Content-Disposition", "attachment;filename=photo.jpg");
+        CorsAdder.addCors(response);
         return response.build();
     }
 
@@ -43,6 +45,8 @@ public class PhotoModule implements IPhotoModule {
     @Override
     public Response getPhotoServices() {
         PhotoChooser photoChooser = new PhotoChooser();
-        return Response.status(Response.Status.OK).entity(photoChooser.getServices()).build();
+        return CorsAdder.addCors(
+                Response.status(Response.Status.OK).entity(photoChooser.getServices()))
+                .build();
     }
 }
