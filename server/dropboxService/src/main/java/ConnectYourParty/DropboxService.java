@@ -37,7 +37,7 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public byte[] getPhotos(String photo) {
+    public byte[] getPhoto(String photo) {
         try {
             InputStream stream = client.files().download("/test.jpg").getInputStream();
 

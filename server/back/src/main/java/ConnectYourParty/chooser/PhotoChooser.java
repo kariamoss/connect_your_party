@@ -1,5 +1,6 @@
 package ConnectYourParty.chooser;
 
+import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.DropboxService;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
 import ConnectYourParty.services.photo.IPhotoService;
@@ -13,8 +14,8 @@ public class PhotoChooser implements Chooser<IPhotoService> {
 
     public PhotoChooser(){
         servicePhotoList = new ArrayList<>();
-        DropboxService dropbox = new DropboxService();
-        servicePhotoList.add(dropbox);
+        servicePhotoList.add(new DropboxService());
+        servicePhotoList.add(new CotyPhotoService());
     }
 
     @Override
