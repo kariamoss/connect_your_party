@@ -1,8 +1,9 @@
-<ul>
-  <li *ngFor="let service of services; let i = index">
-    <button mat-raised-button (click)="closeDialog()">
-      <img src="{{service.icon}}"/>
-      {{service.name}}
-    </button>
-  </li>
-</ul>
+<p>{{this.module | uppercase}} SERVICES</p>
+
+<mat-radio-group [(ngModel)]="selectedService">
+  <mat-radio-button *ngFor="let service of services; let i = index" [value]="service" (change)="onChanges(service)">
+    <img src="{{service.icon}}"/>
+  </mat-radio-button>
+</mat-radio-group>
+<div>Service séléctionné : {{selectedService.name}}</div>
+<button mat-flat-button (click)="closeDialog()">Ok</button>

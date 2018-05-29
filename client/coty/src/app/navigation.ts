@@ -7,6 +7,8 @@ import {EventDetailsComponent} from "./event-details/event-details.component";
 
 export const appRoutes: Routes = [
 
+
+  {path: '', pathMatch: 'full',redirectTo: 'events'},
   {path: 'events', component: EventViewComponent},
   {
     path: 'events/:id', component: EventComponent,

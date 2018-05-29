@@ -28,4 +28,8 @@ export class EventComponent implements OnInit {
     this.parameters.sharedId = this.id;
   }
 
+  getEventName() {
+    return this.eventService.getEventById(+this.id).title;
+  }
+
 }

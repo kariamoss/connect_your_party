@@ -8,7 +8,7 @@ import {appRoutes} from "./navigation";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
-  MatGridList, MatGridListModule, MatDialogModule
+  MatGridList, MatGridListModule, MatDialogModule, MatRadioModule
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
@@ -17,7 +17,8 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { ServiceSelectorComponent } from './service-selector/service-selector.component';
 import {EventService} from "./services/events.service";
-import {PhotoServiceSelectorService} from "./services/photoServiceSelector.service";
+import {SelectorService} from "./services/selector.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {PhotoServiceSelectorService} from "./services/photoServiceSelector.servi
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatButtonModule,
@@ -40,10 +42,11 @@ import {PhotoServiceSelectorService} from "./services/photoServiceSelector.servi
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
+    MatRadioModule,
   ],
   providers: [
     EventService,
-    PhotoServiceSelectorService,
+    SelectorService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [ServiceSelectorComponent]
