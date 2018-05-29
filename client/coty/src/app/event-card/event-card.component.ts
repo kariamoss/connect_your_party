@@ -6,7 +6,7 @@ import {EventService} from "../services/events.service";
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.css']
 })
-export class EventCardComponent implements OnInit {
+export class EventCardComponent implements OnInit{
 
   title;
   desc;

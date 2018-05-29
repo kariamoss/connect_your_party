@@ -8,7 +8,8 @@ import {appRoutes} from "./navigation";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
-  MatGridList, MatGridListModule, MatChipsModule
+  MatGridList, MatGridListModule, MatChipsModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,
+  MatSnackBarModule
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
@@ -17,6 +18,8 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import {EventService} from "./services/events.service";
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import {ShoppingListService} from "./services/shopping-list.service";
+import { ModuleListComponent } from './module-list/module-list.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
     EventCardComponent,
     EventDetailsComponent,
     ShoppingListComponent,
+    ModuleListComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,9 +42,13 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
     MatCardModule,
     MatIconModule,
     MatGridListModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
   ],
-  providers: [EventService],
+  providers: [EventService, ShoppingListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
