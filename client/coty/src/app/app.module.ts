@@ -19,6 +19,7 @@ import { ServiceSelectorComponent } from './service-selector/service-selector.co
 import {EventService} from "./services/events.service";
 import {SelectorService} from "./services/selector.service";
 import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatButtonModule,

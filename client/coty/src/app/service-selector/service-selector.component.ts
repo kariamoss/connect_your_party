@@ -21,6 +21,7 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
               public dialogRef: MatDialogRef<ServiceSelectorComponent>,) { }
 
   ngOnInit() {
+    this.selectorService.updateServicesList(this.module);
     this.serviceSubscription = this.selectorService.servicesSubject.subscribe(
       (services: any[]) => {
         this.services = services;

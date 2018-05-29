@@ -25,7 +25,7 @@ export class PhotosComponent implements OnInit {
     let dialogRef = this.dialog.open(ServiceSelectorComponent, {
       width: '450px',
     });
-    dialogRef.componentInstance.module = 'photos';
+    dialogRef.componentInstance.module = 'photo';
 
     dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');

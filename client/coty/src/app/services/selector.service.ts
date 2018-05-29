@@ -1,25 +1,24 @@
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs/internal/Subject";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class SelectorService {
+
+  constructor(private httpClient: HttpClient) {}
 
   servicesSubject = new Subject<any[]>();
 
   private services = [
     {
-      name: 'Google Drive',
-      icon: "http://icons.iconarchive.com/icons/marcus-roberto/google-play/64/Google-Drive-icon.png",
-    },
-    {
-      name: 'Dropbox',
-      icon: "http://icons.iconarchive.com/icons/danleech/simple/64/dropbox-icon.png",
-    },
+      name: "ServiceName",
+      icon: ""
+    }
   ];
 
   private selectedServices = [
     {
-      module: 'photos',
+      module: 'photo',
       service: null,
     },
   ];
@@ -41,6 +40,13 @@ export class SelectorService {
       }
     );
     return service.service;
+  }
+
+  updateServicesList(module: string) {
+    const headers = new HttpHeaders();
+    headers.append("Content-Type", 'application/json');
+    const result = this.httpClient.get('http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotoServices', {headers: headers});
+    result.subscribe(data => console.log(data));
   }
 
   emitServicesSubject(module: string) {
