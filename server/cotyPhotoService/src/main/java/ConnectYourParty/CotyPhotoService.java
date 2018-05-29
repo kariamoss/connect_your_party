@@ -6,12 +6,12 @@ import java.net.URL;
 
 public class CotyPhotoService implements IPhotoService {
     @Override
-    public String addPhoto(byte[] photo, String path) {
-        return null;
+    public void addPhoto(byte[] photo, String path) {
+
     }
 
     @Override
-    public byte[] getPhoto(String photo) {
+    public byte[] getPhoto(String path) {
         return new byte[0];
     }
 
