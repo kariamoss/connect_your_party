@@ -1,20 +1,11 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.chooser.PhotoChooser;
-import ConnectYourParty.requestObjects.Photo;
-import ConnectYourParty.services.photo.IPhotoService;
-import org.json.JSONObject;
-import ConnectYourParty.webInterface.WebInterfaceHelper;
+import ConnectYourParty.requestObjects.photo.UploadRequest;
 
 import javax.ws.rs.core.Response;
 
-import java.util.List;
-
-import static javax.ws.rs.core.Response.serverError;
-
-import javax.ws.rs.core.Response;
 import java.io.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PhotoModule implements IPhotoModule {
@@ -23,7 +14,7 @@ public class PhotoModule implements IPhotoModule {
 
 
     @Override
-    public Response addPhoto(Photo photo) {
+    public Response addPhoto(UploadRequest photo) {
         if(!photo.check()){
             return Response.status(Response.Status.BAD_REQUEST).entity("missing information").build();
         }

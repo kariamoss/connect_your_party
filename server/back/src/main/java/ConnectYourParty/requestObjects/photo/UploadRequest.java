@@ -1,10 +1,10 @@
-package ConnectYourParty.requestObjects;
+package ConnectYourParty.requestObjects.photo;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Photo {
+public class UploadRequest {
     @XmlElement public String serviceName;
     @XmlElement public String format;
     @XmlElement public String name;

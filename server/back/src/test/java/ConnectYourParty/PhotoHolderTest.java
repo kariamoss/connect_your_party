@@ -3,7 +3,7 @@ package ConnectYourParty;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import ConnectYourParty.requestObjects.Photo;
+import ConnectYourParty.requestObjects.photo.UploadRequest;
 import org.junit.Test;
 
 /**
@@ -14,20 +14,20 @@ public class PhotoHolderTest
     @Test
     public void checkTest()
     {
-        Photo photo = new Photo();
+        UploadRequest photo = new UploadRequest();
         assertFalse(photo.check());
     }
 
     @Test
     public void oneElementTest(){
-        Photo photo = new Photo();
+        UploadRequest photo = new UploadRequest();
         photo.name = "salut";
         assertFalse(photo.check());
     }
 
     @Test
     public void allElemTest(){
-        Photo photo = new Photo();
+        UploadRequest photo = new UploadRequest();
         photo.name = "";
         photo.format = "";
         photo.serviceName ="";

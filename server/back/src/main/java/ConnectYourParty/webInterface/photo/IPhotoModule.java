@@ -1,14 +1,11 @@
 package ConnectYourParty.webInterface.photo;
 
-import ConnectYourParty.requestObjects.Photo;
-import org.json.JSONObject;
+import ConnectYourParty.requestObjects.photo.UploadRequest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.InputStream;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 
 @Path("/photo")
 public interface IPhotoModule {
@@ -29,21 +26,21 @@ public interface IPhotoModule {
      * }
      *
      * @param photo
-     * @return
+     * @return success or failure image
      */
     @POST()
     @Path("addPhoto")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPhoto(Photo photo);
+    Response addPhoto(UploadRequest photo);
 
     @GET()
     @Path("getPhotos")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPhotos();
+    Response getPhotos();
 
     @GET()
     @Path("getPhotoServices")
     @Produces("application/json")
-    public Response getPhotoServices();
+    Response getPhotoServices();
 }
