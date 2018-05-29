@@ -13,6 +13,24 @@ import javax.ws.rs.core.Response;
 @Path("/photo")
 public interface IPhotoModule {
 
+
+    /**
+     * take a json input containing 4 entries
+     * name : name of the photo (string)
+     * format : format of the photo (string)
+     * serviceName : service to be used (string)
+     * photo : base64 encoding of the photo (string)
+     * example :
+     * {
+     *     name : "test",
+     *     format : "jpg",
+     *     serviceName : "drive",
+     *     photo : "SGkh"
+     * }
+     *
+     * @param photo
+     * @return
+     */
     @POST()
     @Path("addPhoto")
     @Produces(MediaType.APPLICATION_JSON)

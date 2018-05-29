@@ -25,9 +25,8 @@ public class PhotoModule implements IPhotoModule {
     @Override
     public Response addPhoto(Photo photo) {
         if(!photo.check()){
-            Response.status(Response.Status.BAD_REQUEST).entity("missing information").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("missing information").build();
         }
-        logger.log(Level.INFO,photo.toString());
         return Response.ok().build();
 
     }
