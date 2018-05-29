@@ -1,13 +1,14 @@
 package ConnectYourParty.chooser;
 
 import ConnectYourParty.DropboxService;
+import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoChooser implements Chooser<IPhotoService> {
+public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder> {
 
     private List<IPhotoService> servicePhotoList;
 
@@ -18,8 +19,13 @@ public class PhotoChooser implements Chooser<IPhotoService> {
     }
 
     @Override
-    public List<IPhotoService> getServices() {
-        return servicePhotoList;
+    public List<PhotoServiceHolder> getServices() {
+        List<PhotoServiceHolder> arr = new ArrayList<>();
+        for(IPhotoService service : servicePhotoList){
+            arr.add(new PhotoServiceHolder(service.getServiceName(),""));
+        }
+
+        return arr;
     }
 
     public void addPhoto(UploadRequest req){
