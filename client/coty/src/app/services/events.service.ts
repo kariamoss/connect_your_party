@@ -4,7 +4,7 @@ import {EventModel} from "../../model/event.model";
 export class EventService{
 
   private events: EventModel[] = [
-    new EventModel(1,'event1',12,'chez la daronne de lucas','coral'),
+    new EventModel(1,'event1',12,'chez rachel','coral'),
     new EventModel(2,'event2',47,'at lucas\'s mom','lightblue'),
     new EventModel(3,'event3',94,'bei lukas mutter','lightgreen')
   ];

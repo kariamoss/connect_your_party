@@ -8,7 +8,7 @@ import {appRoutes} from "./navigation";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
-  MatGridList, MatGridListModule
+  MatGridList, MatGridListModule, MatChipsModule
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
@@ -36,6 +36,7 @@ import {EventService} from "./services/events.service";
     MatCardModule,
     MatIconModule,
     MatGridListModule,
+    MatChipsModule
   ],
   providers: [EventService],
   bootstrap: [AppComponent]
