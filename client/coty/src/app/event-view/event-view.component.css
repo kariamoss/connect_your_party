@@ -1,7 +1,12 @@
+
+
 ul{
   list-style: none;
+  width:100%;
+  text-align: center;
+  padding: 0;
 }
 li{
-  float:left;
+  display: inline-block;
   margin:20px;
 }

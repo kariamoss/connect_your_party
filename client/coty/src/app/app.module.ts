@@ -8,14 +8,18 @@ import {appRoutes} from "./navigation";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
-  MatGridList, MatGridListModule
+  MatGridList, MatGridListModule, MatChipsModule, MatDialogModule, MatRadioModule
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
 import { PhotosComponent } from './photos/photos.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { ServiceSelectorComponent } from './service-selector/service-selector.component';
 import {EventService} from "./services/events.service";
+import {SelectorService} from "./services/selector.service";
+import {FormsModule} from "@angular/forms";
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +30,12 @@ import {EventService} from "./services/events.service";
     PhotosComponent,
     EventCardComponent,
     EventDetailsComponent,
+    ServiceSelectorComponent,
+    ShoppingListComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatButtonModule,
@@ -36,8 +43,15 @@ import {EventService} from "./services/events.service";
     MatCardModule,
     MatIconModule,
     MatGridListModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatChipsModule
   ],
-  providers: [EventService],
-  bootstrap: [AppComponent]
+  providers: [
+    EventService,
+    SelectorService,
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [ServiceSelectorComponent]
 })
 export class AppModule { }

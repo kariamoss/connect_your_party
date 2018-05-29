@@ -7,12 +7,15 @@
 
 <mat-toolbar color="primary">
 
-  <a>Event</a>
+  <a>{{this.getEventName()}}</a>
   <a routerLink="details">
     <button mat-raised-button><mat-icon>description</mat-icon>Description</button>
   </a>
   <a routerLink="photos">
     <button mat-raised-button><mat-icon>photo_camera</mat-icon>Photos</button>
+  </a>
+  <a routerLink="shopping">
+    <button mat-raised-button><mat-icon>shopping_cart</mat-icon>Liste de courses</button>
   </a>
 
 </mat-toolbar>
