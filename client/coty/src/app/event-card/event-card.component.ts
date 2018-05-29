@@ -9,7 +9,6 @@ import {EventService} from "../services/events.service";
 export class EventCardComponent implements OnInit{
 
   title;
-  desc;
   participants: number;
   location;
   color;

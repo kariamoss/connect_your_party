@@ -18,6 +18,9 @@ public class PhotoModule implements IPhotoModule {
         if(!photo.check()){
             return Response.status(Response.Status.BAD_REQUEST).entity("missing information").build();
         }
+
+        PhotoChooser chooser = new PhotoChooser();
+        chooser.addPhoto(photo);
         return Response.ok().build();
 
     }

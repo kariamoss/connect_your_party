@@ -3,7 +3,7 @@ package ConnectYourParty.services.photo;
 import ConnectYourParty.services.IService;
 
 public interface IPhotoService extends IService {
-    String addPhoto(String photo);
+    String addPhoto(byte[] photo, String name);
 
-    String getPhotos(String photo);
+    byte[] getPhotos(String photo);
 }

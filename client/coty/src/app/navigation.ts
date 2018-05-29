@@ -8,7 +8,8 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 
 export const appRoutes: Routes = [
 
-  {path: '', component: NotFoundComponent},
+
+  {path: '', pathMatch: 'full',redirectTo: 'events'},
   {path: 'events', component: EventViewComponent},
   {
     path: 'events/:id', component: EventComponent,
