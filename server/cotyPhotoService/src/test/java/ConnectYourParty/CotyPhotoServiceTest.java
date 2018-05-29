@@ -2,6 +2,7 @@ package ConnectYourParty;
 
 import static org.junit.Assert.assertTrue;
 
+import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,5 +34,14 @@ public class CotyPhotoServiceTest
         in.read(buff);
 
         service.addPhoto(buff,destPath);
+
+        byte[] recv = this.service.getPhoto(destPath);
+
+        assertTrue(Arrays.equals(buff,recv));
+    }
+
+    @Test(expected = RetrievePhotoErrorException.class)
+    public void retrieveUnknownPhoto() throws RetrievePhotoErrorException {
+        byte[] recv = this.service.getPhoto("salut");
     }
 }

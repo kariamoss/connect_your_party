@@ -1,6 +1,7 @@
 package ConnectYourParty;
 
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import java.net.URL;
@@ -12,8 +13,8 @@ public class CotyPhotoService implements IPhotoService {
     }
 
     @Override
-    public byte[] getPhoto(String path) {
-        return new byte[0];
+    public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
+        return Photos.retrievePhoto(path);
     }
 
     @Override
