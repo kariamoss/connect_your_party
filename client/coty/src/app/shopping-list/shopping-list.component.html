@@ -2,7 +2,7 @@
   <li id="form">
     <mat-icon (click)="addElem(inputForm.value)">add_box</mat-icon>
     <mat-form-field>
-      <input matInput #inputForm placeholder="Ajouter un élément">
+      <input matInput #inputForm (keyup.enter)="addElem(inputForm.value)" placeholder="Ajouter un élément">
     </mat-form-field>
   </li>
   <li *ngFor="let item of list; let i = index" #elem [id]="list[i]">

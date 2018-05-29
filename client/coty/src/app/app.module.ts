@@ -9,7 +9,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
   MatGridList, MatGridListModule, MatChipsModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,
-  MatSnackBarModule, MatGridListModule, MatChipsModule,
+  MatSnackBarModule, MatGridListModule, MatChipsModule, MatRadioModule, MatDialogModule,
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
@@ -52,9 +52,9 @@ import { ModuleListComponent } from './module-list/module-list.component';
     MatInputModule,
     MatFormFieldModule,
     MatSnackBarModule,
-    MatDialogModule,
     MatRadioModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule
   ],
   providers: [EventService, SelectorService, ShoppingListService],
   bootstrap: [AppComponent],
