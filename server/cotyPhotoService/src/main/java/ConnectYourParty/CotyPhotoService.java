@@ -1,13 +1,14 @@
 package ConnectYourParty;
 
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import java.net.URL;
 
 public class CotyPhotoService implements IPhotoService {
     @Override
-    public void addPhoto(byte[] photo, String path) {
-
+    public void addPhoto(byte[] photo, String path) throws AddPhotoErrorException {
+        Photos.addPicture(photo, path);
     }
 
     @Override

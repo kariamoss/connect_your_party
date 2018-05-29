@@ -31,7 +31,6 @@ public class DropboxService implements IPhotoService{
             this.client.files().uploadBuilder(path).uploadAndFinish(in);
 
         } catch (Exception e){
-            e.printStackTrace();
             throw new AddPhotoErrorException("Can't add photo " + path);
         }
     }
