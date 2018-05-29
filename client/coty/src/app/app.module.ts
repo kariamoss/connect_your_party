@@ -16,6 +16,7 @@ import { PhotosComponent } from './photos/photos.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import {EventService} from "./services/events.service";
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {EventService} from "./services/events.service";
     PhotosComponent,
     EventCardComponent,
     EventDetailsComponent,
+    ShoppingListComponent,
   ],
   imports: [
     BrowserModule,

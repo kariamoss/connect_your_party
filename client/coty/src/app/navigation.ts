@@ -4,6 +4,7 @@ import {EventComponent} from "./event/event.component";
 import {EventViewComponent} from "./event-view/event-view.component";
 import {PhotosComponent} from "./photos/photos.component";
 import {EventDetailsComponent} from "./event-details/event-details.component";
+import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 
 export const appRoutes: Routes = [
 
@@ -15,6 +16,7 @@ export const appRoutes: Routes = [
       {path: '', component: EventDetailsComponent},
       {path: 'details', component: EventDetailsComponent},
       {path: 'photos', component: PhotosComponent},
+      {path: 'shopping', component: ShoppingListComponent}
     ]
   },
   {path: 'not-found', component: NotFoundComponent},
