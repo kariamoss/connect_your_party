@@ -1,5 +1,6 @@
 package ConnectYourParty.chooser;
 
+import ConnectYourParty.DropboxService;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ public class PhotoChooser implements Chooser<IPhotoService> {
 
     public PhotoChooser(){
         servicePhotoList = new ArrayList<>();
-        DriveService driveService = new DriveService();
-        servicePhotoList.add(driveService);
+        DropboxService dropbox = new DropboxService();
+        servicePhotoList.add(dropbox);
     }
 
     @Override
