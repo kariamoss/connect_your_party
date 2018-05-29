@@ -1,0 +1,11 @@
+mat-toolbar{
+  margin-top:20px;
+}
+
+mat-toolbar a{
+  padding: 0 20px;
+}
+
+mat-toolbar mat-icon{
+  padding-right:10px;
+}

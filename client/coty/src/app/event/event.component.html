@@ -1,0 +1,22 @@
+<a routerLink="/events"  id="back">
+  <button mat-raised-button>
+    <mat-icon>arrow_back</mat-icon>
+    Retour aux événements
+  </button>
+</a>
+
+<mat-toolbar color="primary">
+
+  <a>Event</a>
+  <a routerLink="details">
+    <button mat-raised-button><mat-icon>description</mat-icon>Description</button>
+  </a>
+  <a routerLink="photos">
+    <button mat-raised-button><mat-icon>photo_camera</mat-icon>Photos</button>
+  </a>
+
+</mat-toolbar>
+
+<div>
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,14 @@
+<mat-card class="example-card"  [ngStyle]="color" routerLink="1">
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+    <!--<mat-card-subtitle>{{ desc }}</mat-card-subtitle>-->
+  </mat-card-header>
+  <img mat-card-image src="https://www.contrepoints.org/wp-content/uploads/2017/04/Ren%C3%A9_Coty-1929.jpg" alt="Photo of René Coty (he is your friend)">
+  <mat-card-content>
+    <div ><mat-icon class="info">home</mat-icon> {{location}}
+    </div>
+    <div>
+    <mat-icon class="info">people</mat-icon> {{this.participants}} participants
+    </div>
+  </mat-card-content>
+</mat-card>
