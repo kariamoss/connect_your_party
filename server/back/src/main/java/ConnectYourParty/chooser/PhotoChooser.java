@@ -1,6 +1,7 @@
 package ConnectYourParty.chooser;
 
 import ConnectYourParty.DropboxService;
+import ConnectYourParty.requestObjects.photo.UploadRequest;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import java.util.ArrayList;
@@ -19,5 +20,9 @@ public class PhotoChooser implements Chooser<IPhotoService> {
     @Override
     public List<IPhotoService> getServices() {
         return servicePhotoList;
+    }
+
+    public void addPhoto(UploadRequest req){
+        servicePhotoList.get(0).addPhoto(req.photo.getBytes(),req.name);
     }
 }
