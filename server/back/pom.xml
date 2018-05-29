@@ -43,6 +43,11 @@
       <artifactId>json</artifactId>
       <version>${versions.json}</version>
     </dependency>
+    <dependency>
+      <groupId>ConnectYourParty</groupId>
+      <artifactId>dropboxService</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
     <!-- Dependencies for the OpenEJB framework (provided at runtime by the app server) -->
     <dependency>
       <groupId>org.apache.tomee</groupId>
