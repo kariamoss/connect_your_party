@@ -2,6 +2,7 @@ package ConnectYourParty.modulesLogic.chooser;
 
 import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.DropboxService;
+import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
@@ -28,7 +29,7 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
         servicePhotoList.add(new CotyPhotoService());
     }
 
-    public void addPhoto(InputStream stream, String path) throws IOException, AddPhotoErrorException {
+    public void addPhoto(InputStream stream, String path, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         byte[] buff = new byte[stream.available()];
         stream.read(buff);
         servicePhotoList.get(0).addPhoto(buff, path);

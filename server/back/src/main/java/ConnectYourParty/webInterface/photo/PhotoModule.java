@@ -1,5 +1,6 @@
 package ConnectYourParty.webInterface.photo;
 
+import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
@@ -37,7 +38,11 @@ public class PhotoModule implements IPhotoModule {
         } catch (AddPhotoErrorException e) {
             logger.log(Level.SEVERE, e.getMessage());
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
-        } catch (Exception e){
+        } catch (PhotoAlreadyExistException e){
+            logger.log(Level.SEVERE, "photo already in the system");
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+        catch (Exception e){
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
     }

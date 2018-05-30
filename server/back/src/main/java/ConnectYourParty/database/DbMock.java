@@ -3,24 +3,30 @@ package ConnectYourParty.database;
 import ConnectYourParty.database.businessObjects.Event;
 import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.database.businessObjects.User;
+import ConnectYourParty.exception.PhotoAlreadyExistException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class dbMock {
+public class DbMock {
     static private List<Event> events = new ArrayList<>();
     static private Event event = new Event(0, "La grande soirée costumée", 65, "12, route de Virey 70700 Charcenne");
-    static private User user = new User("Milleret", "Jehan");
-    static private Photo photo = new Photo("image.jpg", "la soirée", user);
+    static public User user = new User("Milleret", "Jehan");
 
     public static List<Event> getEvents() {
         return events;
     }
 
-    public static List<Photo> getPhotosFromEvent(Event event){
-        if(events.contains(event)){
-            return events.get(events.indexOf(event)).getPhotos();
+    public static List<Photo> getPhotosFromEvent(){
+        return event.getPhotos();
+    }
+
+    public static void addPhoto(Photo photo) throws PhotoAlreadyExistException{
+        for(Photo res : event.getPhotos()){
+            if(photo.getName().equals(res.getName())){
+                throw new PhotoAlreadyExistException();
+            }
         }
-        return null;
+        event.addPhoto(photo);
     }
 }
