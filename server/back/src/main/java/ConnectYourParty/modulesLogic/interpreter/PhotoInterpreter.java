@@ -3,12 +3,12 @@ package ConnectYourParty.modulesLogic.interpreter;
 import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
-import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.modulesLogic.IPhoto;
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
+import ConnectYourParty.requestObjects.photo.PhotoHolder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +42,7 @@ public class PhotoInterpreter implements IPhoto {
     }
 
     @Override
-    public List<Photo> getPhotoList() {
+    public List<PhotoHolder> getPhotoList() {
         return photoChooser.getPhotoList();
     }
 }
