@@ -6,6 +6,7 @@ import ConnectYourParty.requestObjects.photo.UploadRequest;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+import ConnectYourParty.webInterface.CorsAdder;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
@@ -30,8 +31,8 @@ public class PhotoModule implements IPhotoModule {
 
 
             PhotoChooser chooser = new PhotoChooser();
-            chooser.addPhoto(input,"/" + name);
-            return Response.ok().build();
+            chooser.addPhoto(input, name);
+            return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
             logger.log(Level.SEVERE, e.getMessage());
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
@@ -48,6 +49,7 @@ public class PhotoModule implements IPhotoModule {
         File photo = findPhoto();
         Response.ResponseBuilder response = Response.ok((Object) photo);
         response.header("Content-Disposition", "attachment;filename=photo.jpg");
+        CorsAdder.addCors(response);
         return response.build();
     }
 
@@ -59,6 +61,8 @@ public class PhotoModule implements IPhotoModule {
     @Override
     public Response getPhotoServices() {
         PhotoChooser photoChooser = new PhotoChooser();
-        return Response.status(Response.Status.OK).entity(photoChooser.getServices()).build();
+        return CorsAdder.addCors(
+                Response.status(Response.Status.OK).entity(photoChooser.getServices()))
+                .build();
     }
 }

@@ -9,7 +9,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
   MatCheckboxModule, MatFormFieldModule, MatInputModule,
-  MatSnackBarModule, MatChipsModule, MatRadioModule, MatDialogModule,
+  MatSnackBarModule, MatChipsModule, MatRadioModule, MatDialogModule, MatGridListModule,
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
@@ -20,10 +20,12 @@ import { ServiceSelectorComponent } from './service-selector/service-selector.co
 import {EventService} from "./services/events.service";
 import {SelectorService} from "./services/selector.service";
 import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import {ShoppingListService} from "./services/shopping-list.service";
 import { ModuleListComponent } from './module-list/module-list.component';
 import { PhotosListComponent } from './photos-list/photos-list.component';
+import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,8 +40,10 @@ import { PhotosListComponent } from './photos-list/photos-list.component';
     ShoppingListComponent,
     ModuleListComponent,
     PhotosListComponent,
+    PhotoDialogComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
@@ -54,10 +58,11 @@ import { PhotosListComponent } from './photos-list/photos-list.component';
     MatSnackBarModule,
     MatRadioModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
   ],
   providers: [EventService, SelectorService, ShoppingListService],
   bootstrap: [AppComponent],
-  entryComponents: [ServiceSelectorComponent]
+  entryComponents: [ServiceSelectorComponent,PhotoDialogComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 package ConnectYourParty;
 
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 
 import java.io.*;
@@ -15,7 +16,7 @@ public class Photos {
      * If a photo already exists with the same path, it will be overwrite
      * @param photo The photo to save
      * @param path The path where to save the photo
-     * @throws AddPhotoErrorException TODO add exception when wanting to erase file
+     * @throws AddPhotoErrorException {@// TODO: 30/05/18 add exception when wanting to erase file }
      */
     public static void addPicture(byte[] photo, String path) throws AddPhotoErrorException {
 
@@ -33,6 +34,13 @@ public class Photos {
         }
     }
 
+    /**
+     * Retrieve one photo that had been saved previously
+     * If no photo corresponds to the path, throw an {@link RetrievePhotoErrorException}
+     * @param pathToFile the path to the photo we want to retrieve
+     * @return a byte array, containing our photo
+     * @throws RetrievePhotoErrorException if no photo corresponds to the path
+     */
     public static byte[] retrievePhoto(String pathToFile) throws RetrievePhotoErrorException {
         Path path = Paths.get(System.getProperty("user.dir") + pathToFile);
         byte[] data = null;
@@ -42,5 +50,15 @@ public class Photos {
             throw new RetrievePhotoErrorException("Error while trying to retrieve photo : " + e.getMessage());
         }
         return data;
+    }
+
+
+    public static void removePhoto(String pathToFile) throws CannotDeletePhotoException {
+        Path path = Paths.get(System.getProperty("user.dir") + pathToFile);
+        try {
+            Files.delete(path);
+        } catch (IOException e) {
+            throw new CannotDeletePhotoException("Error while deleting a photo : " + e.getMessage());
+        }
     }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from "@angular/material";
+import {PhotoDialogComponent} from "../photo-dialog/photo-dialog.component";
 
 @Component({
   selector: 'app-photos-list',
@@ -7,18 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PhotosListComponent implements OnInit {
 
-  url: string;
+  photos: string[] = [
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+    'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos',
+  ];
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http) {
-      $http.get("localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos")
-        .then(function(response) {
-          this.url = response.data;
-        });
-    });
+  }
+
+  showPhoto(src: string){
+    let dialogRef = this.dialog.open(PhotoDialogComponent);
+    dialogRef.componentInstance.url = src;
+
   }
 
 }
