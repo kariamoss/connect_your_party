@@ -36,11 +36,10 @@ public interface IPhotoModule {
 
     @GET()
     @Path("getPhotos")
-    @Produces(MediaType.APPLICATION_JSON)
     Response getPhotos();
 
     @GET()
     @Path("getPhotoServices")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     Response getPhotoServices();
 }

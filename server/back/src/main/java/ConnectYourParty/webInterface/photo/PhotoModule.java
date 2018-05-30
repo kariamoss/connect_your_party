@@ -6,6 +6,7 @@ import ConnectYourParty.requestObjects.photo.UploadRequest;
 import javax.ws.rs.core.Response;
 
 import java.io.*;
+import java.net.URL;
 import java.util.logging.Logger;
 
 public class PhotoModule implements IPhotoModule {
@@ -37,7 +38,8 @@ public class PhotoModule implements IPhotoModule {
     }
 
     public File findPhoto(){
-        return new File("/home/luquamateo/si4/connectyourparty/image.jpg");
+        URL path = this.getClass().getClassLoader().getResource("image.jpg");
+        return new File(path.getPath());
     }
 
     @Override
