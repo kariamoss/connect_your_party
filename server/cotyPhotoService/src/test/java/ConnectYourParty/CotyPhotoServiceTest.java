@@ -7,15 +7,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 
-/**
- * Unit test for simple App.
- */
+
 public class CotyPhotoServiceTest
 {
     private static CotyPhotoService service;
