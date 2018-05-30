@@ -23,6 +23,7 @@ import {FormsModule} from "@angular/forms";
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import {ShoppingListService} from "./services/shopping-list.service";
 import { ModuleListComponent } from './module-list/module-list.component';
+import { PhotosListComponent } from './photos-list/photos-list.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ModuleListComponent } from './module-list/module-list.component';
     ServiceSelectorComponent,
     ShoppingListComponent,
     ModuleListComponent,
+    PhotosListComponent,
   ],
   imports: [
     BrowserModule,
