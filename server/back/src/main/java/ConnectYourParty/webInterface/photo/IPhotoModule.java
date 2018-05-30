@@ -16,25 +16,14 @@ public interface IPhotoModule {
 
 
     /**
-     * take a json input containing 4 entries
-     * name : name of the photo (string)
-     * format : format of the photo (string)
-     * serviceName : service to be used (string)
-     * photo : base64 encoding of the photo (string)
-     * example :
-     * {
-     *     name : "test",
-     *     format : "jpg",
-     *     serviceName : "drive",
-     *     photo : "SGkh"
-     * }
-     *
-     * @param photo
-     * @return success or failure image
-     */
+     * take a multipart form data as input with multiple entries
+     * name : name of the photo
+     * service : name of the service, value must be equal to one return by getPhotoService
+     * e.g "dropbox"
+     * photo : file to be uploaded to the service
+    */
     @POST()
     @Path("addPhoto")
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     Response addPhoto(MultipartBody body);
 
