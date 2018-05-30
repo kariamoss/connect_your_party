@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import org.junit.*;
 
 import java.io.FileInputStream;
@@ -36,20 +37,20 @@ public class ServiceTest {
 
         service.addPhoto(buff,destPath);
 
-        byte[] recv = this.service.getPhotos(destPath);
+        byte[] recv = this.service.getPhoto(destPath);
 
         assertTrue(Arrays.equals(buff,recv));
     }
 
     @Test
-    public void removeTest(){
+    public void removeTest() throws AddPhotoErrorException {
         byte[] buff = new byte[3];
         buff[0] = 1;
-        assertEquals(service.addPhoto(buff,this.destPath),"success");
+        service.addPhoto(buff,this.destPath); // No exception
 
         assertTrue(service.remove(this.destPath));
 
-        assertEquals(service.addPhoto(buff,this.destPath),"success");
+        service.addPhoto(buff,this.destPath); // No exception
 
     }
 

@@ -1,5 +1,6 @@
 package ConnectYourParty;
 
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -23,21 +24,19 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public String addPhoto(byte[] photo,String path) {
+    public void addPhoto(byte[] photo,String path) throws AddPhotoErrorException {
         try {
             InputStream in = new ByteArrayInputStream(photo);
 
             this.client.files().uploadBuilder(path).uploadAndFinish(in);
 
         } catch (Exception e){
-            e.printStackTrace();
-            return "fail";
+            throw new AddPhotoErrorException("Can't add photo " + path);
         }
-        return "success";
     }
 
     @Override
-    public byte[] getPhotos(String photo) {
+    public byte[] getPhoto(String photo) {
         try {
             InputStream stream = client.files().download(photo).getInputStream();
 
