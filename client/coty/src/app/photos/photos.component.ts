@@ -4,6 +4,7 @@ import {ParametersService} from "../services/parameters.service";
 import {ServiceSelectorComponent} from "../service-selector/service-selector.component";
 import {MatDialog} from "@angular/material";
 import {SelectorService} from "../services/selector.service";
+import {AddPhotoComponent} from "../add-photo/add-photo.component";
 
 @Component({
   selector: 'app-photos',
@@ -13,6 +14,7 @@ import {SelectorService} from "../services/selector.service";
 export class PhotosComponent implements OnInit {
 
   id: number;
+  module: 'photo';
 
   constructor(private route: ActivatedRoute,
               private parameters: ParametersService,
@@ -21,18 +23,25 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.parameters.sharedId;
-    this.selectorService.updateServicesList('photo');
+    this.selectorService.updateServicesList(this.module);
   }
 
   openDialog(): void {
     let dialogRef = this.dialog.open(ServiceSelectorComponent, {
       width: '450px',
     });
-    dialogRef.componentInstance.module = 'photo';
+    dialogRef.componentInstance.module = this.module;
 
     dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
     });
+  }
+
+  openAddDialog(): void {
+    let dialogRef = this.dialog.open(AddPhotoComponent, {
+      width: '600px',
+    });
+    dialogRef.componentInstance.module = this.module;
   }
 
 }

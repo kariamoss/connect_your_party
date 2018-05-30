@@ -13,11 +13,7 @@ export class SelectorService {
   servicesSubject = new Subject<Service[]>();
 
   private services: Array<Module> = [
-    {
-      module: 'photo',
-      selectedService: null,
-      moduleServices: [],
-    },
+
   ];
 
   changeSelectedService(module: string, newService): void {
