@@ -28,8 +28,14 @@ public interface IPhotoModule {
     Response addPhoto(MultipartBody body);
 
     @GET()
-    @Path("getPhotos")
-    Response getPhotos();
+    @Path("getPhotoList")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response getPhotoList();
+
+    @GET()
+    @Path("getPhoto/{path}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    Response getPhoto(String path);
 
     /**
      * Return the services as a json object containing

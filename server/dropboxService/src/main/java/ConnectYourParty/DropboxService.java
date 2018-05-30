@@ -64,7 +64,7 @@ public class DropboxService implements IPhotoService{
 
     @Override
     public String getServiceName() {
-        return "dropbox";
+        return "Dropbox";
     }
 
     @Override

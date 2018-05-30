@@ -2,6 +2,8 @@ package ConnectYourParty.modulesLogic.chooser;
 
 import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.DropboxService;
+import ConnectYourParty.database.DbMock;
+import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
@@ -36,13 +38,18 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
     }
 
     @Override
-    public void getPhotos(String path) throws RetrievePhotoErrorException {
-        servicePhotoList.get(0).getPhoto(path);
+    public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
+        return servicePhotoList.get(0).getPhoto(path);
     }
 
     @Override
     public void removePhoto(String path) throws CannotDeletePhotoException {
         servicePhotoList.get(0).removePhoto(path);
+    }
+
+    @Override
+    public List<Photo> getPhotoList() {
+        return DbMock.getPhotosFromEvent();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package ConnectYourParty.webInterface.photo;
 
+import ConnectYourParty.database.businessObjects.Photo;
+import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
@@ -10,11 +12,15 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import ConnectYourParty.webInterface.CorsAdder;
 
+import javax.servlet.ServletOutputStream;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,20 +54,26 @@ public class PhotoModule implements IPhotoModule {
     }
 
     @Override
-    public Response getPhotos() {
-        //PhotoChooser photoChooser = new PhotoChooser();
-        //IPhotoService photoService = photoChooser.getService();
-        //photoService.getPhotos(url);
-        File photo = findPhoto();
-        Response.ResponseBuilder response = Response.ok((Object) photo);
-        response.header("Content-Disposition", "attachment;filename=photo.jpg");
-        CorsAdder.addCors(response);
-        return response.build();
+    public Response getPhotoList() {
+        PhotoInterpreter photoInterpreter = new PhotoInterpreter();
+        return CorsAdder.addCors(
+                Response.status(Response.Status.OK).entity(photoInterpreter.getPhotoList()))
+                .build();
     }
 
-    public File findPhoto(){
-        URL path = this.getClass().getClassLoader().getResource("image.jpg");
-        return new File(path.getPath());
+    @Override
+    public Response getPhoto(String path) {
+        PhotoInterpreter photoInterpreter = new PhotoInterpreter();
+        byte[] photo;
+        try {
+            photo = photoInterpreter.getPhoto("/" + path);
+        } catch (RetrievePhotoErrorException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+        return CorsAdder.addCors(
+                Response.status(Response.Status.OK).entity(photo))
+                .build();
     }
 
     @Override
