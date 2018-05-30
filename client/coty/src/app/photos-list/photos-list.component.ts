@@ -12,13 +12,6 @@ export class PhotosListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http) {
-      $http.get("localhost:8080/back-1.0-SNAPSHOT/photo/getPhotos")
-        .then(function(response) {
-          this.url = response.data;
-        });
-    });
   }
 
 }
