@@ -29,9 +29,6 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
     );
     this.selectorService.emitServicesSubject(this.module);
     this.selectedService = this.selectorService.getSelectedService(this.module);
-    if (isNull(this.selectedService)) {
-      this.selectedService = {name: 'Aucun service sélectionné'};
-    }
   }
 
   onChanges(newService): void {

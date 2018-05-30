@@ -45,7 +45,7 @@ export class SelectorService {
     for (let i = serviceList.length - 1; i >= 0; i--) {
       if (data.map(x => x.name).indexOf(serviceList[i].name) === -1) {
         if (this.getModule(module).selectedService === serviceList[i])
-          this.getModule(module).selectedService = {name: 'Aucun service sélectionné'};
+          this.getModule(module).selectedService = null;
         serviceList.splice(i, 1);
       }
     }
