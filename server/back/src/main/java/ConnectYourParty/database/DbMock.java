@@ -3,6 +3,7 @@ package ConnectYourParty.database;
 import ConnectYourParty.database.businessObjects.Event;
 import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.database.businessObjects.User;
+import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 
 import java.util.ArrayList;
@@ -22,15 +23,22 @@ public class DbMock {
     }
 
     public static void addPhoto(Photo photo) throws PhotoAlreadyExistException{
-        for(Photo res : event.getPhotos()){
-            if(photo.getName().equals(res.getName())){
-                throw new PhotoAlreadyExistException();
-            }
+        if(event.getPhotos().contains(photo)){
+            throw new PhotoAlreadyExistException();
         }
         event.addPhoto(photo);
     }
 
     public static void clean(){
         event = new Event(0, "La grande soirée costumée", 65, "12, route de Virey 70700 Charcenne");
+    }
+
+    public static String getServiceFromPath(String photoPath) throws NoSuchPhotoException{
+        for(Photo photo : event.getPhotos()){
+            if(photo.getPhotoPath().equals(photoPath)){
+                return photo.getServiceHost();
+            }
+        }
+        throw new NoSuchPhotoException();
     }
 }

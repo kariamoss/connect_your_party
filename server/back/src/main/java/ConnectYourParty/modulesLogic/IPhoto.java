@@ -1,6 +1,8 @@
 package ConnectYourParty.modulesLogic;
 
 import ConnectYourParty.database.businessObjects.Photo;
+import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public interface IPhoto {
     void addPhoto(InputStream stream, String path,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException;
-    byte[] getPhoto(String path) throws RetrievePhotoErrorException;
+    byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException;
     void removePhoto(String path) throws CannotDeletePhotoException;
 
     List<Photo> getPhotoList();

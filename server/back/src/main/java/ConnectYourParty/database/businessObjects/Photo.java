@@ -28,4 +28,15 @@ public class Photo {
     public String getName() {
         return name;
     }
+
+    @Override
+    public int hashCode() {
+        return this.photoPath.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.getClass().equals(Photo.class) &&
+                this.photoPath.equals(((Photo) obj).getPhotoPath());
+    }
 }

@@ -1,6 +1,8 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.database.businessObjects.Photo;
+import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
@@ -69,6 +71,12 @@ public class PhotoModule implements IPhotoModule {
             photo = photoInterpreter.getPhoto("/" + path);
         } catch (RetrievePhotoErrorException e) {
             e.printStackTrace();
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        } catch (NoSuchServiceException e){
+            logger.log(Level.SEVERE, "service doesn't exist ");
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        } catch (NoSuchPhotoException e){
+            logger.log(Level.SEVERE, "photo doesn't exist");
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
         return CorsAdder.addCors(

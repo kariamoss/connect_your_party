@@ -4,6 +4,8 @@ import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.DropboxService;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.businessObjects.Photo;
+import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
@@ -38,8 +40,14 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
     }
 
     @Override
-    public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
-        return servicePhotoList.get(0).getPhoto(path);
+    public byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
+        String serviceName = DbMock.getServiceFromPath(path);
+        for(IPhotoService service : servicePhotoList ){
+            if(service.getServiceName().equals(serviceName)){
+                return service.getPhoto(path);
+            }
+        }
+        throw new NoSuchServiceException();
     }
 
     @Override

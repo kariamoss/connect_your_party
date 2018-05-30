@@ -2,6 +2,8 @@ package ConnectYourParty.modulesLogic.interpreter;
 
 import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.database.DbMock;
+import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
@@ -32,7 +34,7 @@ public class PhotoInterpreter implements IPhoto {
     }
 
     @Override
-    public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
+    public byte[] getPhoto(String path) throws RetrievePhotoErrorException,NoSuchServiceException, NoSuchPhotoException {
         return photoChooser.getPhoto(path);
     }
 
