@@ -1,6 +1,7 @@
 package ConnectYourParty;
 
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.services.photo.IPhotoService;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -53,6 +54,16 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
+    public void removePhoto(String path) throws CannotDeletePhotoException {
+        try {
+            this.client.files().deleteV2(path);
+        } catch (Exception e) {
+            throw new CannotDeletePhotoException("Cannot delete photo " + path);
+        }
+    }
+
+
+    @Override
     public String getServiceName() {
         return "dropbox";
     }
@@ -63,15 +74,6 @@ public class DropboxService implements IPhotoService{
             return new URL("https://www.iconfinder.com/icons/173882/download/png/128");
         } catch (Exception e){
             return null;
-        }
-    }
-
-    public boolean remove(String path) {
-        try {
-            this.client.files().deleteV2(path);
-            return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 }

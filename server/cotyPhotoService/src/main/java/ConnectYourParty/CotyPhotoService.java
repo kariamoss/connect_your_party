@@ -1,6 +1,7 @@
 package ConnectYourParty;
 
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
 
@@ -15,6 +16,11 @@ public class CotyPhotoService implements IPhotoService {
     @Override
     public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
         return Photos.retrievePhoto(path);
+    }
+
+    @Override
+    public void removePhoto(String path) throws CannotDeletePhotoException {
+
     }
 
     @Override
