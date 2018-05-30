@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class Photos {
 
@@ -30,7 +31,7 @@ public class Photos {
             writer.write(photo);
             writer.close();
         } catch (IOException e) {
-            throw new AddPhotoErrorException("Exception while adding photo : " + e.getMessage());
+            throw new AddPhotoErrorException("Exception while adding photo : " + e.getMessage() + "\n"+ Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -47,7 +48,8 @@ public class Photos {
         try {
             data = Files.readAllBytes(path);
         } catch (IOException e) {
-            throw new RetrievePhotoErrorException("Error while trying to retrieve photo : " + e.getMessage());
+            throw new RetrievePhotoErrorException("Error while trying to retrieve photo : " + e.getMessage()
+                    + "\n"+ Arrays.toString(e.getStackTrace()));
         }
         return data;
     }
@@ -58,7 +60,8 @@ public class Photos {
         try {
             Files.delete(path);
         } catch (IOException e) {
-            throw new CannotDeletePhotoException("Error while deleting a photo : " + e.getMessage());
+            throw new CannotDeletePhotoException("Error while deleting a photo : " + e.getMessage()
+                    + "\n"+ Arrays.toString(e.getStackTrace()));
         }
     }
 }

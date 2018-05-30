@@ -2,6 +2,7 @@ package ConnectYourParty;
 
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
+import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -12,6 +13,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class DropboxService implements IPhotoService{
 
@@ -32,25 +34,22 @@ public class DropboxService implements IPhotoService{
             this.client.files().uploadBuilder(path).uploadAndFinish(in);
 
         } catch (Exception e){
-            throw new AddPhotoErrorException("Can't add photo " + path);
+            throw new AddPhotoErrorException("Can't add photo " + path + "\n"+ Arrays.toString(e.getStackTrace()));
         }
     }
 
     @Override
-    public byte[] getPhoto(String photo) {
+    public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
         try {
-            InputStream stream = client.files().download(photo).getInputStream();
+            InputStream stream = client.files().download(path).getInputStream();
 
             byte[] buff = new byte[stream.available()];
             stream.read(buff);
 
             return buff;
         } catch (Exception e){
-            e.printStackTrace();
+            throw new RetrievePhotoErrorException("Cannot retrieve photo " + path + "\n"+ Arrays.toString(e.getStackTrace()));
         }
-
-
-        return new byte[0];
     }
 
     @Override
@@ -58,7 +57,7 @@ public class DropboxService implements IPhotoService{
         try {
             this.client.files().deleteV2(path);
         } catch (Exception e) {
-            throw new CannotDeletePhotoException("Cannot delete photo " + path);
+            throw new CannotDeletePhotoException("Cannot delete photo " + path+ "\n"+ Arrays.toString(e.getStackTrace()));
         }
     }
 

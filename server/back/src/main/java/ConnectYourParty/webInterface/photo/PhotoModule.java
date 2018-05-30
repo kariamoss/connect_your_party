@@ -2,6 +2,7 @@ package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
@@ -28,10 +29,8 @@ public class PhotoModule implements IPhotoModule {
             String name = body.getAttachmentObject("name",String.class);
             InputStream input = body.getAttachment("file").getDataHandler().getInputStream();
 
-
-
-            PhotoChooser chooser = new PhotoChooser();
-            chooser.addPhoto(input, name);
+            PhotoInterpreter interpreter = new PhotoInterpreter();
+            interpreter.addPhoto(input, name);
             return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
             logger.log(Level.SEVERE, e.getMessage());
