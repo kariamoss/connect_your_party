@@ -1,0 +1,5 @@
+<app-service-selector [module]="module"></app-service-selector>
+<form (ngSubmit)="onSubmit()">
+  <input type="file" name="pic" accept="image/*" (change)="fileChange($event)" ngModel required>
+  <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="f.invalid">Envoyer</button>
+</form>

@@ -12,6 +12,7 @@ import {Service} from "../../model/service.model";
 })
 export class ServiceSelectorComponent implements OnInit, OnDestroy {
 
+  @Input()
   module: string;
   services: Service[];
   serviceSubscription: Subscription;

@@ -2,7 +2,7 @@ import {Routes} from "@angular/router";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {EventComponent} from "./event/event.component";
 import {EventViewComponent} from "./event-view/event-view.component";
-import {PhotosComponent} from "./photos/photos.component";
+import {PhotosComponent} from "./module-photo/photos/photos.component";
 import {EventDetailsComponent} from "./event-details/event-details.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 
