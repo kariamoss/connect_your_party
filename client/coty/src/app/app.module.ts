@@ -8,8 +8,8 @@ import {appRoutes} from "./navigation";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
-  MatGridList, MatGridListModule, MatChipsModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,
-  MatSnackBarModule, MatGridListModule, MatChipsModule, MatRadioModule, MatDialogModule,
+  MatCheckboxModule, MatFormFieldModule, MatInputModule,
+  MatSnackBarModule, MatChipsModule, MatRadioModule, MatDialogModule,
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
@@ -23,6 +23,7 @@ import {FormsModule} from "@angular/forms";
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import {ShoppingListService} from "./services/shopping-list.service";
 import { ModuleListComponent } from './module-list/module-list.component';
+import { PhotosListComponent } from './photos-list/photos-list.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ModuleListComponent } from './module-list/module-list.component';
     ServiceSelectorComponent,
     ShoppingListComponent,
     ModuleListComponent,
+    PhotosListComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,8 +48,6 @@ import { ModuleListComponent } from './module-list/module-list.component';
     MatToolbarModule,
     MatCardModule,
     MatIconModule,
-    MatGridListModule,
-    MatChipsModule,
     MatCheckboxModule,
     MatInputModule,
     MatFormFieldModule,
