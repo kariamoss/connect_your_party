@@ -2,7 +2,9 @@ package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.chooser.PhotoChooser;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
 
 import java.io.*;
@@ -15,14 +17,17 @@ public class PhotoModule implements IPhotoModule {
 
 
     @Override
-    public Response addPhoto(UploadRequest photo) {
-        if(!photo.check()){
-            return Response.status(Response.Status.BAD_REQUEST).entity("missing information").build();
+    public Response addPhoto(
+            @Multipart(value = "file") InputStream input,
+            @Multipart(value = "name") String name
+    ) {
+        try {
+            PhotoChooser chooser = new PhotoChooser();
+            chooser.addPhoto(input, name);
+            return Response.ok().build();
+        } catch (Exception e){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
-
-        PhotoChooser chooser = new PhotoChooser();
-        chooser.addPhoto(photo);
-        return Response.ok().build();
 
     }
 
