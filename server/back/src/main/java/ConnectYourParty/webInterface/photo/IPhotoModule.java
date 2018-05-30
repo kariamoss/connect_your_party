@@ -6,6 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.Produces;
+import java.io.InputStream;
 
 @Path("/photo")
 public interface IPhotoModule {
@@ -31,16 +32,15 @@ public interface IPhotoModule {
     @POST()
     @Path("addPhoto")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    Response addPhoto(UploadRequest photo);
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    Response addPhoto(InputStream input, String name);
 
     @GET()
     @Path("getPhotos")
-    @Produces(MediaType.APPLICATION_JSON)
     Response getPhotos();
 
     @GET()
     @Path("getPhotoServices")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     Response getPhotoServices();
 }

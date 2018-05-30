@@ -8,6 +8,8 @@ import ConnectYourParty.requestObjects.photo.UploadRequest;
 import ConnectYourParty.services.photo.IPhotoService;
 import ConnectYourParty.webInterface.photo.PhotoModule;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,11 +38,9 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder> {
         return arr;
     }
 
-    public void addPhoto(UploadRequest req){
-        try {
-            servicePhotoList.get(0).addPhoto(req.photo.getBytes(),req.name);
-        } catch (AddPhotoErrorException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
+    public void addPhoto(InputStream stream, String name) throws IOException, AddPhotoErrorException {
+        byte[] buff = new byte[stream.available()];
+        stream.read(buff);
+        servicePhotoList.get(0).addPhoto(buff, name);
     }
 }
