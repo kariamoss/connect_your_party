@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 
-cd serviceInterface
-mvn clean install
-cd ..
+files="serviceInterface dropboxService cotyPhotoService back"
 
-cd dropboxService
-mvn clean install
-cd ..
-
-
-cd back
-mvn clean install
-cd ..
+for i in ${files}
+do
+    cd ${i}
+    mvn clean install
+    cd ..
+done

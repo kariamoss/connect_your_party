@@ -1,12 +1,17 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.chooser.PhotoChooser;
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import ConnectYourParty.webInterface.CorsAdder;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
 
 import java.io.*;
 import java.net.URL;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PhotoModule implements IPhotoModule {
@@ -15,15 +20,20 @@ public class PhotoModule implements IPhotoModule {
 
 
     @Override
-    public Response addPhoto(UploadRequest photo) {
-        if(!photo.check()){
-            return Response.status(Response.Status.BAD_REQUEST).entity("missing information").build();
+    public Response addPhoto(
+            @Multipart(value = "file") InputStream input,
+            @Multipart(value = "name") String name
+    ) {
+        try {
+            PhotoChooser chooser = new PhotoChooser();
+            chooser.addPhoto(input, name);
+            return CorsAdder.addCors(Response.ok()).build();
+        } catch (AddPhotoErrorException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        } catch (Exception e){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
-
-        PhotoChooser chooser = new PhotoChooser();
-        chooser.addPhoto(photo);
-        return Response.ok().build();
-
     }
 
     @Override
@@ -34,6 +44,7 @@ public class PhotoModule implements IPhotoModule {
         File photo = findPhoto();
         Response.ResponseBuilder response = Response.ok((Object) photo);
         response.header("Content-Disposition", "attachment;filename=photo.jpg");
+        CorsAdder.addCors(response);
         return response.build();
     }
 
@@ -45,6 +56,8 @@ public class PhotoModule implements IPhotoModule {
     @Override
     public Response getPhotoServices() {
         PhotoChooser photoChooser = new PhotoChooser();
-        return Response.status(Response.Status.OK).entity(photoChooser.getServices()).build();
+        return CorsAdder.addCors(
+                Response.status(Response.Status.OK).entity(photoChooser.getServices()))
+                .build();
     }
 }

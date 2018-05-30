@@ -1,5 +1,7 @@
 package ConnectYourParty;
 
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.services.photo.IPhotoService;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -23,21 +25,19 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public String addPhoto(byte[] photo,String path) {
+    public void addPhoto(byte[] photo,String path) throws AddPhotoErrorException {
         try {
             InputStream in = new ByteArrayInputStream(photo);
 
             this.client.files().uploadBuilder(path).uploadAndFinish(in);
 
         } catch (Exception e){
-            e.printStackTrace();
-            return "fail";
+            throw new AddPhotoErrorException("Can't add photo " + path);
         }
-        return "success";
     }
 
     @Override
-    public byte[] getPhotos(String photo) {
+    public byte[] getPhoto(String photo) {
         try {
             InputStream stream = client.files().download(photo).getInputStream();
 
@@ -54,6 +54,16 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
+    public void removePhoto(String path) throws CannotDeletePhotoException {
+        try {
+            this.client.files().deleteV2(path);
+        } catch (Exception e) {
+            throw new CannotDeletePhotoException("Cannot delete photo " + path);
+        }
+    }
+
+
+    @Override
     public String getServiceName() {
         return "dropbox";
     }
@@ -64,15 +74,6 @@ public class DropboxService implements IPhotoService{
             return new URL("https://www.iconfinder.com/icons/173882/download/png/128");
         } catch (Exception e){
             return null;
-        }
-    }
-
-    public boolean remove(String path) {
-        try {
-            this.client.files().deleteV2(path);
-            return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 }

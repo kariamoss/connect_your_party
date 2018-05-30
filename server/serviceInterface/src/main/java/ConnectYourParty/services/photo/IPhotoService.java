@@ -1,9 +1,14 @@
 package ConnectYourParty.services.photo;
 
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
+import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.services.IService;
 
 public interface IPhotoService extends IService {
-    String addPhoto(byte[] photo, String name);
+    void addPhoto(byte[] photo, String path) throws AddPhotoErrorException;
 
-    byte[] getPhotos(String photo);
+    byte[] getPhoto(String path) throws RetrievePhotoErrorException;
+
+    void removePhoto(String path) throws CannotDeletePhotoException;
 }
