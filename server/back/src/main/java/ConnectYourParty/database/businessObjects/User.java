@@ -1,4 +1,4 @@
-package ConnectYourParty.businessObjects;
+package ConnectYourParty.database.businessObjects;
 
 public class User {
     private String name;

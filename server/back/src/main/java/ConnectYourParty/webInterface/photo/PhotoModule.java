@@ -1,6 +1,6 @@
 package ConnectYourParty.webInterface.photo;
 
-import ConnectYourParty.chooser.PhotoChooser;
+import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;

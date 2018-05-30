@@ -1,4 +1,4 @@
-package ConnectYourParty.businessObjects;
+package ConnectYourParty.database.businessObjects;
 
 import java.util.ArrayList;
 import java.util.List;

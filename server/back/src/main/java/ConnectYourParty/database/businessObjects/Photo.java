@@ -1,4 +1,4 @@
-package ConnectYourParty.businessObjects;
+package ConnectYourParty.database.businessObjects;
 
 public class Photo {
     private String photoPath;
