@@ -3,11 +3,16 @@ package ConnectYourParty;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
+import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
 
 public class DbTest{
+    @Before
+    public void init(){
+        DbMock.clean();
+    }
 
     @Test(expected = PhotoAlreadyExistException.class)
     public void doublePhoto() throws PhotoAlreadyExistException{

@@ -29,4 +29,8 @@ public class DbMock {
         }
         event.addPhoto(photo);
     }
+
+    public static void clean(){
+        event = new Event(0, "La grande soirée costumée", 65, "12, route de Virey 70700 Charcenne");
+    }
 }
