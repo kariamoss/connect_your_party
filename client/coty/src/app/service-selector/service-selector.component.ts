@@ -3,6 +3,7 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {MatDialogRef} from "@angular/material";
 import {SelectorService} from "../services/selector.service";
 import {isNull, isUndefined} from "util";
+import {Service} from "../../model/service.model";
 
 @Component({
   selector: 'app-service-selector',
@@ -12,7 +13,7 @@ import {isNull, isUndefined} from "util";
 export class ServiceSelectorComponent implements OnInit, OnDestroy {
 
   module: string;
-  services: any[];
+  services: Service[];
   serviceSubscription: Subscription;
   @Input()
   selectedService;
@@ -21,9 +22,8 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
               public dialogRef: MatDialogRef<ServiceSelectorComponent>,) { }
 
   ngOnInit() {
-    this.selectorService.updateServicesList(this.module);
     this.serviceSubscription = this.selectorService.servicesSubject.subscribe(
-      (services: any[]) => {
+      (services: Service[]) => {
         this.services = services;
       }
     );
