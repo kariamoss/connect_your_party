@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SelectorService} from "../services/selector.service";
-import {AddPhotoService} from "../services/addPhoto.service";
+import {SelectorService} from "../../services/selector.service";
 import {NgForm} from '@angular/forms';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
@@ -16,7 +15,6 @@ export class AddPhotoComponent implements OnInit {
   formData: FormData;
 
   constructor(private selectorService: SelectorService,
-              private addPhotoService: AddPhotoService,
               private httpClient: HttpClient) {
   }
 

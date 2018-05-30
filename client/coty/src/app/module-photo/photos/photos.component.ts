@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {ParametersService} from "../services/parameters.service";
-import {ServiceSelectorComponent} from "../service-selector/service-selector.component";
+import {ParametersService} from "../../services/parameters.service";
+import {ServiceSelectorComponent} from "../../service-selector/service-selector.component";
 import {MatDialog} from "@angular/material";
-import {SelectorService} from "../services/selector.service";
+import {SelectorService} from "../../services/selector.service";
 import {AddPhotoComponent} from "../add-photo/add-photo.component";
 
 @Component({

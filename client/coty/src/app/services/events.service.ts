@@ -1,6 +1,9 @@
-
 import {Subject} from "rxjs/index";
 import {EventModel} from "../../model/event.model";
+
+/**
+ * Service managing the different events online (mocked)
+ */
 export class EventService{
 
   private colors: string[] = ["#fb607f", "#7cb9e8", "#c8e2f2", "#6cfbe2"];

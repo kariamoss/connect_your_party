@@ -4,6 +4,10 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../model/service.model";
 import {isUndefined} from "util";
 
+/**
+ * Service managing services selections for each module.
+ * services: Array<Module> contains Module interface object containing the selectedService
+ */
 @Injectable()
 export class SelectorService {
 
@@ -12,9 +16,7 @@ export class SelectorService {
 
   servicesSubject = new Subject<Service[]>();
 
-  private services: Array<Module> = [
-
-  ];
+  private services: Array<Module> = [];
 
   changeSelectedService(module: string, newService): void {
     const selection = this.getModule(module);
@@ -26,6 +28,12 @@ export class SelectorService {
     return selection.selectedService;
   }
 
+  /**
+   * Get the services from the specified module.
+   * Merge the data received and the data stored on the front end. Services no longer available are removed
+   * and new services are added.
+   * @param {string} module
+   */
   updateServicesList(module: string) {
     const headers = new HttpHeaders();
     headers.append("Content-Type", 'application/json');
@@ -55,7 +63,13 @@ export class SelectorService {
 
   }
 
-  getModule(module: string) {
+  /**
+   * Look for a module stored on the front side. If the module doesn't exist we add a new Module to services.
+   * (we supposed that module requested should exist on the backend)
+   * @param {string} module
+   * @returns {Module}
+   */
+  getModule(module: string): Module {
     const tmp = this.services.find(
       (serviceObject) => {
         return serviceObject.module === module;
