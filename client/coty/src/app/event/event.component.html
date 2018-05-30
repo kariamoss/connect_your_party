@@ -5,9 +5,12 @@
   </button>
 </a>
 
+
 <mat-toolbar color="primary">
 
   <a>{{this.getEventName()}}</a>
+
+  <!--  Replaced by module-list-component
   <a routerLink="details">
     <button mat-raised-button><mat-icon>description</mat-icon>Description</button>
   </a>
@@ -18,8 +21,17 @@
     <button mat-raised-button><mat-icon>shopping_cart</mat-icon>Liste de courses</button>
   </a>
 
+  -->
+
 </mat-toolbar>
 
-<div>
+<div class="container">
+<div class="left">
   <router-outlet></router-outlet>
+</div>
+
+  <div class="right">
+    <app-module-list></app-module-list>
+  </div>
+
 </div>
