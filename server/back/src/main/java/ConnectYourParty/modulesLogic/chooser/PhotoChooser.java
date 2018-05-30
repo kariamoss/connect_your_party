@@ -11,6 +11,7 @@ import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.modulesLogic.IPhoto;
+import ConnectYourParty.requestObjects.photo.PhotoHolder;
 import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
 import ConnectYourParty.services.photo.IPhotoService;
 import ConnectYourParty.webInterface.photo.PhotoModule;
@@ -56,8 +57,12 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
     }
 
     @Override
-    public List<Photo> getPhotoList() {
-        return DbMock.getPhotosFromEvent();
+    public List<PhotoHolder> getPhotoList() {
+        List<PhotoHolder> listPhotoHolder = new ArrayList<>();
+        for (Photo photo: DbMock.getPhotosFromEvent()) {
+            listPhotoHolder.add(new PhotoHolder(photo));
+        }
+        return listPhotoHolder;
     }
 
     @Override

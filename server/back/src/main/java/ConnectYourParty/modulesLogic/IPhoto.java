@@ -7,8 +7,8 @@ import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
+import ConnectYourParty.requestObjects.photo.PhotoHolder;
 
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -18,5 +18,5 @@ public interface IPhoto {
     byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException;
     void removePhoto(String path) throws CannotDeletePhotoException;
 
-    List<Photo> getPhotoList();
+    List<PhotoHolder> getPhotoList();
 }

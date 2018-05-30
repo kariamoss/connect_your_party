@@ -13,8 +13,8 @@ import {
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
-import { PhotosComponent } from './photos/photos.component';
-import { EventCardComponent } from './event-card/event-card.component';
+import { PhotosComponent } from './module-photo/photos/photos.component';
+import { EventCardComponent } from './event-view/event-card/event-card.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { ServiceSelectorComponent } from './service-selector/service-selector.component';
 import {EventService} from "./services/events.service";
@@ -23,9 +23,10 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import {ShoppingListService} from "./services/shopping-list.service";
-import { ModuleListComponent } from './module-list/module-list.component';
-import { PhotosListComponent } from './photos-list/photos-list.component';
-import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
+import { ModuleListComponent } from './event/module-list/module-list.component';
+import { PhotosListComponent } from './module-photo/photos-list/photos-list.component';
+import { AddPhotoComponent } from './module-photo/add-photo/add-photo.component';
+import { PhotoDialogComponent } from './module-photo/photo-dialog/photo-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,12 +41,13 @@ import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
     ShoppingListComponent,
     ModuleListComponent,
     PhotosListComponent,
+    AddPhotoComponent,
     PhotoDialogComponent,
   ],
   imports: [
-    HttpClientModule,
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatButtonModule,
@@ -61,8 +63,12 @@ import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
     MatDialogModule,
     MatGridListModule
   ],
-  providers: [EventService, SelectorService, ShoppingListService],
+  providers: [
+    EventService,
+    SelectorService,
+    ShoppingListService,
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [ServiceSelectorComponent,PhotoDialogComponent]
+  entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent]
 })
 export class AppModule { }
