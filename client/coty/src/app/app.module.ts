@@ -25,7 +25,6 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import {ShoppingListService} from "./services/shopping-list.service";
 import { ModuleListComponent } from './module-list/module-list.component';
 import { PhotosListComponent } from './photos-list/photos-list.component';
-import {HttpClientModule} from "@angular/common/http";
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 
 @NgModule({
@@ -47,7 +46,6 @@ import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
     HttpClientModule,
     BrowserModule,
     FormsModule,
-    HttpClientModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatButtonModule,
