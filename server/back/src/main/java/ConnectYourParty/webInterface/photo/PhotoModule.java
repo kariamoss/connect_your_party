@@ -31,13 +31,13 @@ public class PhotoModule implements IPhotoModule {
 
 
             PhotoChooser chooser = new PhotoChooser();
-            chooser.addPhoto(input, name);
+            chooser.addPhoto(input,"/"+ name);
             return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
             logger.log(Level.SEVERE, e.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         } catch (Exception e){
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }
 
