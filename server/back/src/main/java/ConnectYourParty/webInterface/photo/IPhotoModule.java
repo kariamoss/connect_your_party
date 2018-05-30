@@ -39,6 +39,19 @@ public interface IPhotoModule {
     @Path("getPhotos")
     Response getPhotos();
 
+    /**
+     * Return the services as a json object containing
+     * the information about all the services from the photo module
+     * example :
+     *[{
+     *   "name": "dropbox",
+     *   "icon": "www.iconfinder.com/icons/173882"
+     * }, {
+     *   "name": "Album photo de Connect Your Party",
+     *   "icon": "icon.png"
+     * }]
+     * @return JsonObject containing information about the photo services
+     */
     @GET()
     @Path("getPhotoServices")
     @Produces(MediaType.APPLICATION_JSON)
