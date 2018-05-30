@@ -18,7 +18,7 @@ public class PhotoInterpreter implements IPhoto {
     }
 
     @Override
-    public void addPhoto(InputStream stream, String path) throws IOException, AddPhotoErrorException {
+    public void addPhoto(InputStream stream, String path,String serviceName) throws IOException, AddPhotoErrorException {
         photoChooser.addPhoto(stream, path);
     }
 

@@ -28,9 +28,11 @@ public class PhotoModule implements IPhotoModule {
 
             String name = body.getAttachmentObject("name",String.class);
             InputStream input = body.getAttachment("file").getDataHandler().getInputStream();
+            String service = body.getAttachmentObject("service",String.class);
 
             PhotoInterpreter interpreter = new PhotoInterpreter();
-            interpreter.addPhoto(input, name);
+            interpreter.addPhoto(input, name,service);
+
             return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
             logger.log(Level.SEVERE, e.getMessage());
