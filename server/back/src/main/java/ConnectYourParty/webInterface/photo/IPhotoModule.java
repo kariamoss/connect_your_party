@@ -1,6 +1,9 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.requestObjects.photo.UploadRequest;
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -33,7 +36,7 @@ public interface IPhotoModule {
     @Path("addPhoto")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    Response addPhoto(InputStream input, String name);
+    Response addPhoto(MultipartBody body);
 
     @GET()
     @Path("getPhotos")
