@@ -1,6 +1,9 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.requestObjects.photo.UploadRequest;
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -33,12 +36,25 @@ public interface IPhotoModule {
     @Path("addPhoto")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    Response addPhoto(InputStream input, String name);
+    Response addPhoto(MultipartBody body);
 
     @GET()
     @Path("getPhotos")
     Response getPhotos();
 
+    /**
+     * Return the services as a json object containing
+     * the information about all the services from the photo module
+     * example :
+     *[{
+     *   "name": "dropbox",
+     *   "icon": "www.iconfinder.com/icons/173882"
+     * }, {
+     *   "name": "Album photo de Connect Your Party",
+     *   "icon": "icon.png"
+     * }]
+     * @return JsonObject containing information about the photo services
+     */
     @GET()
     @Path("getPhotoServices")
     @Produces(MediaType.APPLICATION_JSON)

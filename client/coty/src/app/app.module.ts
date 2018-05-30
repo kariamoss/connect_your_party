@@ -9,7 +9,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   MatButtonModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatIconModule,
   MatCheckboxModule, MatFormFieldModule, MatInputModule,
-  MatSnackBarModule, MatChipsModule, MatRadioModule, MatDialogModule,
+  MatSnackBarModule, MatChipsModule, MatRadioModule, MatDialogModule, MatGridListModule,
 } from "@angular/material";
 import { EventComponent } from './event/event.component';
 import { EventViewComponent } from './event-view/event-view.component';
@@ -19,7 +19,7 @@ import { EventDetailsComponent } from './event-details/event-details.component';
 import { ServiceSelectorComponent } from './service-selector/service-selector.component';
 import {EventService} from "./services/events.service";
 import {SelectorService} from "./services/selector.service";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import {ShoppingListService} from "./services/shopping-list.service";
@@ -27,6 +27,7 @@ import { ModuleListComponent } from './module-list/module-list.component';
 import { PhotosListComponent } from './photos-list/photos-list.component';
 import { AddPhotoComponent } from './add-photo/add-photo.component';
 import {AddPhotoService} from "./services/addPhoto.service";
+import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,11 +43,11 @@ import {AddPhotoService} from "./services/addPhoto.service";
     ModuleListComponent,
     PhotosListComponent,
     AddPhotoComponent,
+    PhotoDialogComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
@@ -60,7 +61,8 @@ import {AddPhotoService} from "./services/addPhoto.service";
     MatSnackBarModule,
     MatRadioModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
   ],
   providers: [
     EventService,
@@ -69,6 +71,6 @@ import {AddPhotoService} from "./services/addPhoto.service";
     AddPhotoService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ServiceSelectorComponent, AddPhotoComponent]
+  entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent]
 })
 export class AppModule { }

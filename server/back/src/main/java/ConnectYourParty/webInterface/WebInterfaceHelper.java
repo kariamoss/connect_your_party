@@ -1,7 +1,5 @@
 package ConnectYourParty.webInterface;
 
-import ConnectYourParty.chooser.PhotoChooser;
-
 import javax.ws.rs.core.Response;
 import java.util.Optional;
 

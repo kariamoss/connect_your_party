@@ -1,9 +1,11 @@
 package ConnectYourParty.webInterface.photo;
 
-import ConnectYourParty.chooser.PhotoChooser;
+import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import ConnectYourParty.webInterface.CorsAdder;
 
 import javax.ws.rs.FormParam;
@@ -20,11 +22,14 @@ public class PhotoModule implements IPhotoModule {
 
 
     @Override
-    public Response addPhoto(
-            @Multipart(value = "file") InputStream input,
-            @Multipart(value = "name") String name
-    ) {
+    public Response addPhoto(MultipartBody body) {
         try {
+
+            String name = body.getAttachmentObject("name",String.class);
+            InputStream input = body.getAttachment("file").getDataHandler().getInputStream();
+
+
+
             PhotoChooser chooser = new PhotoChooser();
             chooser.addPhoto(input, name);
             return CorsAdder.addCors(Response.ok()).build();

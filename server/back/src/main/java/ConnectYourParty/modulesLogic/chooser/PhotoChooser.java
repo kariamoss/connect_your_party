@@ -1,10 +1,12 @@
-package ConnectYourParty.chooser;
+package ConnectYourParty.modulesLogic.chooser;
 
 import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.DropboxService;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
+import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
+import ConnectYourParty.modulesLogic.IPhoto;
 import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
-import ConnectYourParty.requestObjects.photo.UploadRequest;
 import ConnectYourParty.services.photo.IPhotoService;
 import ConnectYourParty.webInterface.photo.PhotoModule;
 
@@ -12,10 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder> {
+public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, IPhoto {
 
     Logger logger = Logger.getLogger(PhotoModule.class.getName());
 
@@ -27,6 +28,22 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder> {
         servicePhotoList.add(new CotyPhotoService());
     }
 
+    public void addPhoto(InputStream stream, String path) throws IOException, AddPhotoErrorException {
+        byte[] buff = new byte[stream.available()];
+        stream.read(buff);
+        servicePhotoList.get(0).addPhoto(buff, path);
+    }
+
+    @Override
+    public void getPhotos(String path) throws RetrievePhotoErrorException {
+
+    }
+
+    @Override
+    public void removePhoto(String path) throws CannotDeletePhotoException {
+
+    }
+
     @Override
     public List<PhotoServiceHolder> getServices() {
         List<PhotoServiceHolder> arr = new ArrayList<>();
@@ -36,11 +53,5 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder> {
         }
 
         return arr;
-    }
-
-    public void addPhoto(InputStream stream, String name) throws IOException, AddPhotoErrorException {
-        byte[] buff = new byte[stream.available()];
-        stream.read(buff);
-        servicePhotoList.get(0).addPhoto(buff, name);
     }
 }

@@ -32,9 +32,6 @@ export class PhotosComponent implements OnInit {
     });
     dialogRef.componentInstance.module = this.module;
 
-    dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
-    });
   }
 
   openAddDialog(): void {
