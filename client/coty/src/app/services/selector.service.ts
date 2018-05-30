@@ -41,14 +41,22 @@ export class SelectorService {
   }
 
   private merge(data: Array<Service>, module: string) {
+    let serviceList = this.getModule(module).moduleServices;
+    for (let i = serviceList.length - 1; i >= 0; i--) {
+      if (data.map(x => x.name).indexOf(serviceList[i].name) === -1) {
+        if (this.getModule(module).selectedService === serviceList[i])
+          this.getModule(module).selectedService = {name: 'Aucun service sélectionné'};
+        serviceList.splice(i, 1);
+      }
+    }
     while (data.length > 0) {
       const elt = data.pop();
-      const index = this.getModule(module).moduleServices.map(x=>x.name).indexOf(elt.name);
+      const index = serviceList.map(x => x.name).indexOf(elt.name);
       if (index === -1) {
-        this.getModule(module).moduleServices.push(elt);
+        serviceList.push(elt);
       }
-      // ToDo : remove entries that are not anymore in data
     }
+
   }
 
   getModule(module: string) {
