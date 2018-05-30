@@ -2,6 +2,7 @@ package ConnectYourParty;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.*;
 
@@ -50,6 +51,11 @@ public class ServiceTest {
 
         assertEquals(service.addPhoto(buff,this.destPath),"success");
 
+    }
+
+    @Test
+    public void UrlTest(){
+        assertNotNull(service.getServiceIcon());
     }
 
 
