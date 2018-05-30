@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class PhotoHolderTest
+public class UploadRequestTest
 {
     @Test
     public void checkTest()
