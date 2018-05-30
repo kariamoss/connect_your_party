@@ -38,11 +38,9 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder> {
         return arr;
     }
 
-    public void addPhoto(UploadRequest req){
+    public void addPhoto(InputStream stream, String name) throws IOException, AddPhotoErrorException {
         byte[] buff = new byte[stream.available()];
         stream.read(buff);
-        try {
-            servicePhotoList.get(0).addPhoto(buff, name);
-        }catch (AddPhotoErrorException e) {
-                logger.log(Level.SEVERE, e.getMessage()); } }
+        servicePhotoList.get(0).addPhoto(buff, name);
+    }
 }

@@ -1,6 +1,7 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.chooser.PhotoChooser;
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
@@ -9,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import java.io.*;
 import java.net.URL;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PhotoModule implements IPhotoModule {
@@ -25,10 +27,12 @@ public class PhotoModule implements IPhotoModule {
             PhotoChooser chooser = new PhotoChooser();
             chooser.addPhoto(input, name);
             return Response.ok().build();
+        } catch (AddPhotoErrorException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         } catch (Exception e){
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
-
     }
 
     @Override
