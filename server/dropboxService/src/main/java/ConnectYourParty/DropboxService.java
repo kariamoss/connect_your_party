@@ -59,7 +59,11 @@ public class DropboxService implements IPhotoService{
 
     @Override
     public URL getServiceIcon() {
-        return null;
+        try {
+            return new URL("https://www.iconfinder.com/icons/173882/download/png/128");
+        } catch (Exception e){
+            return null;
+        }
     }
 
     public boolean remove(String path) {

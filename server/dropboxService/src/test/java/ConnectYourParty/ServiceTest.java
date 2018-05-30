@@ -2,6 +2,7 @@ package ConnectYourParty;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import org.junit.*;
@@ -51,6 +52,11 @@ public class ServiceTest {
 
         service.addPhoto(buff,this.destPath); // No exception
 
+    }
+
+    @Test
+    public void UrlTest(){
+        assertNotNull(service.getServiceIcon());
     }
 
 
