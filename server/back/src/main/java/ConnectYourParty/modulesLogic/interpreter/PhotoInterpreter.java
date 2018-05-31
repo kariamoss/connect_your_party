@@ -28,7 +28,7 @@ public class PhotoInterpreter implements IPhoto {
 
     @Override
     public void addPhoto(InputStream stream, String name,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
-        String path = DbMock.event.getTitle() + "/"
+        String path = DbMock.event.getId() + "/"
                 + UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
         Photo photo = new Photo(path, name, DbMock.user,serviceName);

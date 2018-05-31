@@ -57,7 +57,7 @@ public interface IPhotoModule {
     @GET()
     @Path("getPhoto/{event}/{name}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    Response getPhoto(String event, String name);
+    Response getPhoto(@PathParam("event") String event, @PathParam("name") String name);
 
     /**
      * Return the services as a json array containing
