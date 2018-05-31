@@ -16,7 +16,7 @@ public interface IPhotoModule {
 
 
     /**
-     * take a multipart form data as input with multiple entries
+     * Take a multipart form data as input with multiple entries
      * name : name of the photo
      * service : name of the service, value must be equal to one return by getPhotoService
      * e.g "dropbox"
@@ -27,20 +27,41 @@ public interface IPhotoModule {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     Response addPhoto(MultipartBody body);
 
+    /**
+     * Return a list of the photo uploaded in our system
+     * as a json array.
+     * Example:
+     *[{
+     *   "photoPath": "/event1/photo1.jpg",
+     *   "name": "/Flower-icon3.jpg",
+     *   "user": "Jehan Milleret"
+     * }, {
+     *   "photoPath": "/event1/photo2.jpeg",
+     *   "name": "/myparty20156jpeg",
+     *   "user": "Jehan Milleret"
+     * }]
+     * @return JsonArray containing information about the photo saved
+     */
     @GET()
     @Path("getPhotoList")
     @Produces(MediaType.APPLICATION_JSON)
     Response getPhotoList();
 
+    /**
+     * Take a path as input that will retrieve a photo in our system
+     * Every path can be asked by using the method {@link IPhotoModule#getPhotoList()}
+     * @param path the path were the photo is stored
+     * @return byte[] containing the image requested
+     */
     @GET()
     @Path("getPhoto/{path}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     Response getPhoto(String path);
 
     /**
-     * Return the services as a json object containing
+     * Return the services as a json array containing
      * the information about all the services from the photo module
-     * example :
+     * Example:
      *[{
      *   "name": "dropbox",
      *   "icon": "www.iconfinder.com/icons/173882"
@@ -48,7 +69,7 @@ public interface IPhotoModule {
      *   "name": "Album photo de Connect Your Party",
      *   "icon": "icon.png"
      * }]
-     * @return JsonObject containing information about the photo services
+     * @return JsonArray containing information about the photo services
      */
     @GET()
     @Path("getPhotoServices")
