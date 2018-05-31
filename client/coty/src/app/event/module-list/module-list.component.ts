@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModuleListComponent implements OnInit {
 
+  selected;
+
   constructor() { }
 
   ngOnInit() {
+    this.selected = 'infos';
   }
+
+  setActive(toto){
+    this.selected = toto;
+    console.log('active class : '+toto);
+  }
+
+
 
 }

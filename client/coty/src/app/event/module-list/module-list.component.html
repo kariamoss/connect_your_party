@@ -1,23 +1,23 @@
 <mat-radio-group>
-  <button mat-button class="hvr-grow" routerLink="details" value="info">
+  <button #btn1 [ngClass]="{'activeStyle' : selected == 'btn1.value'}" (click)="setActive('btn1.value')"  mat-button class="hvr-grow" routerLink="details" value="info">
     <div class="content">
       <mat-icon>description</mat-icon>
       Infos
     </div>
   </button>
-  <button mat-button class="hvr-grow" routerLink="photos" value="photo">
+  <button #btn2 [ngClass]="{'activeStyle' : selected == 'btn2.value'}" (click)="setActive('btn2.value')" mat-button class="hvr-grow" routerLink="photos" value="photo">
     <div class="content">
       <mat-icon>photo_camera</mat-icon>
       Photos
     </div>
   </button>
-  <button mat-button class="hvr-grow" routerLink="shopping" value="shopping">
+  <button #btn3 [ngClass]="{'activeStyle' : selected == 'btn3.value'}" (click)="setActive('btn3.value')" mat-button class="hvr-grow" routerLink="shopping" value="shopping">
     <div class="content">
       <mat-icon>shopping_cart</mat-icon>
       Shopping
     </div>
   </button>
-  <button mat-button class="hvr-grow" routerLink="music" value="music">
+  <button #btn4 [ngClass]="{'activeStyle' : selected == 'btn4.value'}" (click)="setActive('btn4.value')" mat-button class="hvr-grow" routerLink="music" value="music">
     <div class="content">
       <mat-icon>library_music</mat-icon>
       Musique
