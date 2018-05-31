@@ -33,7 +33,7 @@
     <versions.shrinkwrap>2.2.6</versions.shrinkwrap>
 
     <artifactory>http://207.154.199.162:8081/artifactory/</artifactory>
-    <artifactory.repo>libs-snapshot-local</artifactory.repo>
+    <artifactory.repo>Connect</artifactory.repo>
     <artifactory.premiumrepo>premium</artifactory.premiumrepo>
   </properties>
 
