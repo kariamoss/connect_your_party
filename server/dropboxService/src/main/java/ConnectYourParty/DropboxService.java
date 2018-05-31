@@ -70,7 +70,7 @@ public class DropboxService implements IPhotoService{
     @Override
     public URL getServiceIcon() {
         try {
-            return new URL("https://www.iconfinder.com/icons/173882/download/png/128");
+            return new URL("http://www.iconsplace.com/download/blue-dropbox-512.ico");
         } catch (Exception e){
             return null;
         }
