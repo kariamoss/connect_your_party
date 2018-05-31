@@ -5,6 +5,7 @@ import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import gherkin.lexer.De;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DbTest{
     @Before
+    @After
     public void init(){
         DbMock.clean();
     }

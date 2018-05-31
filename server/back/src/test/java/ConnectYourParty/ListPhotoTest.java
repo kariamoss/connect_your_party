@@ -6,6 +6,7 @@ import ConnectYourParty.database.businessObjects.User;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ListPhotoTest {
 
     @Before
+    @After
     public void init(){
         DbMock.clean();
     }
