@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class CotyPhotoServiceTest
 {
     private static CotyPhotoService service;
-    private String destPath = "/test/imageTests.jpg";
+    private String destPath = "/test/test/imageTests.jpg";
 
     @BeforeClass
     public static void init(){

@@ -33,9 +33,13 @@ public class PhotoInterpreter implements IPhoto {
 
         Photo photo = new Photo(path, name, DbMock.user,serviceName);
 
+        try {
+            DbMock.addPhoto(DbMock.event, photo);
+            photoChooser.addPhoto(stream, path, serviceName);
+        } catch (Exception e){
+            DbMock.removePhotoFromEvent(DbMock.event,photo);
+        }
 
-        DbMock.addPhoto(DbMock.event, photo);
-        photoChooser.addPhoto(stream, path, serviceName);
     }
 
     @Override

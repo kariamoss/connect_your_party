@@ -37,13 +37,13 @@ public class PhotoModuleTest {
 
     @Test
     public void addAndGetTest() throws Exception{
-        String imagePath = "test/test/test.jpg";
+        String imagePath = "test/test.jpg";
 
         CotyPhotoService coty = new CotyPhotoService();
         URL path = this.getClass().getClassLoader().getResource("image.jpg");
 
         DataHandler nameHandler = new DataHandler(imagePath,"text/plain");
-        DataHandler serviceHandler = new DataHandler("Dropbox","text/plain");
+        DataHandler serviceHandler = new DataHandler(coty.getServiceName(),"text/plain");
 
         MultivaluedHashMap header = new MultivaluedHashMap<String,String>();
 

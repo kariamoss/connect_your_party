@@ -22,9 +22,9 @@ public class Photos {
     public static void addPicture(byte[] photo, String path) throws AddPhotoErrorException {
 
         File file = new File(System.getProperty("user.dir") + path);
-        file.getParentFile().mkdir();
 
         try {
+            Files.createDirectories(file.getParentFile().toPath());
             file.createNewFile();
             File dir = new File(file.getParentFile(), file.getName());
             FileOutputStream writer = new FileOutputStream(dir);
