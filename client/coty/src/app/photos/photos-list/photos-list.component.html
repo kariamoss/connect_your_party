@@ -5,6 +5,6 @@
     </button>
   </mat-grid-tile>
   <mat-grid-tile *ngFor="let photo of photos; let i = index">
-    <img [src]="'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhoto' + photo.photoPath" (click)="showPhoto(tof.src)" #tof [id]="i"/>
+    <img [src]="'http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhoto/' + photo.photoPath" (click)="showPhoto(tof.src)" #tof [id]="i"/>
   </mat-grid-tile>
 </mat-grid-list>

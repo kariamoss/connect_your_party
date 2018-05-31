@@ -10,7 +10,6 @@ import {PhotoService} from "../../services/photo.service";
   selector: 'app-add-photo',
   templateUrl: './add-photo.component.html',
   styleUrls: ['./add-photo.component.css'],
-  providers: [PhotoService]
 })
 export class AddPhotoComponent implements OnInit {
 
@@ -34,12 +33,13 @@ export class AddPhotoComponent implements OnInit {
       return;
     }
     this.formData.append('service', this.selectorService.getSelectedService(this.module).name);
+    this.formData.append('eventId', "1");
     this.uploading = true;
     this.httpClient.post('http://localhost:8080/back-1.0-SNAPSHOT/photo/addPhoto', this.formData, {headers: this.headers})
       .subscribe(
       data => {
         this.dialogRef.close();
-        this.photoService.getPhotos();
+        this.photoService.getPhotos(1);
       },
       error => console.log(error),
       () => this.uploading = false,

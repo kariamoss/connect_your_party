@@ -26,8 +26,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
         this.photos = photos;
       }
     );
-    this.photoService.emitPhotoSubject();
-    this.photoService.getPhotos();
+    this.photoService.getPhotos(1);
   }
 
   showPhoto(src: string){

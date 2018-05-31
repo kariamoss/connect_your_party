@@ -11,7 +11,6 @@ import {PhotoService} from "../services/photo.service";
   selector: 'app-photos',
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.css'],
-  providers: [PhotoService],
 })
 export class PhotosComponent implements OnInit {
 
