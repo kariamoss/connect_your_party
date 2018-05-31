@@ -34,7 +34,7 @@ public class DropboxTest {
 
     @Test
     public void addAndGetTest() throws Exception{
-        URL path = this.getClass().getClassLoader().getResource("image.jpg");
+        URL path = this.getClass().getClassLoader().getResource("grosseImage.jpg");
         InputStream in = new FileInputStream(path.getPath());
         byte[] buff = new byte[in.available()];
         in.read(buff);
