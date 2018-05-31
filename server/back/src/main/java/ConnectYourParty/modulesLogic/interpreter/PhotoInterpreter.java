@@ -11,10 +11,12 @@ import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.modulesLogic.IPhoto;
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
+import org.apache.myfaces.util.FilenameUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 public class PhotoInterpreter implements IPhoto {
 
@@ -25,10 +27,15 @@ public class PhotoInterpreter implements IPhoto {
     }
 
     @Override
-    public void addPhoto(InputStream stream, String path,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
-        Photo photo = new Photo(path,path, DbMock.user,serviceName);
+    public void addPhoto(InputStream stream, String name,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
+        String path = "ConnectYourParty/" + DbMock.event.getTitle() + "/"
+                + UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
-        DbMock.addPhoto(photo);
+        Photo photo = new Photo(name, path, DbMock.user,serviceName);
+
+
+        DbMock.addPhoto(DbMock.event, photo);
+
 
         photoChooser.addPhoto(stream, path, serviceName);
     }

@@ -1,4 +1,4 @@
-<p>{{this.module | uppercase}} SERVICES</p>
+<p>{{(this.module ? this.module : 'MODULE NOT FOUND') | uppercase}} SERVICES</p>
 
 <mat-radio-group [(ngModel)]="selectedService">
   <mat-radio-button *ngFor="let service of services; let i = index" [value]="service" (change)="onChanges(service)">

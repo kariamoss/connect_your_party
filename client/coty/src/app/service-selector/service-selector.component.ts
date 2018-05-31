@@ -19,8 +19,7 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
   @Input()
   selectedService;
 
-  constructor(private selectorService: SelectorService,
-              public dialogRef: MatDialogRef<ServiceSelectorComponent>,) { }
+  constructor(private selectorService: SelectorService,) { }
 
   ngOnInit() {
     this.serviceSubscription = this.selectorService.servicesSubject.subscribe(
@@ -34,10 +33,6 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
 
   onChanges(newService): void {
     this.selectorService.changeSelectedService(this.module, newService);
-  }
-
-  closeDialog(): void {
-    this.dialogRef.close('Pizza!');
   }
 
   ngOnDestroy(): void {

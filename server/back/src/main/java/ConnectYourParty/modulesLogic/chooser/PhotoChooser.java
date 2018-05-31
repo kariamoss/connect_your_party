@@ -37,6 +37,7 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
     public void addPhoto(InputStream stream, String path, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         byte[] buff = new byte[stream.available()];
         stream.read(buff);
+
         for(IPhotoService serv : servicePhotoList){
             if(serv.getServiceName().equals(serviceName)){
                 serv.addPhoto(buff, "/" +  path);
