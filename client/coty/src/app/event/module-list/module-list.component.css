@@ -9,9 +9,7 @@ button{
   color:#000;
 }
 
-
 button:focus{
-  border: none;
   outline: 0;
 }
 
@@ -26,3 +24,6 @@ mat-icon{
 
 }
 
+.activeStyle{
+  border: 2px #3F51B5 solid;
+}
