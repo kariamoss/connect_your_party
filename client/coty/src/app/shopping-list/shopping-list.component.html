@@ -1,9 +1,11 @@
+<h2>Liste de courses collaborative</h2>
+
 <ul>
   <li id="form">
-    <mat-icon (click)="addElem(inputForm.value)">add_box</mat-icon>
-    <mat-form-field>
-      <input matInput #inputForm (keyup.enter)="addElem(inputForm.value)" placeholder="Ajouter un élément">
-    </mat-form-field>
+    <mat-icon (click)="addElem(inputForm.value)" id="addicon">add_box</mat-icon>
+
+    <input #inputForm (keyup.enter)="addElem(inputForm.value)" placeholder="Ajouter un élément">
+
   </li>
   <li *ngFor="let item of list; let i = index" #elem [id]="list[i]">
       <mat-icon (click)="removeElem(elem.id)" class="trash">delete_outline</mat-icon>
