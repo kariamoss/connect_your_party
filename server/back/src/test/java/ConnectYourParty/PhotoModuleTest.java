@@ -67,7 +67,10 @@ public class PhotoModuleTest {
         List<PhotoHolder> holder = (List<PhotoHolder>) response.getEntity();
         assertEquals(holder.size(),1);
 
-        Response responseGet = this.module.getPhoto(holder.get(0).photoPath);
+        String event = holder.get(0).photoPath.split("/")[0];
+        String namePhoto = holder.get(0).photoPath.split("/")[1];
+
+        Response responseGet = this.module.getPhoto(event, namePhoto);
 
         assertEquals(responseGet.getStatus(),200);
 

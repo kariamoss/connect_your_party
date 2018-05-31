@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, IPhoto {
@@ -40,6 +41,7 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
 
         for(IPhotoService serv : servicePhotoList){
             if(serv.getServiceName().equals(serviceName)){
+                logger.log(Level.INFO, "Request " + serviceName + " to add photo " + path);
                 serv.addPhoto(buff, "/" +  path);
             }
         }
@@ -50,6 +52,8 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
         String serviceName = DbMock.getServiceFromPath(path);
         for(IPhotoService service : servicePhotoList ){
             if(service.getServiceName().equals(serviceName)){
+                path = "ConnectYourParty/" + path;
+                logger.log(Level.INFO, "Request " + serviceName + " to retrieve photo " + path);
                 return service.getPhoto("/"+path);
             }
         }
