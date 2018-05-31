@@ -50,6 +50,7 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
         String serviceName = DbMock.getServiceFromPath(path);
         for(IPhotoService service : servicePhotoList ){
             if(service.getServiceName().equals(serviceName)){
+                path = "ConnectYourParty/" + path;
                 return service.getPhoto("/"+path);
             }
         }

@@ -68,11 +68,11 @@ public class PhotoModule implements IPhotoModule {
     }
 
     @Override
-    public Response getPhoto(String path) {
+    public Response getPhoto(String event, String name) {
         PhotoInterpreter photoInterpreter = new PhotoInterpreter();
         byte[] photo;
         try {
-            photo = photoInterpreter.getPhoto( path);
+            photo = photoInterpreter.getPhoto(event + "/" + name);
         } catch (RetrievePhotoErrorException e) {
             e.printStackTrace();
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();

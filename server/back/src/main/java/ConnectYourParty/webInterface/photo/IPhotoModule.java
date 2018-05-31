@@ -50,13 +50,14 @@ public interface IPhotoModule {
     /**
      * Take a path as input that will retrieve a photo in our system
      * Every path can be asked by using the method {@link IPhotoModule#getPhotoList()}
-     * @param path the path were the photo is stored
+     * @param event the event (path) were the photo is stored
+     * @param name the name of the image saved
      * @return byte[] containing the image requested
      */
     @GET()
-    @Path("getPhoto/{path}")
+    @Path("getPhoto/{event}/{name}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    Response getPhoto(String path);
+    Response getPhoto(String event, String name);
 
     /**
      * Return the services as a json array containing

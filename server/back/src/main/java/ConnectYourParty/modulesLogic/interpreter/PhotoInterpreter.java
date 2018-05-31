@@ -28,13 +28,14 @@ public class PhotoInterpreter implements IPhoto {
 
     @Override
     public void addPhoto(InputStream stream, String name,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
-        String path = "ConnectYourParty/" + DbMock.event.getTitle() + "/"
+        String path = DbMock.event.getTitle() + "/"
                 + UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
         Photo photo = new Photo(path, name, DbMock.user,serviceName);
 
         try {
             DbMock.addPhoto(DbMock.event, photo);
+            path = "ConnectYourParty/" + path;
             photoChooser.addPhoto(stream, path, serviceName);
         } catch (Exception e){
             DbMock.removePhotoFromEvent(DbMock.event,photo);
