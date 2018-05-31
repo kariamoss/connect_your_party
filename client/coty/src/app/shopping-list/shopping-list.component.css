@@ -1,5 +1,6 @@
 ul{
   list-style: none;
+  padding-left: 0;
 }
 
 li{
@@ -13,5 +14,45 @@ mat-icon{
   font-size: 27px;
 }
 
-.form{
+.trash{
+  color:#b1afaf;
+  font-size: 25px;
+}
+
+.trash:hover{
+  color:#777777;
+}
+
+#addicon:hover{
+  color:#575656;
+
+}
+
+#form{
+  padding-left: 31px;
+}
+
+#form mat-icon{
+  padding-right: 10px;
+  display: inline;
+}
+
+input{
+  width:70%;
+  display: inline;
+  padding: 5px;
+  border:none;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+input::placeholder{
+  font-size: 15px;
+}
+input:active {
+  outline: none;
+}
+
+input:focus{
+  outline: none;
 }

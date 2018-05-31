@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DbMock {
     static private List<Event> events = new ArrayList<>();
-    static public Event event = new Event(0, "La grande soirée costumée", 65, "12, route de Virey 70700 Charcenne");
+    static public Event event = new Event(0, "La_grande_soirée_costumée", 65, "12, route de Virey 70700 Charcenne");
     static public User user = new User("Milleret", "Jehan");
 
     public static List<Event> getEvents() {
@@ -30,7 +30,7 @@ public class DbMock {
     }
 
     public static void clean(){
-        event = new Event(0, "La grande soirée costumée", 65, "12, route de Virey 70700 Charcenne");
+        event = new Event(0, "La_grande_soirée_costumée", 65, "12, route de Virey 70700 Charcenne");
     }
 
     public static String getServiceFromPath(String photoPath) throws NoSuchPhotoException{
@@ -40,5 +40,9 @@ public class DbMock {
             }
         }
         throw new NoSuchPhotoException();
+    }
+
+    public static void removePhotoFromEvent(Event event , Photo photo){
+        event.getPhotos().remove(photo);
     }
 }
