@@ -35,7 +35,7 @@ public class PhotoModule implements IPhotoModule {
     public Response addPhoto(MultipartBody body) {
         try {
 
-            String name = "/" + body.getAttachmentObject("name",String.class);
+            String name = body.getAttachmentObject("name",String.class);
             InputStream input = body.getAttachment("file").getDataHandler().getInputStream();
             String service = body.getAttachmentObject("service",String.class);
 
