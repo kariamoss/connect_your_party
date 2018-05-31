@@ -28,6 +28,7 @@ import { PhotosListComponent } from './photos/photos-list/photos-list.component'
 import { AddPhotoComponent } from './photos/add-photo/add-photo.component';
 import { PhotoDialogComponent } from './photos/photo-dialog/photo-dialog.component';
 import { MusicComponent } from './music/music.component';
+import {PhotoService} from "./services/photo.service";
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { MusicComponent } from './music/music.component';
     EventService,
     SelectorService,
     ShoppingListService,
+    PhotoService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent]

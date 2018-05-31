@@ -5,6 +5,7 @@ import {ServiceSelectorComponent} from "../service-selector/service-selector.com
 import {MatDialog} from "@angular/material";
 import {SelectorService} from "../services/selector.service";
 import {AddPhotoComponent} from "./add-photo/add-photo.component";
+import {PhotoService} from "../services/photo.service";
 
 @Component({
   selector: 'app-photos',
@@ -34,11 +35,6 @@ export class PhotosComponent implements OnInit {
 
   }
 
-  openAddDialog(): void {
-    let dialogRef = this.dialog.open(AddPhotoComponent, {
-      width: '600px',
-    });
-    dialogRef.componentInstance.module = this.module;
-  }
+
 
 }
