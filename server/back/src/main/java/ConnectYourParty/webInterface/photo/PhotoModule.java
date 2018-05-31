@@ -8,11 +8,13 @@ import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
+import ConnectYourParty.requestObjects.photo.PhotoAdderBody;
 import ConnectYourParty.requestObjects.photo.UploadRequest;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import ConnectYourParty.webInterface.CorsAdder;
+import org.apache.cxf.message.Message;
 
 import javax.servlet.ServletOutputStream;
 import javax.ws.rs.FormParam;
@@ -35,9 +37,11 @@ public class PhotoModule implements IPhotoModule {
     public Response addPhoto(MultipartBody body) {
         try {
 
-            String name = "/" + body.getAttachmentObject("name",String.class);
-            InputStream input = body.getAttachment("file").getDataHandler().getInputStream();
-            String service = body.getAttachmentObject("service",String.class);
+            PhotoAdderBody photo = parseBody(body);
+            String name = photo.getName();
+            InputStream input = photo.getInput();
+            String service = photo.getService();
+
 
             PhotoInterpreter interpreter = new PhotoInterpreter();
             interpreter.addPhoto(input, name,service);
@@ -68,7 +72,7 @@ public class PhotoModule implements IPhotoModule {
         PhotoInterpreter photoInterpreter = new PhotoInterpreter();
         byte[] photo;
         try {
-            photo = photoInterpreter.getPhoto("/" + path);
+            photo = photoInterpreter.getPhoto( path);
         } catch (RetrievePhotoErrorException e) {
             e.printStackTrace();
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
@@ -90,5 +94,19 @@ public class PhotoModule implements IPhotoModule {
         return CorsAdder.addCors(
                 Response.status(Response.Status.OK).entity(photoChooser.getServices()))
                 .build();
+    }
+
+    private PhotoAdderBody parseBody(MultipartBody body) throws IOException{
+        PhotoAdderBody photo = new PhotoAdderBody();
+        photo.setName(body.getAttachmentObject("name",String.class));
+        photo.setInput( body.getAttachment("file").getDataHandler().getInputStream());
+        photo.setService( body.getAttachmentObject("service",String.class));
+
+        if(!photo.check()){
+            photo.setName(body.getAttachment("name").getDataHandler().getContent().toString());
+            photo.setService(body.getAttachment("service").getDataHandler().getContent().toString());
+        }
+
+        return photo;
     }
 }
