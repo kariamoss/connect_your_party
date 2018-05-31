@@ -21,6 +21,8 @@ button:focus{
 mat-icon{
   display:block;
   margin:0 auto;
+  font-size: 25px;
+  padding-bottom: 2px;
 
 }
 

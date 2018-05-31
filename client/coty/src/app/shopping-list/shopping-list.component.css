@@ -55,4 +55,5 @@ input:active {
 
 input:focus{
   outline: none;
+  border-bottom: 1px solid #3F51B5;
 }
