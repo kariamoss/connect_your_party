@@ -6,6 +6,7 @@ import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import gherkin.lexer.De;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,5 +72,16 @@ public class DbTest{
         DbMock.addPhoto(DbMock.event, photo1);
 
         DbMock.getServiceFromPath("aaaaa");
+    }
+
+    @Test
+    public void removeTest() throws Exception{
+        Photo photo1 = new Photo("salut","salut", DbMock.user,"dropbox");
+        DbMock.addPhoto(DbMock.event,photo1);
+        assertEquals(DbMock.getPhotosFromEvent().size(),1);
+
+        DbMock.removePhotoFromEvent(DbMock.event,photo1);
+        assertEquals(DbMock.getPhotosFromEvent().size(),0);
+
     }
 }
