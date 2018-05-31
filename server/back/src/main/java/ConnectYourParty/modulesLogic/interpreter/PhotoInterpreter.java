@@ -31,12 +31,10 @@ public class PhotoInterpreter implements IPhoto {
         String path = "ConnectYourParty/" + DbMock.event.getTitle() + "/"
                 + UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
-        Photo photo = new Photo(name, path, DbMock.user,serviceName);
+        Photo photo = new Photo(path, name, DbMock.user,serviceName);
 
 
         DbMock.addPhoto(DbMock.event, photo);
-
-
         photoChooser.addPhoto(stream, path, serviceName);
     }
 
