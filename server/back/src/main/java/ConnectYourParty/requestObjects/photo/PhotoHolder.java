@@ -8,7 +8,7 @@ public class PhotoHolder {
     public String name;
     public String user;
 
-    public PhotoHolder(String photoPath, String name, User user) {
+    public PhotoHolder(String photoPath, String name, User user, String serviceHost) {
         this.photoPath = photoPath;
         this.name = name;
         this.user = user.getSurname() + " " + user.getName();
