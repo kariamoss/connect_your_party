@@ -5,12 +5,26 @@
 
 img{
   height:200px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 mat-card{
   width: 250px;
   height:200px;
   position:relative;
+}
+
+mat-card:active{
+  outline:none;
+}
+
+mat-card:focus{
+  outline:none;
 }
 
 mat-card-title{
