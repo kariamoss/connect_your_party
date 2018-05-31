@@ -1,0 +1,53 @@
+.container{
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  margin-top:25px;
+}
+
+.header{
+  font-size: 25px;
+  border-bottom: 2px solid lightgray;
+}
+
+#date{
+  display: inline-block;
+  padding: 25px;
+  border-right: 1px solid lightgray;
+  background-color: #3F51B5;
+  color:#fff;
+  border-top-left-radius: 5px;
+
+}
+
+#title{
+  display: inline-block;
+  padding: 25px;
+}
+
+.details{
+  font-size:18px;
+  color:#575656;
+}
+
+#location{
+  border-bottom: 1px solid lightgray;
+  padding:15px;
+}
+
+#creator{
+  border-bottom: 1px solid lightgray;
+  padding:15px;
+}
+
+#infos{
+  padding:15px;
+  line-height: 32px;
+}
+
+mat-icon{
+  vertical-align: middle;
+  color: #a7a6a5;
+  font-size: 23px;
+  padding-right: 5px;
+}
+

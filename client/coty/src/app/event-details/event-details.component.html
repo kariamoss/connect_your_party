@@ -1,4 +1,11 @@
-<p>
-  Informations de la soirée : <br/>
-  y en a pas encore pasque askip c pas important
-</p>
+<div class="container">
+  <div class="header">
+    <div id="date">{{event.date}}</div>
+    <div id="title">{{event.title}}</div>
+  </div>
+  <div class="details">
+    <div id="location"><mat-icon>location_on</mat-icon>{{event.location}}</div>
+    <div id="creator"><mat-icon>people</mat-icon>{{event.people}} participants</div>
+    <div id="infos">{{event.desc}}</div>
+  </div>
+</div>

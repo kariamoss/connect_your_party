@@ -27,6 +27,7 @@ import { ModuleListComponent } from './event/module-list/module-list.component';
 import { PhotosListComponent } from './photos/photos-list/photos-list.component';
 import { AddPhotoComponent } from './photos/add-photo/add-photo.component';
 import { PhotoDialogComponent } from './photos/photo-dialog/photo-dialog.component';
+import { MusicComponent } from './music/music.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { PhotoDialogComponent } from './photos/photo-dialog/photo-dialog.compone
     PhotosListComponent,
     AddPhotoComponent,
     PhotoDialogComponent,
+    MusicComponent,
   ],
   imports: [
     BrowserModule,
