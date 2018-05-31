@@ -37,7 +37,12 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
     public void addPhoto(InputStream stream, String path, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         byte[] buff = new byte[stream.available()];
         stream.read(buff);
-        servicePhotoList.get(0).addPhoto(buff, path);
+
+        for(IPhotoService serv : servicePhotoList){
+            if(serv.getServiceName().equals(serviceName)){
+                serv.addPhoto(buff, "/" +  path);
+            }
+        }
     }
 
     @Override
@@ -45,7 +50,7 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
         String serviceName = DbMock.getServiceFromPath(path);
         for(IPhotoService service : servicePhotoList ){
             if(service.getServiceName().equals(serviceName)){
-                return service.getPhoto(path);
+                return service.getPhoto("/"+path);
             }
         }
         throw new NoSuchServiceException();

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DbMock {
     static private List<Event> events = new ArrayList<>();
-    static private Event event = new Event(0, "La grande soirée costumée", 65, "12, route de Virey 70700 Charcenne");
+    static public Event event = new Event(0, "La grande soirée costumée", 65, "12, route de Virey 70700 Charcenne");
     static public User user = new User("Milleret", "Jehan");
 
     public static List<Event> getEvents() {
@@ -22,7 +22,7 @@ public class DbMock {
         return event.getPhotos();
     }
 
-    public static void addPhoto(Photo photo) throws PhotoAlreadyExistException{
+    public static void addPhoto(Event event, Photo photo) throws PhotoAlreadyExistException{
         if(event.getPhotos().contains(photo)){
             throw new PhotoAlreadyExistException();
         }

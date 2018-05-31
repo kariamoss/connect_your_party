@@ -4,6 +4,7 @@ import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.businessObjects.Photo;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
+import gherkin.lexer.De;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,8 +23,8 @@ public class DbTest{
         Photo photo1 = new Photo("salut","salut", DbMock.user,"dropbox");
         Photo photo2 = new Photo("salut","ezaeazezae", DbMock.user,"dropbox");
 
-        DbMock.addPhoto(photo1);
-        DbMock.addPhoto(photo2);
+        DbMock.addPhoto(DbMock.event, photo1);
+        DbMock.addPhoto(DbMock.event, photo2);
     }
 
     @Test
@@ -31,7 +32,7 @@ public class DbTest{
         Photo photo1 = new Photo("salut","salut", DbMock.user,"dropbox");
 
 
-        DbMock.addPhoto(photo1);
+        DbMock.addPhoto(DbMock.event, photo1);
 
         assertTrue(DbMock.getPhotosFromEvent().get(0).equals(photo1));
     }
@@ -53,12 +54,11 @@ public class DbTest{
     @Test
     public void serviceRetrievalTest() throws Exception{
         String path = "salut";
-        String service = "dropbox";
+        String service = "Dropbox";
         Photo photo1 = new Photo(path,"salut", DbMock.user,service);
+        DbMock.addPhoto(DbMock.event, photo1);
 
-        DbMock.addPhoto(photo1);
-
-        assertEquals(DbMock.getServiceFromPath(path),service);
+        assertEquals(service, DbMock.getServiceFromPath(path));
     }
 
     @Test(expected = NoSuchPhotoException.class)
@@ -66,7 +66,7 @@ public class DbTest{
         String path = "salut";
         Photo photo1 = new Photo(path,"salut", DbMock.user,"drop");
 
-        DbMock.addPhoto(photo1);
+        DbMock.addPhoto(DbMock.event, photo1);
 
         DbMock.getServiceFromPath("aaaaa");
     }

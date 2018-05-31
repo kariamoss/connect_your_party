@@ -21,7 +21,7 @@ public class ListPhotoTest {
 
     @Test
     public void addPhotoAndGetList() throws PhotoAlreadyExistException {
-        DbMock.addPhoto(new Photo("salut", "name", new User("milleret", "jehan"), "Dropbox"));
+        DbMock.addPhoto(DbMock.event, new Photo("salut", "name", new User("milleret", "jehan"), "Dropbox"));
 
         PhotoInterpreter photoInterpreter = new PhotoInterpreter();
         List<PhotoHolder> photoHolderList = photoInterpreter.getPhotoList();
@@ -33,6 +33,5 @@ public class ListPhotoTest {
         Assert.assertEquals("salut", photoHolder.photoPath);
         Assert.assertEquals("name", photoHolder.name);
         Assert.assertEquals("jehan milleret", photoHolder.user);
-        Assert.assertEquals("Dropbox", photoHolder.serviceHost);
     }
 }
