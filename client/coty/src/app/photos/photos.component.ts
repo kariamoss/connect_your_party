@@ -34,11 +34,6 @@ export class PhotosComponent implements OnInit {
 
   }
 
-  openAddDialog(): void {
-    let dialogRef = this.dialog.open(AddPhotoComponent, {
-      width: '600px',
-    });
-    dialogRef.componentInstance.module = this.module;
-  }
+
 
 }

@@ -1,4 +1,9 @@
 <mat-grid-list cols="4">
+  <mat-grid-tile>
+    <button mat-fab (click)="openAddDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-grid-tile>
   <mat-grid-tile *ngFor="let photo of photos; let i = index">
     <img [src]="photo" (click)="showPhoto(tof.src)" #tof [id]="i"/>
   </mat-grid-tile>
