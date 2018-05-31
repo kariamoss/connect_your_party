@@ -4,10 +4,11 @@ import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
+import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.FileMetadata;
-import com.dropbox.core.v2.users.FullAccount;
+import com.dropbox.core.v2.files.DownloadBuilder;
+
 
 import java.io.*;
 import java.net.URL;
@@ -41,10 +42,11 @@ public class DropboxService implements IPhotoService{
     @Override
     public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
         try {
-            InputStream stream = client.files().download(path).getInputStream();
 
-            byte[] buff = new byte[stream.available()];
-            stream.read(buff);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            client.files().download(path).download(out);
+            byte[] buff = out.toByteArray();
+            out.close();
 
             return buff;
         } catch (Exception e){
