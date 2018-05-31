@@ -5,11 +5,13 @@ import {ServiceSelectorComponent} from "../service-selector/service-selector.com
 import {MatDialog} from "@angular/material";
 import {SelectorService} from "../services/selector.service";
 import {AddPhotoComponent} from "./add-photo/add-photo.component";
+import {PhotoService} from "../services/photo.service";
 
 @Component({
   selector: 'app-photos',
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.css'],
+  providers: [PhotoService],
 })
 export class PhotosComponent implements OnInit {
 

@@ -1,22 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {PhotoDialogComponent} from "../photo-dialog/photo-dialog.component";
-import {HttpClient, HttpClientJsonpModule} from "@angular/common/http";
 import {AddPhotoComponent} from "../add-photo/add-photo.component";
+import {Subscription} from "rxjs/internal/Subscription";
+import {PhotoService} from "../../services/photo.service";
+import {Photo} from "../../../model/photo.model";
 
 @Component({
   selector: 'app-photos-list',
   templateUrl: './photos-list.component.html',
   styleUrls: ['./photos-list.component.css']
 })
-export class PhotosListComponent implements OnInit {
+export class PhotosListComponent implements OnInit, OnDestroy {
 
-  photos: string[];
+  photos: Photo[];
+  photosSubscription: Subscription;
   module: 'photo';
 
-  constructor(public dialog: MatDialog, private httpClient : HttpClient) { }
+  constructor(public dialog: MatDialog,
+              private photoService: PhotoService) { }
 
   ngOnInit() {
+    this.photosSubscription = this.photoService.photosSubject.subscribe(
+      (photos: Photo[]) => {
+        this.photos = photos;
+      }
+    );
+    this.photoService.emitPhotoSubject();
+    this.photoService.getPhotos();
   }
 
   showPhoto(src: string){
@@ -29,6 +40,10 @@ export class PhotosListComponent implements OnInit {
       width: '600px',
     });
     dialogRef.componentInstance.module = this.module;
+  }
+
+  ngOnDestroy(): void {
+    this.photosSubscription.unsubscribe();
   }
 
 }
