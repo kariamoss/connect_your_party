@@ -15,7 +15,7 @@ export const appRoutes: Routes = [
   {
     path: 'events/:id', component: EventComponent,
     children: [
-      {path: '', component: EventDetailsComponent},
+      {path: '', pathMatch: 'full',redirectTo: 'details'},
       {path: 'details', component: EventDetailsComponent},
       {path: 'photos', component: PhotosComponent},
       {path: 'shopping', component: ShoppingListComponent},
