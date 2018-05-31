@@ -9,6 +9,7 @@ import {EventService} from "../../services/events.service";
 export class EventCardComponent implements OnInit{
 
   title;
+  img_url;
   participants: number;
   location;
   color;
@@ -25,6 +26,7 @@ export class EventCardComponent implements OnInit{
     this.participants = event.people;
     this.location = event.location;
     this.color = {"background-color" : event.color};
+    this.img_url = '../../../assets/'+event.photo;
   }
 
 }

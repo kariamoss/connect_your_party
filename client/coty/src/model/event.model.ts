@@ -6,6 +6,7 @@ export class EventModel{
     public people: number,
     public location: string,
     public date: string,
+    public photo: string,
     public color: string
 ){}
 }

@@ -1,21 +1,36 @@
-mat-toolbar{
-  margin-top:20px;
+mat-toolbar {
+  margin-top: 20px;
 }
 
-mat-toolbar a{
+mat-toolbar a {
   padding: 0 20px;
 }
 
-mat-toolbar mat-icon{
-  padding-right:10px;
+mat-toolbar mat-icon {
+  padding-right: 10px;
 }
 
-.left{
-  width:50%;
-  float:left;
+.left {
+  width: 50%;
+  float: left;
 }
 
-.right{
-  width:50%;
-  float:right;
+.right {
+  width: 50%;
+  float: right;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+
+#back button{
+  background-color: #3F51B5;
+  color:#fff;
+}
+
+#back button:hover{
+  background-color: #fff;
+  color:#000;
 }

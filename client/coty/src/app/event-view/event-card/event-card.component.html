@@ -1,7 +1,7 @@
 
 <mat-card  [ngStyle]="color" routerLink="{{id}}">
   <mat-card-title>{{title}}</mat-card-title>
-  <img mat-card-image src="https://www.contrepoints.org/wp-content/uploads/2017/04/Ren%C3%A9_Coty-1929.jpg" alt="Photo of René Coty (he is your friend)">
+  <img mat-card-image src="{{img_url}}" alt="Photo of René Coty (he is your friend)">
   <mat-chip-list>
     <mat-chip [ngStyle]="color">{{location}}</mat-chip>
     <mat-chip [ngStyle]="color">{{this.participants}} participants</mat-chip>
