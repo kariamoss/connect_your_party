@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {ParametersService} from "../services/parameters.service";
+import {EventService} from "../services/events.service";
+import {EventModel} from "../../model/event.model";
+import {Subscription} from "rxjs/internal/Subscription";
+import {Service} from "../../model/service.model";
 
 @Component({
   selector: 'app-event-details',
@@ -7,9 +12,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventDetailsComponent implements OnInit {
 
-  constructor() { }
+  id: number;
+  event: EventModel;
+
+  constructor(private parameters: ParametersService,
+              private eventService: EventService) { }
 
   ngOnInit() {
+    this.id = this.parameters.sharedId;
+    this.event = this.eventService.getEventById(this.id);
   }
 
 }
