@@ -35,7 +35,6 @@ public class PhotoModuleTest {
         this.module = new PhotoModule();
     }
 
-    @Ignore
     @Test
     public void addAndGetTest() throws Exception{
         String imagePath = "test/test/test.jpg";
@@ -79,12 +78,6 @@ public class PhotoModuleTest {
         input.read(buff);
 
         assertTrue(Arrays.equals(arr,buff));
-
-
-
-
-
-
     }
 
 }
