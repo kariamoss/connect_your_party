@@ -1,8 +1,8 @@
-<p>{{(module ? module : 'MODULE NOT FOUND') | uppercase}} SERVICES</p>
-
+<div class="toto">
 <mat-radio-group [(ngModel)]="selectedService">
   <mat-radio-button *ngFor="let service of services; let i = index" [value]="service" (change)="onChanges(service)">
     <img src="http://{{service.icon}}"/>
   </mat-radio-button>
 </mat-radio-group>
-<div>Service séléctionné : {{selectedService ? selectedService.name : "Aucun service sélectionné"}}</div>
+<div id="selected">{{selectedService ? selectedService.name : "Aucun service sélectionné"}}</div>
+</div>

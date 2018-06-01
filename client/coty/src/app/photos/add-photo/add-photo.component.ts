@@ -44,6 +44,9 @@ export class AddPhotoComponent implements OnInit {
       error => console.log(error),
       () => this.uploading = false,
     );
+
+    document.getElementById('mainForm').hidden = true;
+
   }
 
   fileChange(event) {
