@@ -6,6 +6,7 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {PhotoService} from "../../services/photo.service";
 import {Photo} from "../../../model/photo.model";
 import {APP_CONFIG, AppConfig} from "../../app-config.module";
+import {interval} from "rxjs/internal/observable/interval";
 
 @Component({
   selector: 'app-photos-list',
@@ -17,6 +18,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
   photos: Photo[];
   photosSubscription: Subscription;
   module: 'photo';
+  refreshSubscription: Subscription;
 
   constructor(public dialog: MatDialog,
               private photoService: PhotoService,
@@ -29,6 +31,14 @@ export class PhotosListComponent implements OnInit, OnDestroy {
       }
     );
     this.photoService.getPhotos(1);
+    this.refreshSubscription = interval(2000).subscribe(
+      () => {
+        this.photoService.getPhotos(1);
+      },
+      (error) => {
+        console.log('An error occurred: ' + error);
+      },
+    );
   }
 
   showPhoto(src: string){
@@ -45,6 +55,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.photosSubscription.unsubscribe();
+    this.refreshSubscription.unsubscribe();
   }
 
 }
