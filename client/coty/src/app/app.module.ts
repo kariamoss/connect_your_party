@@ -29,6 +29,7 @@ import { AddPhotoComponent } from './photos/add-photo/add-photo.component';
 import { PhotoDialogComponent } from './photos/photo-dialog/photo-dialog.component';
 import { MusicComponent } from './music/music.component';
 import {PhotoService} from "./services/photo.service";
+import {AppConfigModule} from "./app-config.module";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {PhotoService} from "./services/photo.service";
   ],
   imports: [
     BrowserModule,
+    AppConfigModule,
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),

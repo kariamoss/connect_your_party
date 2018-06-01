@@ -1,8 +1,9 @@
-import {Injectable} from "@angular/core";
+import {Inject, Injectable} from "@angular/core";
 import {Subject} from "rxjs/internal/Subject";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../model/service.model";
 import {isUndefined} from "util";
+import {APP_CONFIG, AppConfig} from "../app-config.module";
 
 /**
  * Service managing services selections for each module.
@@ -11,7 +12,8 @@ import {isUndefined} from "util";
 @Injectable()
 export class SelectorService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              @Inject(APP_CONFIG) public config: AppConfig,) {
   }
 
   servicesSubject = new Subject<Service[]>();
@@ -37,7 +39,7 @@ export class SelectorService {
   updateServicesList(module: string) {
     const headers = new HttpHeaders();
     headers.append("Content-Type", 'application/json');
-    const result = this.httpClient.get<Array<Service>>('http://localhost:8080/back-1.0-SNAPSHOT/photo/getPhotoServices', {headers: headers});
+    const result = this.httpClient.get<Array<Service>>('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/photo/getPhotoServices', {headers: headers});
     result.subscribe(data => {
       this.merge(data, module);
     });
