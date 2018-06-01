@@ -12,6 +12,7 @@ mat-icon{
   padding-right:5px;
   vertical-align: middle;
   font-size: 27px;
+  cursor: pointer;
 }
 
 .trash{

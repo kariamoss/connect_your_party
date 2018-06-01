@@ -3,7 +3,7 @@ import {Subject} from "rxjs/index";
 import {EventModel} from "../../model/event.model";
 export class ShoppingListService{
 
-  private list: string[] = ["du coca","des chips","des calmants pour Jéhan quand il verra cette liste"];
+  private list: string[] = ["du coca","des chips","des gâteaux"];
   listSubject = new Subject<string[]>();
 
   emitList() {
