@@ -1,10 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {PhotoDialogComponent} from "../photo-dialog/photo-dialog.component";
 import {AddPhotoComponent} from "../add-photo/add-photo.component";
 import {Subscription} from "rxjs/internal/Subscription";
 import {PhotoService} from "../../services/photo.service";
 import {Photo} from "../../../model/photo.model";
+import {APP_CONFIG, AppConfig} from "../../app-config.module";
 
 @Component({
   selector: 'app-photos-list',
@@ -18,7 +19,8 @@ export class PhotosListComponent implements OnInit, OnDestroy {
   module: 'photo';
 
   constructor(public dialog: MatDialog,
-              private photoService: PhotoService) { }
+              private photoService: PhotoService,
+              @Inject(APP_CONFIG) public config: AppConfig,) { }
 
   ngOnInit() {
     this.photosSubscription = this.photoService.photosSubject.subscribe(

@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {SelectorService} from "../../services/selector.service";
 import {NgForm} from '@angular/forms';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {isNull} from "util";
 import {MatDialogRef} from "@angular/material";
 import {PhotoService} from "../../services/photo.service";
+import {APP_CONFIG, AppConfig} from "../../app-config.module";
 
 @Component({
   selector: 'app-add-photo',
@@ -21,7 +22,8 @@ export class AddPhotoComponent implements OnInit {
   constructor(private selectorService: SelectorService,
               private httpClient: HttpClient,
               private dialogRef: MatDialogRef<AddPhotoComponent>,
-              private photoService: PhotoService) {
+              private photoService: PhotoService,
+              @Inject(APP_CONFIG) private config: AppConfig,) {
   }
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class AddPhotoComponent implements OnInit {
     this.formData.append('service', this.selectorService.getSelectedService(this.module).name);
     this.formData.append('eventId', "1");
     this.uploading = true;
-    this.httpClient.post('http://localhost:8080/back-1.0-SNAPSHOT/photo/addPhoto', this.formData, {headers: this.headers})
+    this.httpClient.post('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/photo/addPhoto', this.formData, {headers: this.headers})
       .subscribe(
       data => {
         this.dialogRef.close();
