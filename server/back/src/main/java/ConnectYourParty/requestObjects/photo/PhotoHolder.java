@@ -1,7 +1,7 @@
 package ConnectYourParty.requestObjects.photo;
 
-import ConnectYourParty.database.businessObjects.Photo;
-import ConnectYourParty.database.businessObjects.User;
+import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.User;
 
 public class PhotoHolder {
     public String photoPath;

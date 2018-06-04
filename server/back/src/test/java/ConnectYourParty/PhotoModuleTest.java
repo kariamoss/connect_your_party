@@ -1,38 +1,65 @@
 package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
-import ConnectYourParty.database.businessObjects.Photo;
+import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.modulesLogic.ServiceUser.IPhotoServiceUser;
+import ConnectYourParty.modulesLogic.ServiceUser.PhotoServiceUser;
+import ConnectYourParty.modulesLogic.chooser.IPhotoChooser;
+import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
+import ConnectYourParty.modulesLogic.interpreter.IPhotoInterpreter;
+import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
+import ConnectYourParty.services.photo.IPhotoService;
+import ConnectYourParty.webInterface.photo.IPhotoModule;
 import ConnectYourParty.webInterface.photo.PhotoModule;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 
 import javax.activation.DataHandler;
+import javax.ejb.EJB;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-
+@RunWith(Arquillian.class)
 public class PhotoModuleTest {
 
-    private PhotoModule module;
 
-    @Before
-    public void init(){
-        this.module = new PhotoModule();
+    @EJB DbMock db;
+
+    @EJB
+    IPhotoModule module;
+
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addPackage(DbMock.class.getPackage())
+                .addPackage(IPhotoChooser.class.getPackage())
+                .addPackage(PhotoChooser.class.getPackage())
+                .addPackage(IPhotoInterpreter.class.getPackage())
+                .addPackage(PhotoInterpreter.class.getPackage())
+                .addPackage(IPhotoServiceUser.class.getPackage())
+                .addPackage(IPhotoModule.class.getPackage())
+                .addPackage(PhotoModule.class.getPackage())
+                .addPackage(IPhotoServiceUser.class.getPackage())
+                .addPackage(PhotoServiceUser.class.getPackage());
     }
 
     @Test
@@ -61,7 +88,7 @@ public class PhotoModuleTest {
 
         assertEquals(responseAdd.getStatus(),200);
 
-        DbMock.getPhotosFromEvent().contains(new Photo(imagePath,"test",DbMock.user,coty.getServiceName()));
+        db.getPhotosFromEvent().contains(new Photo(imagePath,"test",db.getUser(),coty.getServiceName()));
 
         Response response = module.getPhotoList();
         List<PhotoHolder> holder = (List<PhotoHolder>) response.getEntity();
