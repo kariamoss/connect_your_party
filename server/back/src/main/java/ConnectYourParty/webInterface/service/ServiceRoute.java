@@ -22,7 +22,7 @@ public class ServiceRoute implements IServiceRoute{
             String name = body.getAttachmentObject("name", String.class);
             String module = body.getAttachmentObject("module", String.class);
             InputStream file = body.getAttachment("file").getDataHandler().getInputStream();
-            
+
 
             return CorsAdder.corsResponse().build();
         } catch (Exception e){
