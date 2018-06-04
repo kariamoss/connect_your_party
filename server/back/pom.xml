@@ -31,13 +31,14 @@
     <versions.arquillian.junit>1.1.12.Final</versions.arquillian.junit>
     <versions.arquilian.jta>1.0.3.Final</versions.arquilian.jta>
     <versions.shrinkwrap>2.2.6</versions.shrinkwrap>
-
-    <artifactory>http://207.154.199.162:8081/artifactory/</artifactory>
-    <artifactory.repo>Connect</artifactory.repo>
-    <artifactory.premiumrepo>premium</artifactory.premiumrepo>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>ConnectYourParty</groupId>
+      <artifactId>parent</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
@@ -174,16 +175,4 @@
     </plugins>
   </build>
 
-  <repositories>
-    <repository>
-      <id>snapshots</id>
-      <url>${artifactory}${artifactory.repo}</url>
-    </repository>
-  </repositories>
-  <distributionManagement>
-    <snapshotRepository>
-      <id>snapshots</id>
-      <url>${artifactory}${artifactory.repo}</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>
