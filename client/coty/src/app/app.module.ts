@@ -30,6 +30,7 @@ import { PhotoDialogComponent } from './photos/photo-dialog/photo-dialog.compone
 import { MusicComponent } from './music/music.component';
 import {PhotoService} from "./services/photo.service";
 import {AppConfigModule} from "./app-config.module";
+import {TokenRetrieverService} from "./services/tokenRetriever.service";
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {AppConfigModule} from "./app-config.module";
     SelectorService,
     ShoppingListService,
     PhotoService,
+    TokenRetrieverService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent]
