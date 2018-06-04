@@ -35,17 +35,17 @@ public class PhotoServiceUser implements IPhotoServiceUser{
 
     @Override
     public void removePhoto(Photo photo) throws CannotDeletePhotoException, NoSuchServiceException {
-        this.getService(photo.getServiceHost()).removePhoto(photo.getPhotoPath());
+        this.getService(photo.getServiceHost()).removePhoto(photo.getPrivatePhotoPath());
     }
 
     @Override
     public byte[] getPhoto(Photo photo) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
-        return this.getService(photo.getServiceHost()).getPhoto(photo.getPhotoPath());
+        return this.getService(photo.getServiceHost()).getPhoto(photo.getPrivatePhotoPath());
     }
 
     @Override
     public void addPhoto(Photo photo, byte[] bin) throws AddPhotoErrorException, NoSuchServiceException {
-        this.getService(photo.getServiceHost()).addPhoto(bin,photo.getPhotoPath());
+        this.getService(photo.getServiceHost()).addPhoto(bin,photo.getPrivatePhotoPath());
     }
 
     private IPhotoService getService(String serviceName) throws NoSuchServiceException{

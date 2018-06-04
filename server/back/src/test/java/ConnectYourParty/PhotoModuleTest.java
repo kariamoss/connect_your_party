@@ -70,7 +70,7 @@ public class PhotoModuleTest {
         URL path = this.getClass().getClassLoader().getResource("image.jpg");
 
         DataHandler nameHandler = new DataHandler(imagePath,"text/plain");
-        DataHandler serviceHandler = new DataHandler(coty.getServiceName(),"text/plain");
+        DataHandler serviceHandler = new DataHandler("Dropbox","text/plain");
 
         MultivaluedHashMap header = new MultivaluedHashMap<String,String>();
 
@@ -88,11 +88,11 @@ public class PhotoModuleTest {
 
         assertEquals(responseAdd.getStatus(),200);
 
-        db.getPhotosFromEvent().contains(new Photo(imagePath,"test",db.getUser(),coty.getServiceName()));
+        //assertTrue(db.getPhotosFromEvent().contains(new Photo(imagePath,"test",db.getUser(),coty.getServiceName())));
 
-        Response response = module.getPhotoList();
+        Response response = this.module.getPhotoList();
         List<PhotoHolder> holder = (List<PhotoHolder>) response.getEntity();
-        assertEquals(holder.size(),1);
+        assertEquals(1,holder.size());
 
         String event = holder.get(0).photoPath.split("/")[0];
         String namePhoto = holder.get(0).photoPath.split("/")[1];

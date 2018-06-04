@@ -37,14 +37,12 @@ public class PhotoInterpreter implements IPhotoInterpreter {
 
     @Override
     public void addPhoto(InputStream stream, String name,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
-        String path = db.getEvent().getId() + "/"
-                + UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
+        String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
-        Photo photo = new Photo(path, name, db.getUser(),serviceName);
+        Photo photo = new Photo(String.valueOf(db.getEvent().getId()), rName, db.getUser(),serviceName);
         byte[] bin = new byte[stream.available()];
         stream.read(bin);
         try {
-            path = "ConnectYourParty/" + path;
             db.addPhoto(db.getEvent(), photo);
             photoChooser.addPhoto(bin, photo);
         } catch (Exception e){

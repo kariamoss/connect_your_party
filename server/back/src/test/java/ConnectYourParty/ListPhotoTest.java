@@ -54,7 +54,7 @@ public class ListPhotoTest {
 
         PhotoHolder photoHolder = photoHolderList.get(0);
 
-        Assert.assertEquals("salut", photoHolder.photoPath);
+        Assert.assertEquals("salut/name", photoHolder.photoPath);
         Assert.assertEquals("name", photoHolder.name);
         Assert.assertEquals("jehan milleret", photoHolder.user);
     }

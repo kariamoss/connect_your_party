@@ -29,14 +29,15 @@ public class DbMock {
     }
 
     public List<Photo> getPhotosFromEvent(){
-        return event.getPhotos();
+        return this.event.getPhotos();
     }
 
     public void addPhoto(Event event, Photo photo) throws PhotoAlreadyExistException{
-        if(this.event.getPhotos().contains(photo)){
+        if(event.getPhotos().contains(photo)){
             throw new PhotoAlreadyExistException();
         }
-        this.event.addPhoto(photo);
+        event.addPhoto(photo);
+        System.out.println("photo added");
     }
 
     public void clean(){
@@ -62,6 +63,6 @@ public class DbMock {
     }
 
     public void removePhotoFromEvent(Event event , Photo photo){
-        this.event.getPhotos().remove(photo);
+        event.getPhotos().remove(photo);
     }
 }

@@ -42,7 +42,7 @@ public class DbTest{
     @Test(expected = PhotoAlreadyExistException.class)
     public void doublePhoto() throws PhotoAlreadyExistException{
         Photo photo1 = new Photo("salut","salut", db.getUser(),"dropbox");
-        Photo photo2 = new Photo("salut","ezaeazezae", db.getUser(),"dropbox");
+        Photo photo2 = new Photo("salut","salut", db.getUser(),"dropbox");
 
         db.addPhoto(db.getEvent(), photo1);
         db.addPhoto(db.getEvent(), photo2);
@@ -76,10 +76,10 @@ public class DbTest{
     public void serviceRetrievalTest() throws Exception{
         String path = "salut";
         String service = "Dropbox";
-        Photo photo1 = new Photo(path,"salut", db.getUser(),service);
+        Photo photo1 = new Photo(db.getEvent().getId()+"",path, db.getUser(),service);
         db.addPhoto(db.getEvent(), photo1);
 
-        assertEquals(service, db.getServiceFromPath(path));
+        assertEquals(service, db.getServiceFromPath(db.getEvent().getId()+"/"+path));
     }
 
     @Test(expected = NoSuchPhotoException.class)

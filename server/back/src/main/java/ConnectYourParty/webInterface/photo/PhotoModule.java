@@ -6,23 +6,28 @@ import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.modulesLogic.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoAdderBody;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import ConnectYourParty.webInterface.CorsAdder;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.jws.WebService;
 import javax.ws.rs.core.Response;
 
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Stateless
 public class PhotoModule implements IPhotoModule {
 
     Logger logger = Logger.getLogger(PhotoModule.class.getName());
 
-    @EJB PhotoInterpreter interpreter;
+    @EJB
+    IPhotoInterpreter interpreter;
 
     @Override
     public Response addPhoto(MultipartBody body) {
