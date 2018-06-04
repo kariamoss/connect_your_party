@@ -78,8 +78,17 @@ public class PhotoChooser implements Chooser<IPhotoService,PhotoServiceHolder>, 
     public List<PhotoServiceHolder> getServices() {
         List<PhotoServiceHolder> arr = new ArrayList<>();
         for(IPhotoService service : servicePhotoList){
+            if (service.getOAuth() == null) {
+                arr.add(new PhotoServiceHolder(service.getServiceName(),
+                        service.getServiceIcon().getHost()+service.getServiceIcon().getPath()));
+                continue;
+            }
             arr.add(new PhotoServiceHolder(service.getServiceName(),
-                    service.getServiceIcon().getHost()+service.getServiceIcon().getPath()));
+                    service.getServiceIcon().getHost()+service.getServiceIcon().getPath(),
+                    service.getOAuth().getHost()+service.getOAuth().getPath(),
+                    service.getOAuthToken().getHost()+service.getOAuthToken().getPath(),
+                    service.getAppKey(),
+                    service.getAppSecret()));
         }
 
         return arr;

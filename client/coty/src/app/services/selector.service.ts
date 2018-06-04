@@ -25,6 +25,15 @@ export class SelectorService {
     selection.selectedService = newService;
   }
 
+  getServiceByName(module: string, serviceName: string): any {
+    const selection = this.getModule(module);
+    return selection.moduleServices.find(
+      (serviceObject) => {
+        return serviceObject.name === serviceName;
+      }
+    );
+  }
+
   getSelectedService(module: string) {
     const selection = this.getModule(module);
     return selection.selectedService;

@@ -17,7 +17,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
 
   photos: Photo[];
   photosSubscription: Subscription;
-  module: 'photo';
+  module:string = 'photo';
   refreshSubscription: Subscription;
 
   constructor(public dialog: MatDialog,
