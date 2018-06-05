@@ -1,14 +1,18 @@
 package ConnectYourParty.webInterface.music;
 
+import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.modulesLogic.music.interpreter.IMusicInterpreter;
 import ConnectYourParty.requestObjects.music.MusicEventHolder;
 import ConnectYourParty.webInterface.CorsAdder;
+import ConnectYourParty.webInterface.photo.PhotoModule;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.ws.rs.core.Response;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 @Stateless
 public class MusicModule implements IMusicModule {
@@ -16,10 +20,12 @@ public class MusicModule implements IMusicModule {
     @EJB
     IMusicInterpreter musicInterpreter;
 
+    Logger logger = Logger.getLogger(MusicModule.class.getName());
+
     @Override
     public Response addMusicToEvent(MusicEventHolder musicEventHolder) {
         try {
-            musicInterpreter.addMusicToEvent(musicEventHolder.spotifyTrack, musicEventHolder.eventId);
+            musicInterpreter.addMusicToEvent(musicEventHolder.song, musicEventHolder.eventId);
 
             return CorsAdder.addCors(Response.ok()).build();
         }
@@ -29,11 +35,15 @@ public class MusicModule implements IMusicModule {
     }
 
     @Override
-    public Response searchMusic(String search) {
+    public Response searchMusic(String search, String service) {
         try {
             return CorsAdder.addCors(
-                    Response.status(Response.Status.OK).entity(musicInterpreter.searchMusic(search)))
+                    Response.status(Response.Status.OK).entity(musicInterpreter.searchMusic(search, service)))
                     .build();
+        }
+        catch (NoSuchServiceException e){
+            logger.log(Level.SEVERE, e.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
         catch (Exception e){
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
@@ -42,6 +52,7 @@ public class MusicModule implements IMusicModule {
 
     @Override
     public Response getUserToken() {
+        //TODO Gérer la connexion
         return CorsAdder.addCors(
                 Response.status(Response.Status.OK)
                         .entity("BQDdv4wrb_rlgb8BO3Y576MmqfGHDNEb3OzDLxzYaQofrPw5K41SvYCQSREG0pHXUKOI7VQ" +

@@ -6,10 +6,15 @@
 
   <artifactId>serviceInterface</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.tomee</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0-1</version>
+    </dependency>
+  </dependencies>
 
   <name>serviceInterface</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <parent>
     <groupId>ConnectYourParty</groupId>
@@ -21,16 +26,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <versions.json>20160810</versions.json>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

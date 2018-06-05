@@ -1,12 +1,14 @@
 package ConnectYourParty.database;
 
 import ConnectYourParty.businessObjects.Event;
+import ConnectYourParty.businessObjects.Music;
 import ConnectYourParty.businessObjects.Photo;
 import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 
 import javax.ejb.Singleton;
+import javax.json.JsonArray;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,4 +67,6 @@ public class DbMock {
     public void removePhotoFromEvent(Event event , Photo photo){
         event.getPhotos().remove(photo);
     }
+
+
 }

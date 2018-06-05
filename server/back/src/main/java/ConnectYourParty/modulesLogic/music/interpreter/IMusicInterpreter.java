@@ -1,11 +1,15 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
+import ConnectYourParty.businessObjects.Music;
+import ConnectYourParty.exception.NoSuchServiceException;
+
 import javax.json.JsonArray;
+import java.util.List;
 
 public interface IMusicInterpreter {
-    JsonArray searchMusic(String search);
+    JsonArray searchMusic(String search, String service) throws NoSuchServiceException;
 
-    JsonArray getListMusic(String event);
+    List<Music> getListMusic(String event);
 
     void addMusicToEvent(String music, String event);
 }

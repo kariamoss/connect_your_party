@@ -20,9 +20,9 @@ public interface IMusicModule {
     Response addMusicToEvent(MusicEventHolder musicEventHolder);
 
     @GET()
-    @Path("searchMusic/{search}")
+    @Path("searchMusic/{service}/{search}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response searchMusic(@PathParam("search") String search);
+    Response searchMusic(@PathParam("search") String search, @PathParam("service") String service);
 
     @GET()
     @Path("getUserToken")
