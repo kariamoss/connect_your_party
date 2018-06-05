@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-files="serviceInterface dropboxService cotyPhotoService back"
+files="parent serviceInterface dropboxService cotyPhotoService back"
 
 for i in ${files}
 do
