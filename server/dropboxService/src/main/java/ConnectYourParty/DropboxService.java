@@ -77,4 +77,32 @@ public class DropboxService implements IPhotoService{
             return null;
         }
     }
+
+    @Override
+    public URL getOAuth() {
+        try {
+            return new URL("https://www.dropbox.com/oauth2/authorize");
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public URL getOAuthToken() {
+        try {
+            return new URL("https://api.dropboxapi.com/oauth2/token");
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public String getAppKey() {
+        return "qmoepnnfjdergql";
+    }
+
+    @Override
+    public String getAppSecret() {
+        return "lwlzexl2nnypmlq";
+    }
 }

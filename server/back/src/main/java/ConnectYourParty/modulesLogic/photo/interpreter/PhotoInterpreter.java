@@ -1,7 +1,8 @@
 package ConnectYourParty.modulesLogic.photo.interpreter;
 
-import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.DbMock;
+import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
@@ -33,33 +34,34 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     IPhotoChooser photoChooser;
 
     @EJB
-    DbMock db;
+    IPhotoDatabase db;
 
     @Override
-    public void addPhoto(InputStream stream, String name,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
+    public void addPhoto(InputStream stream, String name, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
-        Photo photo = new Photo(String.valueOf(db.getEvent().getId()), rName, db.getUser(),serviceName);
+        Photo photo = new Photo(String.valueOf(DbMock.event.getId()), rName, DbMock.user,serviceName);
+
 
         try {
-            db.addPhoto(db.getEvent(), photo);
+            db.addPhoto(photo);
             byte[] bin = new byte[stream.available()];
             stream.read(bin);
             photoChooser.addPhoto(bin, photo);
         } catch (Exception e){
-            db.removePhotoFromEvent(db.getEvent(),photo);
+            db.removePhoto(photo);
         }
 
     }
 
     @Override
-    public byte[] getPhoto(String path) throws RetrievePhotoErrorException,NoSuchServiceException, NoSuchPhotoException {
+    public byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
         Photo photo = db.getPhotoFromPath(path);
         return services.getPhoto(photo);
     }
 
     @Override
-    public void removePhoto(String path) throws RetrievePhotoErrorException,NoSuchServiceException, NoSuchPhotoException,CannotDeletePhotoException {
+    public void removePhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException, CannotDeletePhotoException {
         Photo photo = db.getPhotoFromPath(path);
         services.removePhoto(photo);
     }
@@ -68,7 +70,7 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     public List<PhotoHolder> getPhotoList() {
         List<PhotoHolder> arr = new ArrayList<>();
 
-        for (Photo photo : db.getPhotosFromEvent()) {
+        for (Photo photo : db.getPhotoList()) {
             arr.add(new PhotoHolder(photo));
         }
         return arr;
@@ -77,9 +79,18 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     @Override
     public List<PhotoServiceHolder> getServices() {
         List<PhotoServiceHolder> arr = new ArrayList<>();
-        for(IPhotoService service : services.getServiceList()){
+        for (IPhotoService service : services.getServiceList()) {
+            if (service.getOAuth() == null) {
+                arr.add(new PhotoServiceHolder(service.getServiceName(),
+                        service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
+                continue;
+            }
             arr.add(new PhotoServiceHolder(service.getServiceName(),
-                    service.getServiceIcon().getHost()+service.getServiceIcon().getPath()));
+                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
+                    service.getOAuth().getHost() + service.getOAuth().getPath(),
+                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
+                    service.getAppKey(),
+                    service.getAppSecret()));
         }
 
         return arr;

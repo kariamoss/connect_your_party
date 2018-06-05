@@ -1,14 +1,38 @@
-package ConnectYourParty.businessObjects;
+package ConnectYourParty.businessObjects.photo;
 
-public class Photo {
-    private String eventId;
+import ConnectYourParty.businessObjects.User;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+@Entity
+public class Photo implements Serializable {
+
+    @Id
+    private String path;
+
+    @NotNull
     private String name;
+
+    @NotNull
+    private String eventId;
+
+    @NotNull
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private User user;
+
+    @NotNull
     private String serviceHost;
 
+    public Photo(){
+
+    }
+
     public Photo(String eventId, String name, User user, String serviceHost) {
-        this.eventId = eventId;
         this.name = name;
+        this.eventId = eventId;
+        this.path = eventId+"/"+name;
         this.user = user;
         this.serviceHost = serviceHost;
     }
@@ -22,7 +46,7 @@ public class Photo {
     }
 
     public String getPhotoPath() {
-        return eventId+"/"+name;
+        return this.path;
     }
 
     public String getPrivatePhotoPath(){

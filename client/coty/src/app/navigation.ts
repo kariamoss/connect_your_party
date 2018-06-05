@@ -6,6 +6,8 @@ import {PhotosComponent} from "./photos/photos.component";
 import {EventDetailsComponent} from "./event-details/event-details.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {MusicComponent} from "./music/music.component";
+import {DevelopersComponent} from "./developers/developers.component";
+import {AuthenticationProcessComponent} from "./authentication-process/authentication-process.component";
 
 export const appRoutes: Routes = [
 
@@ -17,11 +19,13 @@ export const appRoutes: Routes = [
     children: [
       {path: '', pathMatch: 'full',redirectTo: 'details'},
       {path: 'details', component: EventDetailsComponent},
-      {path: 'photos', component: PhotosComponent},
+      {path: 'photo', component: PhotosComponent},
       {path: 'shopping', component: ShoppingListComponent},
       {path: 'music',component: MusicComponent}
     ]
   },
+  {path: 'authentication', component: AuthenticationProcessComponent},
+  {path: 'devs', component: DevelopersComponent},
   {path: 'not-found', component: NotFoundComponent},
-  {path: '**', redirectTo: 'not-found'}
+  {path: '**', redirectTo: 'not-found'},
 ];

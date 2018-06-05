@@ -1,0 +1,23 @@
+<div class="toto">
+  <p>
+    <mat-icon>warning</mat-icon>
+    Fais gaffe parce que Lucas Matteo va regarder ton code et il s'y connait en hacking
+    donc tu vas pas nous la faire à l'envers
+  </p>
+  <form id="submitForm" (ngSubmit)="onSubmit()" #f="ngForm">
+    Nom du service :
+    <input type="text" id="serviceName" name="salut" [(ngModel)]="serviceName"/>
+    <br/>
+    <input type="file" name="pic" accept="*" id="file" (change)="fileChange($event)" ngModel required/>
+    <br/>
+    <div class="subbtn">
+      <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="f.invalid">Envoyer</button>
+    </div>
+  </form>
+
+
+  <div id="loading" *ngIf="uploading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <p>Uploading...</p>
+  </div>
+</div>
