@@ -1,39 +1,50 @@
 package ConnectYourParty.database;
 
-import ConnectYourParty.database.businessObjects.Event;
-import ConnectYourParty.database.businessObjects.Photo;
-import ConnectYourParty.database.businessObjects.User;
+import ConnectYourParty.businessObjects.Event;
+import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
 
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class DbMock {
-    static private List<Event> events = new ArrayList<>();
-    static public Event event = new Event(0, "La_grande_soirée_costumée", 65, "12, route de Virey 70700 Charcenne");
-    static public User user = new User("Milleret", "Jehan");
+    private List<Event> events = new ArrayList<>();
+    private Event event = new Event(0, "La_grande_soirée_costumée", 65, "12, route de Virey 70700 Charcenne");
+    private User user = new User("Milleret", "Jehan");
 
-    public static List<Event> getEvents() {
+    public List<Event> getEvents() {
         return events;
     }
 
-    public static List<Photo> getPhotosFromEvent(){
-        return event.getPhotos();
+    public Event getEvent() {
+        return this.event;
     }
 
-    public static void addPhoto(Event event, Photo photo) throws PhotoAlreadyExistException{
+    public User getUser() {
+        return this.user;
+    }
+
+    public List<Photo> getPhotosFromEvent(){
+        return this.event.getPhotos();
+    }
+
+    public void addPhoto(Event event, Photo photo) throws PhotoAlreadyExistException{
         if(event.getPhotos().contains(photo)){
             throw new PhotoAlreadyExistException();
         }
         event.addPhoto(photo);
+        System.out.println("photo added");
     }
 
-    public static void clean(){
+    public void clean(){
         event = new Event(0, "La_grande_soirée_costumée", 65, "12, route de Virey 70700 Charcenne");
     }
 
-    public static String getServiceFromPath(String photoPath) throws NoSuchPhotoException{
+    public String getServiceFromPath(String photoPath) throws NoSuchPhotoException{
         for(Photo photo : event.getPhotos()){
             if(photo.getPhotoPath().equals(photoPath)){
                 return photo.getServiceHost();
@@ -42,7 +53,16 @@ public class DbMock {
         throw new NoSuchPhotoException();
     }
 
-    public static void removePhotoFromEvent(Event event , Photo photo){
+    public Photo getPhotoFromPath(String path) throws NoSuchPhotoException{
+        for(Photo photo : event.getPhotos()){
+            if(photo.getPhotoPath().equals(path)){
+                return photo;
+            }
+        }
+        throw new NoSuchPhotoException();
+    }
+
+    public void removePhotoFromEvent(Event event , Photo photo){
         event.getPhotos().remove(photo);
     }
 }
