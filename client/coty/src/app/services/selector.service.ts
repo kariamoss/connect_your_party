@@ -48,7 +48,7 @@ export class SelectorService {
   updateServicesList(module: string) {
     const headers = new HttpHeaders();
     headers.append("Content-Type", 'application/json');
-    const result = this.httpClient.get<Array<Service>>('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/photo/getPhotoServices', {headers: headers});
+    const result = this.httpClient.get<Array<Service>>('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/'+ module +'/getServices', {headers: headers});
     result.subscribe(data => {
       this.merge(data, module);
     });

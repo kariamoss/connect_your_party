@@ -7,6 +7,7 @@ import {PhotoService} from "../../services/photo.service";
 import {Photo} from "../../../model/photo.model";
 import {APP_CONFIG, AppConfig} from "../../app-config.module";
 import {interval} from "rxjs/internal/observable/interval";
+import {ParametersService} from "../../services/parameters.service";
 
 @Component({
   selector: 'app-photos-list',
@@ -21,6 +22,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
   refreshSubscription: Subscription;
 
   constructor(public dialog: MatDialog,
+              private parameters: ParametersService,
               private photoService: PhotoService,
               @Inject(APP_CONFIG) public config: AppConfig,) { }
 
@@ -51,6 +53,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
       width: '600px',
     });
     dialogRef.componentInstance.module = this.module;
+    dialogRef.componentInstance.id = this.parameters.sharedId;
   }
 
   ngOnDestroy(): void {

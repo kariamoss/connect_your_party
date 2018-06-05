@@ -33,6 +33,7 @@ import {AppConfigModule} from "./app-config.module";
 import {DevelopersComponent} from './developers/developers.component';
 import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component';
 import {TokenRetrieverService} from "./services/tokenRetriever.service";
+import { AuthenticationProcessComponent } from './authentication-process/authentication-process.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {TokenRetrieverService} from "./services/tokenRetriever.service";
     MusicComponent,
     DevelopersComponent,
     SubmitDevComponent,
+    AuthenticationProcessComponent,
   ],
   imports: [
     BrowserModule,

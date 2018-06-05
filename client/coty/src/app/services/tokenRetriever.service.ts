@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TokenHolder} from "../../model/tokenHolder.model";
 import {Service} from "../../model/service.model";
-import {isUndefined} from "util";
 
 
 @Injectable()
@@ -14,13 +13,13 @@ export class TokenRetrieverService {
 
   }
 
-  retrieveToken(service: Service, code: string, id: number) {
+  retrieveToken(service: Service, code: string, id: number, module: string) {
         let formData: FormData = new FormData();
         formData.append('code', code);
         formData.append('grant_type', 'authorization_code');
         formData.append('client_id', service.client_id);
         formData.append('client_secret', service.client_secret);
-        formData.append('redirect_uri', 'http://localhost:4200/events/' + id + '/photos?service=' + service.name);
+        formData.append('redirect_uri', 'http://localhost:4200/authentication/?service=' + service.name);
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         this.httpClient.post('https://' + service.oAuthTokenURL, formData, {headers: headers})
@@ -66,6 +65,6 @@ export class TokenRetrieverService {
         return tokenHolder.service.name === service.name;
       }
     );
-    return tmp.access_token;
+    return tmp.access_token ? tmp.access_token : null;
   }
 }

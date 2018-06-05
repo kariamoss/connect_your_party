@@ -6,6 +6,7 @@ import {isNull} from "util";
 import {MatDialogRef} from "@angular/material";
 import {PhotoService} from "../../services/photo.service";
 import {APP_CONFIG, AppConfig} from "../../app-config.module";
+import {TokenRetrieverService} from "../../services/tokenRetriever.service";
 
 @Component({
   selector: 'app-add-photo',
@@ -18,11 +19,13 @@ export class AddPhotoComponent implements OnInit {
   headers: HttpHeaders;
   formData: FormData;
   uploading: boolean = false;
+  id: number;
 
   constructor(private selectorService: SelectorService,
               private httpClient: HttpClient,
               private dialogRef: MatDialogRef<AddPhotoComponent>,
               private photoService: PhotoService,
+              private tokenRetriever: TokenRetrieverService,
               @Inject(APP_CONFIG) private config: AppConfig,) {
   }
 
@@ -30,12 +33,16 @@ export class AddPhotoComponent implements OnInit {
   }
 
   onSubmit() {
+    const service = this.selectorService.getSelectedService(this.module);
     if (isNull(this.selectorService.getSelectedService(this.module))) {
       alert("Veuillez sélectionner un service avant");
       return;
     }
-    this.formData.append('service', this.selectorService.getSelectedService(this.module).name);
-    this.formData.append('eventId', "1");
+    this.formData.append('service', service.name);
+    this.formData.append('eventId', this.id.toString());
+    if (this.tokenRetriever.getToken(service)) {
+      this.formData.append('access_token', this.tokenRetriever.getToken(service));
+    }
     this.uploading = true;
     this.httpClient.post('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/photo/addPhoto', this.formData, {headers: this.headers})
       .subscribe(
