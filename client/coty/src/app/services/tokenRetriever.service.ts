@@ -26,26 +26,44 @@ export class TokenRetrieverService {
         this.httpClient.post('https://' + service.oAuthTokenURL, formData, {headers: headers})
           .subscribe(
             data => {
-              this.setToken(service, data['access_token']);
+              this.setToken(service, data['access_token'], data['expires_in'], data['refresh_token']);
               console.log('Retrieved token for ' + service.name + ' : ' + this.getToken(service))
             },
             error => console.log(error)
           );
   }
 
-  setToken(service: Service, access_token: string): void {
-    const index = this.tokens.map(x => x.serviceName).indexOf(service.name);
+  refresh(refresh_token: string, service: Service) {
+    let formData: FormData = new FormData();
+    formData.append('grant_type', 'grant_type');
+    formData.append('client_id', service.client_id);
+    formData.append('client_secret', service.client_secret);
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    this.httpClient.post('https://' + service.oAuthTokenURL, formData, {headers: headers})
+      .subscribe(
+        data => {
+          this.setToken(service, data['access_token'], data['expires_in'], data['refresh_token']);
+          console.log('Retrieved token for ' + service.name + ' : ' + this.getToken(service))
+        },
+        error => console.log(error)
+      );
+  }
+
+  setToken(service: Service, access_token: string, expires_in: number, refresh_token: string): void {
+    const index = this.tokens.map(x => x.service.name).indexOf(service.name);
     if (index === -1) {
-      this.tokens.push(new TokenHolder(access_token, service.name));
+      this.tokens.push(new TokenHolder(access_token, service, refresh_token));
     } else {
-      this.tokens[0].access_token = access_token;
+      this.tokens[index].access_token = access_token;
+      this.tokens[index].refresh_token  = refresh_token ? refresh_token :  this.tokens[index].refresh_token;
     }
   }
 
   getToken(service: Service) {
     const tmp = this.tokens.find(
       (tokenHolder) => {
-        return tokenHolder.serviceName === service.name;
+        return tokenHolder.service.name === service.name;
       }
     );
     return tmp.access_token;

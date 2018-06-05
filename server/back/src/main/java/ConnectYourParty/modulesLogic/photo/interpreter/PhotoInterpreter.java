@@ -36,30 +36,30 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     DbMock db;
 
     @Override
-    public void addPhoto(InputStream stream, String name,String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
+    public void addPhoto(InputStream stream, String name, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
-        Photo photo = new Photo(String.valueOf(db.getEvent().getId()), rName, db.getUser(),serviceName);
+        Photo photo = new Photo(String.valueOf(db.getEvent().getId()), rName, db.getUser(), serviceName);
 
         try {
             db.addPhoto(db.getEvent(), photo);
             byte[] bin = new byte[stream.available()];
             stream.read(bin);
             photoChooser.addPhoto(bin, photo);
-        } catch (Exception e){
-            db.removePhotoFromEvent(db.getEvent(),photo);
+        } catch (Exception e) {
+            db.removePhotoFromEvent(db.getEvent(), photo);
         }
 
     }
 
     @Override
-    public byte[] getPhoto(String path) throws RetrievePhotoErrorException,NoSuchServiceException, NoSuchPhotoException {
+    public byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
         Photo photo = db.getPhotoFromPath(path);
         return services.getPhoto(photo);
     }
 
     @Override
-    public void removePhoto(String path) throws RetrievePhotoErrorException,NoSuchServiceException, NoSuchPhotoException,CannotDeletePhotoException {
+    public void removePhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException, CannotDeletePhotoException {
         Photo photo = db.getPhotoFromPath(path);
         services.removePhoto(photo);
     }
@@ -77,9 +77,18 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     @Override
     public List<PhotoServiceHolder> getServices() {
         List<PhotoServiceHolder> arr = new ArrayList<>();
-        for(IPhotoService service : services.getServiceList()){
+        for (IPhotoService service : services.getServiceList()) {
+            if (service.getOAuth() == null) {
+                arr.add(new PhotoServiceHolder(service.getServiceName(),
+                        service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
+                continue;
+            }
             arr.add(new PhotoServiceHolder(service.getServiceName(),
-                    service.getServiceIcon().getHost()+service.getServiceIcon().getPath()));
+                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
+                    service.getOAuth().getHost() + service.getOAuth().getPath(),
+                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
+                    service.getAppKey(),
+                    service.getAppSecret()));
         }
 
         return arr;

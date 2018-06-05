@@ -33,7 +33,6 @@ export class PhotosComponent implements OnInit, OnDestroy {
         this.queryService = this.selectorService.getServiceByName(this.module, params.service);
         this.selectorService.changeSelectedService(this.module, this.queryService);
         this.code = params.code;
-        console.log(this.queryService);
         if (!isUndefined(this.code)) {
           this.tokenRetriever.retrieveToken(this.queryService, this.code, this.id);
         }
