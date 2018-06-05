@@ -6,6 +6,7 @@ import {PhotosComponent} from "./photos/photos.component";
 import {EventDetailsComponent} from "./event-details/event-details.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {MusicComponent} from "./music/music.component";
+import {DevelopersComponent} from "./developers/developers.component";
 
 export const appRoutes: Routes = [
 
@@ -22,6 +23,7 @@ export const appRoutes: Routes = [
       {path: 'music',component: MusicComponent}
     ]
   },
+  {path: 'devs', component: DevelopersComponent},
   {path: 'not-found', component: NotFoundComponent},
-  {path: '**', redirectTo: 'not-found'}
+  {path: '**', redirectTo: 'not-found'},
 ];

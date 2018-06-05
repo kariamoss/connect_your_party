@@ -1,0 +1,32 @@
+#loading{
+  margin:0 auto;
+  text-align: center;
+}
+
+.toto{
+  padding:25px;
+  line-height:25px;
+}
+
+input{
+  margin-bottom: 15px;
+}
+
+.subbtn{
+  text-align: center;
+}
+
+mat-icon{
+  font-size: 30px;
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  color:red;
+}
+
+.subbtn button{
+  background-color: #3F51B5;
+  color:#fff;
+}
+
+
