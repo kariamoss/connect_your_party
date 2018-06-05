@@ -1,4 +1,4 @@
-package ConnectYourParty.modulesLogic.ServiceUser;
+package ConnectYourParty.modulesLogic.photo.ServiceUser;
 
 import ConnectYourParty.businessObjects.Photo;
 import ConnectYourParty.exception.NoSuchPhotoException;

@@ -1,4 +1,4 @@
-package ConnectYourParty.modulesLogic.interpreter;
+package ConnectYourParty.modulesLogic.photo.interpreter;
 
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;

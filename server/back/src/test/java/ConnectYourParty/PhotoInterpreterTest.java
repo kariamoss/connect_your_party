@@ -2,14 +2,13 @@ package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.businessObjects.Photo;
-import ConnectYourParty.modulesLogic.interpreter.IPhotoInterpreter;
-import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
+import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
+import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +38,6 @@ public class PhotoInterpreterTest {
                 .addPackage(PhotoInterpreter.class.getPackage());
     }
 
-    @Ignore
     @Test
     public void fallbackTest() throws Exception{
         InputStream stream = mock(InputStream.class);

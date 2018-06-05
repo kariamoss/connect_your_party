@@ -1,9 +1,9 @@
-package ConnectYourParty.modulesLogic.chooser;
+package ConnectYourParty.modulesLogic.photo.chooser;
 
 import ConnectYourParty.businessObjects.Photo;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
-import ConnectYourParty.modulesLogic.ServiceUser.IPhotoServiceUser;
+import ConnectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;
 import ConnectYourParty.webInterface.photo.PhotoModule;
 
 import javax.ejb.EJB;

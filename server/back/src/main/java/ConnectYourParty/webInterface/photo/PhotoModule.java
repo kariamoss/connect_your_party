@@ -4,17 +4,14 @@ import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
-import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
-import ConnectYourParty.modulesLogic.interpreter.IPhotoInterpreter;
-import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
+import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoAdderBody;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import ConnectYourParty.webInterface.CorsAdder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.jws.WebService;
 import javax.ws.rs.core.Response;
 
 import java.io.*;
@@ -44,9 +41,6 @@ public class PhotoModule implements IPhotoModule {
             return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
             logger.log(Level.SEVERE, e.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
-        } catch (PhotoAlreadyExistException e){
-            logger.log(Level.SEVERE, "photo already in the system");
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
         catch (Exception e){

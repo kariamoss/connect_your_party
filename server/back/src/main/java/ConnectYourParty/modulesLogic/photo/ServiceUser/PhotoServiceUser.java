@@ -1,4 +1,4 @@
-package ConnectYourParty.modulesLogic.ServiceUser;
+package ConnectYourParty.modulesLogic.photo.ServiceUser;
 
 
 import ConnectYourParty.CotyPhotoService;

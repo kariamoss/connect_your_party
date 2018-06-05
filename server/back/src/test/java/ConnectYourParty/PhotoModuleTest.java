@@ -1,15 +1,13 @@
 package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
-import ConnectYourParty.businessObjects.Photo;
-import ConnectYourParty.modulesLogic.ServiceUser.IPhotoServiceUser;
-import ConnectYourParty.modulesLogic.ServiceUser.PhotoServiceUser;
-import ConnectYourParty.modulesLogic.chooser.IPhotoChooser;
-import ConnectYourParty.modulesLogic.chooser.PhotoChooser;
-import ConnectYourParty.modulesLogic.interpreter.IPhotoInterpreter;
-import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
+import ConnectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;
+import ConnectYourParty.modulesLogic.photo.ServiceUser.PhotoServiceUser;
+import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
+import ConnectYourParty.modulesLogic.photo.chooser.PhotoChooser;
+import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
+import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
-import ConnectYourParty.services.photo.IPhotoService;
 import ConnectYourParty.webInterface.photo.IPhotoModule;
 import ConnectYourParty.webInterface.photo.PhotoModule;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
@@ -19,7 +17,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

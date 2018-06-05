@@ -1,4 +1,4 @@
-package ConnectYourParty.modulesLogic.interpreter;
+package ConnectYourParty.modulesLogic.photo.interpreter;
 
 import ConnectYourParty.businessObjects.Photo;
 import ConnectYourParty.database.DbMock;
@@ -8,8 +8,8 @@ import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
-import ConnectYourParty.modulesLogic.ServiceUser.IPhotoServiceUser;
-import ConnectYourParty.modulesLogic.chooser.IPhotoChooser;
+import ConnectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;
+import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
 import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
 import ConnectYourParty.services.photo.IPhotoService;
@@ -40,10 +40,11 @@ public class PhotoInterpreter implements IPhotoInterpreter {
         String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
         Photo photo = new Photo(String.valueOf(db.getEvent().getId()), rName, db.getUser(),serviceName);
-        byte[] bin = new byte[stream.available()];
-        stream.read(bin);
+
         try {
             db.addPhoto(db.getEvent(), photo);
+            byte[] bin = new byte[stream.available()];
+            stream.read(bin);
             photoChooser.addPhoto(bin, photo);
         } catch (Exception e){
             db.removePhotoFromEvent(db.getEvent(),photo);

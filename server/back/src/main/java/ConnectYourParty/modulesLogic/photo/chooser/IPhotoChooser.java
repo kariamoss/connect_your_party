@@ -1,4 +1,4 @@
-package ConnectYourParty.modulesLogic.chooser;
+package ConnectYourParty.modulesLogic.photo.chooser;
 
 
 import ConnectYourParty.businessObjects.Photo;
