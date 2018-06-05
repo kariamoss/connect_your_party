@@ -1,15 +1,17 @@
 package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
-import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.photo.Photo;
+import ConnectYourParty.database.photo.IPhotoDatabase;
+import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,17 +26,20 @@ import static org.mockito.Mockito.when;
 public class PhotoInterpreterTest {
 
     @EJB
-    IPhotoInterpreter interpreter;
+    private IPhotoInterpreter interpreter;
 
     @EJB
-    DbMock db;
+    private IPhotoInterpreter db;
 
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addPackage(DbMock.class.getPackage())
+                .addPackage(IPhotoDatabase.class.getPackage())
+                .addPackage(PhotoDatabase.class.getPackage())
                 .addPackage(IPhotoInterpreter.class.getPackage())
+                .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoInterpreter.class.getPackage());
     }
 
@@ -43,11 +48,11 @@ public class PhotoInterpreterTest {
         InputStream stream = mock(InputStream.class);
         when(stream.available()).thenReturn(-1);
 
-        Photo photo = new Photo("test","test",db.getUser(),"dominos");
+        Photo photo = new Photo("test","test","dominos");
 
-        assertEquals(db.getPhotosFromEvent().size(),0);
+        assertEquals(0,db.getPhotoList().size());
         this.interpreter.addPhoto(stream,photo.getName(),photo.getServiceHost());
 
-        assertEquals(db.getPhotosFromEvent().size(),0);
+        assertEquals(0,db.getPhotoList().size());
     }
 }
