@@ -5,6 +5,8 @@ import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
+import javax.ejb.Local;
+import javax.jws.WebService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -12,6 +14,7 @@ import javax.ws.rs.Produces;
 import java.io.InputStream;
 
 @Path("/photo")
+@WebService
 public interface IPhotoModule {
 
 
