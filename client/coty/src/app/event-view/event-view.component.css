@@ -1,12 +1,30 @@
 
-
-ul{
+ul {
   list-style: none;
-  width:100%;
+  width: 100%;
   text-align: center;
   padding: 0;
 }
-li{
+
+li {
   display: inline-block;
-  margin:20px;
+  margin: 20px;
+}
+
+.footer {
+  text-align:center;
+  position: fixed;
+  bottom: 25px;
+  width:80%;
+}
+
+.footer button{
+  padding: 5px 5px 5px 15px;
+  color:#fff;
+  background-color: #000;
+  border-radius: 4px;
+
+  width:200px;
+  margin-left:40%;
+  margin-right:40%;
 }

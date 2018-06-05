@@ -7,20 +7,9 @@ import {RouterModule} from "@angular/router";
 import {appRoutes} from "./navigation";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
-  MatButtonModule,
-  MatToolbarModule,
-  MatCardModule,
-  MatIconModule,
-  MatCheckboxModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatSnackBarModule,
-  MatChipsModule,
-  MatRadioModule,
-  MatDialogModule,
-  MatGridListModule,
-  MatProgressSpinnerModule,
-  MatTabsModule,
+  MatButtonModule, MatToolbarModule, MatCardModule, MatIconModule,
+  MatCheckboxModule, MatFormFieldModule, MatInputModule,
+  MatSnackBarModule, MatChipsModule, MatRadioModule, MatDialogModule, MatGridListModule, MatProgressSpinnerModule, MatTabsModule,
 } from "@angular/material";
 import {EventComponent} from './event/event.component';
 import {EventViewComponent} from './event-view/event-view.component';
@@ -43,6 +32,8 @@ import {PhotoService} from "./services/photo.service";
 import {AppConfigModule} from "./app-config.module";
 import {DevelopersComponent} from './developers/developers.component';
 import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component';
+import {TokenRetrieverService} from "./services/tokenRetriever.service";
+import { AuthenticationProcessComponent } from './authentication-process/authentication-process.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +53,7 @@ import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component
     MusicComponent,
     DevelopersComponent,
     SubmitDevComponent,
+    AuthenticationProcessComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,9 +82,9 @@ import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component
     SelectorService,
     ShoppingListService,
     PhotoService,
+    TokenRetrieverService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent,SubmitDevComponent ]
 })
-export class AppModule {
-}
+export class AppModule { }
