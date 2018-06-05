@@ -12,14 +12,14 @@ public class PhotoTest {
 
     @Test
     public void photoEqualTest(){
-        Photo photo1 = new Photo("salut","salut", this.user,"dropbox");
+        Photo photo1 = new Photo("salut","salut", "dropbox");
         assertTrue(photo1.equals(photo1));
     }
 
     @Test
     public void photoNotEqualTest(){
-        Photo photo1 = new Photo("salut","salut", this.user,"dropbox");
-        Photo photo2 = new Photo("azeaze","salut", this.user,"dropbox");
+        Photo photo1 = new Photo("salut","salut", "dropbox");
+        Photo photo2 = new Photo("azeaze","salut", "dropbox");
 
         assertFalse(photo1.equals(photo2));
     }

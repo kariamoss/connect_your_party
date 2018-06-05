@@ -2,6 +2,7 @@ package ConnectYourParty.photo;
 
 import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.businessObjects.photo.Photo;
+import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.exception.NoSuchPhotoException;
@@ -49,7 +50,6 @@ public class DbTest {
     public void addTest() throws Exception{
         Photo photo = new Photo("test",
                 "test",
-                new User("test","test"),
                 "Dropbox");
 
         db.addPhoto(photo);
@@ -67,7 +67,6 @@ public class DbTest {
     public void removeTest() throws Exception{
         Photo photo = new Photo("test",
                 "test",
-                new User("test","test"),
                 "Dropbox");
 
         db.addPhoto(photo);
@@ -82,10 +81,8 @@ public class DbTest {
 
     @Test(expected = AddPhotoErrorException.class)
     public void doublePhoto() throws AddPhotoErrorException{
-        Photo photo1 = new Photo("salut","salut",
-                new User("test","test"),"dropbox");
-        Photo photo2 = new Photo("salut","salut",
-                new User("test","test"),"dropbox");
+        Photo photo1 = new Photo("salut","salut","dropbox");
+        Photo photo2 = new Photo("salut","salut","dropbox");
 
         db.addPhoto(photo1);
         db.addPhoto(photo2);
@@ -96,7 +93,7 @@ public class DbTest {
         String path = "salut";
         String eventId = "salut";
         String service = "Dropbox";
-        Photo photo1 = new Photo(eventId,path, this.user,service);
+        Photo photo1 = new Photo(eventId,path, service);
         db.addPhoto(photo1);
 
         assertEquals(photo1, db.getPhotoFromPath(eventId+"/"+path));
@@ -107,10 +104,26 @@ public class DbTest {
         String path = "salut";
         String eventId = "salut";
         String service = "Dropbox";
-        Photo photo1 = new Photo(eventId,path, this.user,service);
+        Photo photo1 = new Photo(eventId,path,service);
         db.addPhoto(photo1);
 
         db.getPhotoFromPath("fff");
+    }
+
+    @Test
+    public void addingMultiplePhotoTest() throws Exception{
+        Photo photo1 = new Photo(DbMock.event.getId()+"","salut","Drop");
+        Photo photo2 = new Photo(DbMock.event.getId()+"","azea","Drop");
+        Photo photo3 = new Photo(DbMock.event.getId()+"","azeaze","Drop");
+        Photo photo4 = new Photo(DbMock.event.getId()+"","azeaz","Drop");
+
+        this.db.addPhoto(photo1);
+        this.db.addPhoto(photo2);
+        this.db.addPhoto(photo3);
+        this.db.addPhoto(photo4);
+
+        assertEquals(4,this.db.getPhotoList().size());
+
     }
 
 

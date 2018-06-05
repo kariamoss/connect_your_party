@@ -53,7 +53,7 @@ public class ListPhotoTest {
 
     @Test
     public void addPhotoAndGetList() throws PhotoAlreadyExistException,AddPhotoErrorException {
-        db.addPhoto(new Photo("salut", "name", new User("milleret", "jehan"), "Dropbox"));
+        db.addPhoto(new Photo("salut", "name", "Dropbox"));
 
         List<PhotoHolder> photoHolderList = photoInterpreter.getPhotoList();
 
@@ -63,6 +63,6 @@ public class ListPhotoTest {
 
         Assert.assertEquals("salut/name", photoHolder.photoPath);
         Assert.assertEquals("name", photoHolder.name);
-        Assert.assertEquals("jehan milleret", photoHolder.user);
+        Assert.assertEquals("Jehan", photoHolder.user);
     }
 }

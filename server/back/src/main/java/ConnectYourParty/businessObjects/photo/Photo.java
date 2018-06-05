@@ -19,21 +19,16 @@ public class Photo implements Serializable {
     private String eventId;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private User user;
-
-    @NotNull
     private String serviceHost;
 
     public Photo(){
 
     }
 
-    public Photo(String eventId, String name, User user, String serviceHost) {
+    public Photo(String eventId, String name, String serviceHost) {
         this.name = name;
         this.eventId = eventId;
         this.path = eventId+"/"+name;
-        this.user = user;
         this.serviceHost = serviceHost;
     }
 
@@ -41,9 +36,6 @@ public class Photo implements Serializable {
         return serviceHost;
     }
 
-    public User getUser() {
-        return user;
-    }
 
     public String getPhotoPath() {
         return this.path;

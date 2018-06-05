@@ -16,6 +16,6 @@ public class PhotoHolder {
     public PhotoHolder(Photo photo) {
         this.photoPath = photo.getPhotoPath();
         this.name = photo.getName();
-        this.user = photo.getUser().getSurname() + " " + photo.getUser().getName();
+        this.user = "Jehan";
     }
 }
