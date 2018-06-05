@@ -1,0 +1,106 @@
+<mat-toolbar color="primary">
+  <a>For developers</a>
+
+  <span class="example-spacer"></span>
+
+  <a routerLink="/events" id="back">
+    <button mat-raised-button>
+      <mat-icon>undo</mat-icon>
+      Retour aux événements
+    </button>
+  </a>
+</mat-toolbar>
+
+<div class="left elem">
+  <div class="title">
+    <mat-icon>extension</mat-icon>
+    Intégrer votre propre services
+  </div>
+  <div class="content">
+    Notre ambition est de proposer à n'importe quelle application externe (aux fonctionnalités adaptées)
+    de s'intégrer dans connect Your Party. Pour cela, il suffit simplement de remplir l'implémentation spécifique à
+    chaque module. Notre équipe de dévelopeurs est disponible du lundi au vendredi de 9h à 17h pour vous aider.
+    <br/>Ensemble, construisons l'application de demain.
+  </div>
+
+</div>
+
+
+<div class="right elem">
+  <img src="https://cdn-images-1.medium.com/max/1600/1*r8o2sXZKkTcB7_niDrgP6g.png"/>
+</div>
+
+
+<div class="modules">
+  <div class="tab">
+    <button class="tablinks" (click)="openTab('music')"><mat-icon>library_music</mat-icon></button>
+    <button class="tablinks" (click)="openTab('photo')"><mat-icon>photo_camera</mat-icon></button>
+    <button class="tablinks" (click)="openTab('payment')"><mat-icon>payment</mat-icon></button>
+  </div>
+
+  <div id="music" class="tabcontent">
+    <h3>Module Musique</h3>
+    <div class="content">
+    Contactez Lucas au 06 37 82 76 57, il va vous expliquer comment on fait j'ai rien compris, mais en gros
+    c'est avec Maven. Bonne chance bisou
+    </div>
+    <button mat-button (click)="submitService('music')" class="submit">Soumettre un service</button>
+  </div>
+
+  <div id="photo" class="tabcontent">
+    <h3>Module Photos</h3>
+    <div class="content">
+    Contactez Lucas au 06 37 82 76 57, il va vous expliquer comment on fait j'ai rien compris, mais en gros
+    c'est avec Maven. Bonne chance bisou
+    </div>
+    <button mat-button (click)="submitService('photo')" class="submit">Soumettre un service</button>
+  </div>
+
+  <div id="payment" class="tabcontent">
+    <h3>Module Paiements</h3>
+    <div class="content">
+    Contactez Lucas au 06 37 82 76 57, il va vous expliquer comment on fait j'ai rien compris, mais en gros
+    c'est avec Maven. Bonne chance bisou
+    </div>
+    <button mat-button (click)="submitService('payment')" class="submit">Soumettre un service</button>
+  </div>
+
+</div>
+
+
+<!--
+<div class="modules">
+  <mat-tab-group>
+    <mat-tab id="salut" label="Photo">
+      <ng-template mat-tab-label>
+        <mat-icon>photo_camera</mat-icon>
+      </ng-template>
+      <button mat-button color="primary">Télécharger l'interface</button>
+      <br/>
+      <button mat-button color="warn">Soumettre un service</button>
+
+    </mat-tab>
+    <mat-tab label="Musique">
+      <ng-template mat-tab-label class="salut">
+        <mat-icon>library_music</mat-icon>
+      </ng-template>
+      Content 2
+    </mat-tab>
+
+    <mat-tab label="Shopping">
+      <ng-template mat-tab-label class="salut">
+        <mat-icon>shopping_cart</mat-icon>
+      </ng-template>
+      Content 2
+    </mat-tab>
+
+    <mat-tab label="Paiement">
+      <ng-template mat-tab-label>
+        <mat-icon>payment</mat-icon>
+      </ng-template>
+      Content 2
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
+-->

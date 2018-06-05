@@ -1,0 +1,112 @@
+mat-toolbar{
+  margin-top: 35px;
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.elem{
+  width:45%;
+  display: inline-block;
+  margin-top: 25px;
+}
+
+.left {
+  padding: 20px;
+  line-height: 27px;
+  text-align: justify;
+}
+
+.right {
+  text-align: center;
+}
+
+.right img{
+  height:200px;
+}
+
+.module{
+  display: block;
+}
+
+#back button{
+  background-color: #3F51B5;
+  color:#fff;
+}
+
+#back button:hover{
+  background-color: #fff;
+  color:#000;
+}
+
+.title{
+  font-size: 23px;
+  padding:0px 15px 15px 0px;
+}
+
+.title mat-icon{
+  padding-right: 5px;
+  padding-bottom: 3px;
+}
+
+
+.modules{
+  width:60%;
+  display: block;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  height:180px;
+  margin: 50px auto 500px;
+}
+
+.tab {
+  float: left;
+  background-color: #f1f1f1;
+  width:65px;
+}
+
+.tab button {
+  display: block;
+  background-color: inherit;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: center;
+  transition: 0.3s;
+  color:#3F51B5;
+  height:60px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tabcontent {
+  float: left;
+  padding-left: 20px;
+  width: calc(100% - 100px);
+  max-height: 120px;
+  text-align: center;
+}
+
+.submit{
+  background-color: #3F51B5;
+  color:#fff;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  margin: 25px auto 0;
+}
+
+
+.submit:hover{
+  color:#fff;
+}
+
+.content{
+  text-align: left;
+}
