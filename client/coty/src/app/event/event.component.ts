@@ -32,4 +32,5 @@ export class EventComponent implements OnInit {
     return this.eventService.getEventById(+this.id).title;
   }
 
+
 }
