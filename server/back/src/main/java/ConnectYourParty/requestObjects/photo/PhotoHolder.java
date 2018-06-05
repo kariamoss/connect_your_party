@@ -1,6 +1,6 @@
 package ConnectYourParty.requestObjects.photo;
 
-import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.businessObjects.User;
 
 public class PhotoHolder {

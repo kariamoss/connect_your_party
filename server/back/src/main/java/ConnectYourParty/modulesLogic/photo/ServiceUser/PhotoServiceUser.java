@@ -3,7 +3,7 @@ package ConnectYourParty.modulesLogic.photo.ServiceUser;
 
 import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.DropboxService;
-import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;

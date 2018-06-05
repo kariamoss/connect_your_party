@@ -1,15 +1,19 @@
 package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
-import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.businessObjects.User;
+import ConnectYourParty.database.photo.IPhotoDatabase;
+import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
@@ -24,7 +28,8 @@ import java.util.List;
 @RunWith(Arquillian.class)
 public class ListPhotoTest {
 
-    @EJB DbMock db;
+    @EJB
+    IPhotoDatabase db;
 
     @EJB
     IPhotoInterpreter photoInterpreter;
@@ -33,8 +38,10 @@ public class ListPhotoTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addPackage(DbMock.class.getPackage())
+                .addPackage(IPhotoDatabase.class.getPackage())
+                .addPackage(PhotoDatabase.class.getPackage())
                 .addPackage(IPhotoInterpreter.class.getPackage())
+                .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoInterpreter.class.getPackage());
     }
 
@@ -45,8 +52,8 @@ public class ListPhotoTest {
     }
 
     @Test
-    public void addPhotoAndGetList() throws PhotoAlreadyExistException {
-        db.addPhoto(db.getEvent(), new Photo("salut", "name", new User("milleret", "jehan"), "Dropbox"));
+    public void addPhotoAndGetList() throws PhotoAlreadyExistException,AddPhotoErrorException {
+        db.addPhoto(new Photo("salut", "name", new User("milleret", "jehan"), "Dropbox"));
 
         List<PhotoHolder> photoHolderList = photoInterpreter.getPhotoList();
 

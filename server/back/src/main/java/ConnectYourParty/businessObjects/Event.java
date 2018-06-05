@@ -1,10 +1,30 @@
 package ConnectYourParty.businessObjects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+@Entity
 public class Event {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotNull
     private String title;
+
+    @NotNull
     private int nbPeople;
+
+    @NotNull
     private String location;
+
+    public Event(){
+
+    }
 
     public Event(int id, String title, int nbPeople, String location) {
         this.id = id;
