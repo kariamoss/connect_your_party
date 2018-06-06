@@ -2,8 +2,6 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TokenHolder} from "../../model/tokenHolder.model";
 import {Service} from "../../model/service.model";
-import {isUndefined} from "util";
-
 
 @Injectable()
 export class TokenRetrieverService {
@@ -26,8 +24,8 @@ export class TokenRetrieverService {
     this.httpClient.post('https://' + service.oAuthTokenURL, formData, {headers: headers})
       .subscribe(
         data => {
-          this.setToken(service, data['access_token'], data['expires_in'], data['refresh_token']);
-          console.log('Retrieved token for ' + service.name + ' : ' + this.getToken(service))
+            this.setToken(service, data['access_token'], data['expires_in'], data['refresh_token']);
+            console.log('Retrieved token for ' + service.name + ' : ' + this.getToken(service));
         },
         error => console.log(error)
       );
@@ -48,6 +46,13 @@ export class TokenRetrieverService {
         },
         error => console.log(error)
       );
+  }
+
+  forgetToken(service: Service) {
+    const index = this.tokens.map(x => x.service).indexOf(service);
+    if (index !== -1) {
+      this.tokens.splice(index, 1);
+    }
   }
 
   setToken(service: Service, access_token: string, expires_in: number, refresh_token: string): void {

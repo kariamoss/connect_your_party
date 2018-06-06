@@ -1,4 +1,8 @@
-<div id="loading">
+<div *ngIf="authentication">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   <p>Confirming authentication...</p>
+</div>
+<div *ngIf="!authentication">
+  <p>Accès au service refusé ...</p>
+  <p>Error type : {{error}}</p>
 </div>

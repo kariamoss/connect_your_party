@@ -1,8 +1,11 @@
 <div class="toto">
-<mat-radio-group [(ngModel)]="selectedService">
-  <mat-radio-button *ngFor="let service of services; let i = index" [value]="service" (change)="onChanges(service)">
-    <img src="http://{{service.icon}}"/>
-  </mat-radio-button>
-</mat-radio-group>
-<div id="selected">{{selectedService ? selectedService.name : "Aucun service sélectionné"}}</div>
+  <mat-radio-group [(ngModel)]="selectedService">
+    <mat-radio-button *ngFor="let service of services; let i = index" [value]="service" (change)="onChanges(service)">
+      <img src="http://{{service.icon}}"/>
+    </mat-radio-button>
+  </mat-radio-group>
+  <div id="selected">
+    {{selectedService ? selectedService.name : "Aucun service sélectionné"}}
+  </div>
+  <button *ngIf="canDisconnect" mat-raised-button class="btn btn-primary" (click)="forgetToken()">Disconnect</button>
 </div>

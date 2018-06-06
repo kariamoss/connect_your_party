@@ -14,6 +14,8 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
 
   updatePass: Subscription;
   sub: Subscription;
+  authentication: boolean = true;
+  error: string;
 
   constructor(private selectorService: SelectorService,
               private tokenRetriever: TokenRetrieverService,
@@ -34,12 +36,17 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
         queryService = this.selectorService.getServiceByName(module, params.service);
         this.selectorService.changeSelectedService(module, queryService);
         code = params.code;
+        this.error = params.error_description;
         if (!isUndefined(code)) {
           this.tokenRetriever.retrieveToken(queryService, code, id, module);
+
+        } else if (this.error) {
+          this.authentication = false;
+          this.selectorService.changeSelectedService(module, null);
         }
         setTimeout(() => {
           this.router.navigate(['/events/' + state]);
-        }, 1000);
+        }, 1000 + this.error ? 2000 : 0);
       });
     }, 1000);
   }

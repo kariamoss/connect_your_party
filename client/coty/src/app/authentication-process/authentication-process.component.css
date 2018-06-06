@@ -1,4 +1,8 @@
-#loading{
-  margin:0 auto;
+div{
   text-align: center;
+  margin-top: 25vh;
+}
+
+mat-progress-spinner {
+  margin:0 auto;
 }
