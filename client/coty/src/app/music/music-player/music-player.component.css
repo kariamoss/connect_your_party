@@ -1,0 +1,25 @@
+mat-card{
+  width:300px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+button{
+  margin:5px;
+  vertical-align: middle;
+}
+
+.button-row{
+  margin:25px;
+  padding-top:25px;
+}
+
+#title{
+  font-weight: bold;
+}
+
+#subtitle{
+  font-size:16px;
+  padding-bottom: 10px;
+}

@@ -1,0 +1,21 @@
+<mat-card>
+  <div class="button-row">
+    <button id="previous" mat-fab (click)="onPrevious()">
+      <mat-icon aria-label="previous">skip_previous</mat-icon>
+    </button>
+
+    <button id="play" mat-fab (click)="onPlay()">
+      <mat-icon aria-label="play">{{isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
+    </button>
+
+    <button id="next" mat-fab (click)="onNext()">
+      <mat-icon aria-label="next">skip_next</mat-icon>
+    </button>
+  </div>
+
+  <div class="song">
+    <mat-progress-bar mode="{{progressBarMode}}"></mat-progress-bar>
+    <p id="title">{{title}}</p>
+    <p id="subtitle">{{author}} - {{album}}</p>
+  </div>
+</mat-card>

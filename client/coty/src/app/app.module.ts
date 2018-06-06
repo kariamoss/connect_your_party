@@ -20,7 +20,7 @@ import {
   MatDialogModule,
   MatGridListModule,
   MatProgressSpinnerModule,
-  MatTabsModule,
+  MatTabsModule, MatProgressBarModule,
 } from "@angular/material";
 import {EventComponent} from './event/event.component';
 import {EventViewComponent} from './event-view/event-view.component';
@@ -43,6 +43,7 @@ import {PhotoService} from "./services/photo.service";
 import {AppConfigModule} from "./app-config.module";
 import {DevelopersComponent} from './developers/developers.component';
 import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component';
+import { MusicPlayerComponent } from './music/music-player/music-player.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component
     MusicComponent,
     DevelopersComponent,
     SubmitDevComponent,
+    MusicPlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +86,7 @@ import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component
     MatGridListModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatProgressBarModule,
   ],
   providers: [
     EventService,
