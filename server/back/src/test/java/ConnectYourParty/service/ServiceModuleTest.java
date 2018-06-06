@@ -1,6 +1,8 @@
-package ConnectYourParty;
+package ConnectYourParty.service;
 
-import ConnectYourParty.database.DbMock;
+import ConnectYourParty.FileReader;
+import ConnectYourParty.businessObjects.service.Module;
+import ConnectYourParty.businessObjects.service.ServiceHolder;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.database.service.IServiceRegistry;
@@ -11,9 +13,10 @@ import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
 import ConnectYourParty.modulesLogic.photo.chooser.PhotoChooser;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
-import ConnectYourParty.requestObjects.photo.PhotoHolder;
 import ConnectYourParty.webInterface.photo.IPhotoModule;
 import ConnectYourParty.webInterface.photo.PhotoModule;
+import ConnectYourParty.webInterface.service.IServiceRoute;
+import ConnectYourParty.webInterface.service.ServiceRoute;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -22,35 +25,43 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-
 
 import javax.activation.DataHandler;
 import javax.ejb.EJB;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(Arquillian.class)
-public class PhotoModuleTest {
+public class ServiceModuleTest {
 
+    @EJB private IServiceRegistry registry;
 
+    @EJB private IPhotoServiceUser module;
 
-    @EJB
-    IPhotoModule module;
+    @EJB private IServiceRoute route;
+
+    @EJB private IPhotoModule photoRoute;
 
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
+                .addPackage(ServiceRegistry.class.getPackage())
+                .addPackage(IServiceRoute.class.getPackage())
+                .addPackage(ServiceRoute.class.getPackage())
+                .addPackage(IPhotoServiceUser.class.getPackage())
+                .addPackage(PhotoServiceUser.class.getPackage())
                 .addPackage(IPhotoChooser.class.getPackage())
                 .addPackage(PhotoChooser.class.getPackage())
                 .addPackage(IPhotoInterpreter.class.getPackage())
@@ -63,56 +74,59 @@ public class PhotoModuleTest {
                 .addPackage(IPhotoDatabase.class.getPackage())
                 .addPackage(IServiceRegistry.class.getPackage())
                 .addPackage(ServiceRegistry.class.getPackage())
-                .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
-                .addPackage(PhotoDatabase.class.getPackage());
+                .addPackage(IServiceRegistry.class.getPackage());
+    }
+
+    @Before
+    public void clean(){
+        this.registry.clean();
     }
 
     @Test
-    public void addAndGetTest() throws Exception{
-        String imagePath = "test/test.jpg";
+    public void addService() throws Exception{
+        int nbService = module.getServiceList().size();
 
-        CotyPhotoService coty = new CotyPhotoService();
-        URL path = this.getClass().getClassLoader().getResource("image.jpg");
+        ServiceHolder holder = new ServiceHolder(Module.PHOTO, FileReader.readfile());
+        registry.addServiceHolder(holder);
 
-        DataHandler nameHandler = new DataHandler(imagePath,"text/plain");
-        DataHandler serviceHandler = new DataHandler(coty.getServiceName(),"text/plain");
+        assertEquals(nbService + 1 , module.getServiceList().size());
+    }
+
+    @Test
+    public void addAndGetNewService() throws Exception{
+        DataHandler nameHandler = new DataHandler("test","text/plain");
+        DataHandler moduleHandler = new DataHandler("photo","text/plain");
 
         MultivaluedHashMap header = new MultivaluedHashMap<String,String>();
 
 
         Attachment name = new Attachment("name",nameHandler,header);
-        Attachment service = new Attachment("service", serviceHandler,header);
-        Attachment file = new Attachment("file",new FileInputStream(path.getPath()),null);
+        Attachment module = new Attachment("service", moduleHandler,header);
+        Attachment file = new Attachment("file",new ByteArrayInputStream(FileReader.readfile()),null);
 
         MultipartBody body = new MultipartBody(Arrays.asList(name,
-                service,
+                module,
                 file
         ));
 
-        Response responseAdd = this.module.addPhoto(body);
+        Response getListResponse = this.photoRoute.getPhotoServices();
+        assertEquals(200,getListResponse.getStatus());
+        int nbService = ((List)getListResponse.getEntity()).size();
 
-        assertEquals(responseAdd.getStatus(),200);
 
-        //assertTrue(db.getPhotosFromEvent().contains(new Photo(imagePath,"test",db.getUser(),coty.getServiceName())));
+        Response addServiceResp = this.route.addService(body);
+        assertEquals(200,addServiceResp.getStatus());
+        assertEquals(1,this.registry.getServiceHolder().size());
 
-        Response response = this.module.getPhotoList();
-        List<PhotoHolder> holder = (List<PhotoHolder>) response.getEntity();
-        assertEquals(1,holder.size());
+        getListResponse = this.photoRoute.getPhotoServices();
+        assertEquals(200,getListResponse.getStatus());
+        assertEquals(nbService+1,((List)getListResponse.getEntity()).size());
 
-        String event = holder.get(0).photoPath.split("/")[0];
-        String namePhoto = holder.get(0).photoPath.split("/")[1];
-
-        Response responseGet = this.module.getPhoto(event, namePhoto);
-
-        assertEquals(responseGet.getStatus(),200);
-
-        byte[] arr = (byte[])responseGet.getEntity();
-
-        InputStream input = new FileInputStream(path.getPath());
-        byte[] buff = new byte[input.available()];
-        input.read(buff);
-
-        assertTrue(Arrays.equals(arr,buff));
     }
+
+
+
+
+
 
 }

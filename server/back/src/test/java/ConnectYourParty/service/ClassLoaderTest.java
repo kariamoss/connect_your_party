@@ -3,6 +3,7 @@ package ConnectYourParty.service;
 import ConnectYourParty.FileReader;
 import ConnectYourParty.modulesLogic.service.ByteClassLoader;
 import ConnectYourParty.services.IService;
+import ConnectYourParty.services.photo.IPhotoService;
 import org.junit.Before;
 import org.junit.Test;
 
