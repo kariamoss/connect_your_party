@@ -1,6 +1,7 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
 import ConnectYourParty.businessObjects.music.Music;
+import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.requestObjects.music.MusicSearchHolder;
 
@@ -14,5 +15,5 @@ public interface IMusicInterpreter {
 
     List<Music> getListMusic(String event);
 
-    void addMusicToEvent(String music, String event);
+    void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException;
 }

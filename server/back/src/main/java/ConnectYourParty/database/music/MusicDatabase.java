@@ -5,6 +5,7 @@ import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchMusicException;
 import ConnectYourParty.exception.NoSuchPhotoException;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+@Stateless
 public class MusicDatabase implements IMusicDatabase {
     @PersistenceContext
     private EntityManager entityManager;
@@ -44,8 +46,8 @@ public class MusicDatabase implements IMusicDatabase {
     }
 
     @Override
-    public Music getMusicFromPath(String path) throws NoSuchMusicException {
-        Music music = this.entityManager.find(Music.class,path);
+    public Music getMusicFromId(String id) throws NoSuchMusicException {
+        Music music = this.entityManager.find(Music.class,id);
         if(music == null){
             throw new NoSuchMusicException();
         }

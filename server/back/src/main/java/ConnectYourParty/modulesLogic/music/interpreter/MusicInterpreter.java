@@ -2,6 +2,8 @@ package ConnectYourParty.modulesLogic.music.interpreter;
 
 import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.database.DbMock;
+import ConnectYourParty.database.music.IMusicDatabase;
+import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.modulesLogic.music.serviceUser.IMusicServiceUser;
 import ConnectYourParty.objects.music.MusicService;
@@ -16,7 +18,7 @@ import java.util.List;
 @Stateless
 public class MusicInterpreter implements IMusicInterpreter {
     @EJB
-    DbMock db;
+    IMusicDatabase db;
 
     @EJB
     IMusicServiceUser musicServiceUser;
@@ -33,12 +35,12 @@ public class MusicInterpreter implements IMusicInterpreter {
 
     @Override
     public List<Music> getListMusic(String event) {
-        //return db.getMusicFromEvent(event);
-        return null;
+        return db.getMusicList();
     }
 
     @Override
-    public void addMusicToEvent(String music, String event) {
-        //db.addMusicToEvent(music, event);
+    public void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException {
+        MusicService musicService = musicServiceUser.getInfoFromId(music, service);
+        db.addMusic(new Music(music, service, musicService.getTitle(), musicService.getArtist()));
     }
 }

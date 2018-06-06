@@ -23,6 +23,11 @@ public class MusicServiceUser implements IMusicServiceUser {
         return this.getService(serviceName).searchMusic(music);
     }
 
+    @Override
+    public MusicService getInfoFromId(String id, String serviceName) throws NoSuchServiceException {
+        return this.getService(serviceName).getInfoFromId(id);
+    }
+
     private IMusicService getService(String serviceName) throws NoSuchServiceException {
         for(IMusicService service : serviceMusicList){
             if(service.getServiceName().equals(serviceName)){

@@ -11,4 +11,5 @@ import java.util.List;
 public interface IMusicServiceUser {
     List<MusicService> searchMusic(String music, String serviceName) throws NoSuchServiceException;
 
+    MusicService getInfoFromId(String id, String serviceName) throws NoSuchServiceException;
 }

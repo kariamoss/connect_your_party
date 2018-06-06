@@ -10,11 +10,11 @@ import java.util.List;
 public interface IMusicDatabase {
     List<Music> getMusicList();
 
-    void addMusic(Music photo) throws AddMusicException;
+    void addMusic(Music music) throws AddMusicException;
 
     void removeMusic(Music music);
 
-    Music getMusicFromPath(String path) throws NoSuchMusicException;
+    Music getMusicFromId(String id) throws NoSuchMusicException;
 
     void clean();
 }

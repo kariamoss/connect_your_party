@@ -1,5 +1,6 @@
 package ConnectYourParty.webInterface.music;
 
+import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.modulesLogic.music.interpreter.IMusicInterpreter;
 import ConnectYourParty.requestObjects.music.MusicEventHolder;
@@ -25,11 +26,14 @@ public class MusicModule implements IMusicModule {
     @Override
     public Response addMusicToEvent(MusicEventHolder musicEventHolder) {
         try {
-            musicInterpreter.addMusicToEvent(musicEventHolder.song, musicEventHolder.eventId);
+            musicInterpreter.addMusicToEvent(musicEventHolder.song, musicEventHolder.eventId, musicEventHolder.service);
 
             return CorsAdder.addCors(Response.ok()).build();
         }
-        catch (Exception e){
+        catch (NoSuchServiceException | AddMusicException e){
+            logger.log(Level.SEVERE, e.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        } catch (Exception e){
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
     }

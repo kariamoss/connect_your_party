@@ -16,7 +16,7 @@ public interface IMusicModule {
 
     @POST()
     @Path("addMusic")
-    @Consumes(MediaType.APPLICATION_JSON) //TODO Change to requestObject
+    @Consumes(MediaType.APPLICATION_JSON)
     Response addMusicToEvent(MusicEventHolder musicEventHolder);
 
     @GET()
