@@ -1,6 +1,8 @@
 package ConnectYourParty.modulesLogic.music.serviceUser;
 
+import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.objects.music.MusicService;
 import ConnectYourParty.services.photo.IMusicService;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +22,9 @@ public class MusicServiceUser implements IMusicServiceUser {
 
     @Override
     public JsonArray searchMusic(String music, String serviceName) throws NoSuchServiceException {
-        return this.getService(serviceName).searchMusic(music);
+        MusicService musicService = this.getService(serviceName).searchMusic(music);
+        Music musicGot = new Music();
+        return null;
     }
 
     private IMusicService getService(String serviceName) throws NoSuchServiceException {

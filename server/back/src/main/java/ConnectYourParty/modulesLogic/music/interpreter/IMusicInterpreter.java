@@ -1,6 +1,6 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
-import ConnectYourParty.businessObjects.Music;
+import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.exception.NoSuchServiceException;
 
 import javax.ejb.Local;
