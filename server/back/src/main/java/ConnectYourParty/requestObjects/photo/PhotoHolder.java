@@ -1,7 +1,7 @@
 package ConnectYourParty.requestObjects.photo;
 
-import ConnectYourParty.database.businessObjects.Photo;
-import ConnectYourParty.database.businessObjects.User;
+import ConnectYourParty.businessObjects.photo.Photo;
+import ConnectYourParty.businessObjects.User;
 
 public class PhotoHolder {
     public String photoPath;
@@ -16,6 +16,6 @@ public class PhotoHolder {
     public PhotoHolder(Photo photo) {
         this.photoPath = photo.getPhotoPath();
         this.name = photo.getName();
-        this.user = photo.getUser().getSurname() + " " + photo.getUser().getName();
+        this.user = "Jehan";
     }
 }

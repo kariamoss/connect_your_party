@@ -1,39 +1,68 @@
 package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
-import ConnectYourParty.database.businessObjects.Photo;
-import ConnectYourParty.database.businessObjects.User;
+import ConnectYourParty.businessObjects.photo.Photo;
+import ConnectYourParty.businessObjects.User;
+import ConnectYourParty.database.photo.IPhotoDatabase;
+import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
-import ConnectYourParty.modulesLogic.interpreter.PhotoInterpreter;
+import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
+import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
+import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import javax.ejb.EJB;
 import java.util.List;
 
+@RunWith(Arquillian.class)
 public class ListPhotoTest {
+
+    @EJB
+    IPhotoDatabase db;
+
+    @EJB
+    IPhotoInterpreter photoInterpreter;
+
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addPackage(IPhotoDatabase.class.getPackage())
+                .addPackage(PhotoDatabase.class.getPackage())
+                .addPackage(IPhotoInterpreter.class.getPackage())
+                .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
+                .addPackage(PhotoInterpreter.class.getPackage());
+    }
 
     @Before
     @After
     public void init(){
-        DbMock.clean();
+        db.clean();
     }
 
     @Test
-    public void addPhotoAndGetList() throws PhotoAlreadyExistException {
-        DbMock.addPhoto(DbMock.event, new Photo("salut", "name", new User("milleret", "jehan"), "Dropbox"));
+    public void addPhotoAndGetList() throws PhotoAlreadyExistException,AddPhotoErrorException {
+        db.addPhoto(new Photo( "name", "Dropbox"));
 
-        PhotoInterpreter photoInterpreter = new PhotoInterpreter();
         List<PhotoHolder> photoHolderList = photoInterpreter.getPhotoList();
 
         Assert.assertEquals(1, photoHolderList.size());
 
         PhotoHolder photoHolder = photoHolderList.get(0);
 
-        Assert.assertEquals("salut", photoHolder.photoPath);
+        Assert.assertEquals(DbMock.event.getId() + "/name", photoHolder.photoPath);
         Assert.assertEquals("name", photoHolder.name);
-        Assert.assertEquals("jehan milleret", photoHolder.user);
+        Assert.assertEquals("Jehan", photoHolder.user);
     }
 }

@@ -5,6 +5,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
+
 import javax.jws.WebService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -12,8 +13,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.Produces;
 import java.io.InputStream;
 
-@WebService
 @Path("/photo")
+@WebService
 public interface IPhotoModule {
 
 
@@ -75,7 +76,7 @@ public interface IPhotoModule {
      * @return JsonArray containing information about the photo services
      */
     @GET()
-    @Path("getPhotoServices")
+    @Path("getServices")
     @Produces(MediaType.APPLICATION_JSON)
     Response getPhotoServices();
 }

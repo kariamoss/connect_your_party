@@ -37,4 +37,24 @@ public class CotyPhotoService implements IPhotoService {
             return null;
         }
     }
+
+    @Override
+    public URL getOAuth() {
+        return null;
+    }
+
+    @Override
+    public URL getOAuthToken() {
+        return null;
+    }
+
+    @Override
+    public String getAppKey() {
+        return null;
+    }
+
+    @Override
+    public String getAppSecret() {
+        return null;
+    }
 }
