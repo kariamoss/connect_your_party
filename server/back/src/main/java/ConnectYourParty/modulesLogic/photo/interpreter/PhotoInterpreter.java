@@ -79,15 +79,15 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     public List<PhotoServiceHolder> getServices() {
         List<PhotoServiceHolder> arr = new ArrayList<>();
         for (IPhotoService service : services.getServiceList()) {
-            if (service.getOAuth() == null) {
+            if (service.getOAuthUrl() == null) {
                 arr.add(new PhotoServiceHolder(service.getServiceName(),
                         service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
                 continue;
             }
             arr.add(new PhotoServiceHolder(service.getServiceName(),
                     service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
-                    service.getOAuth().getHost() + service.getOAuth().getPath(),
-                    service.setOAuthToken().getHost() + service.setOAuthToken().getPath(),
+                    service.getOAuthUrl().getHost() + service.getOAuthUrl().getPath(),
+                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
                     service.getAppKey(),
                     service.getAppSecret()));
         }

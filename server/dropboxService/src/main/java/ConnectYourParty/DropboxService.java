@@ -75,7 +75,7 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public URL getOAuth() {
+    public URL getOAuthUrl() {
         try {
             return new URL("https://www.dropbox.com/oauth2/authorize");
         } catch (Exception e){
@@ -84,7 +84,7 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public void setOAuthToken(String oAuthToken) {
+    public URL getOAuthToken() {
         try {
             return new URL("https://api.dropboxapi.com/oauth2/token");
         } catch (Exception e){

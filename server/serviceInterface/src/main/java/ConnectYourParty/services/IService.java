@@ -23,15 +23,21 @@ public interface IService {
      * Leave blank if there is no OAuth login on your service
      * @return URL where the service need to login
      */
-    URL getOAuth();
+    URL getOAuthUrl();
+
+
+    //TODO Pass those two methods in services and use updateToken
+    URL getOAuthToken();
+    String getAppSecret();
 
     /**
-     * When the OAuth token is retrieved
-     * Call this method to set it
+     * When the OAuth code is retrieved with {@link IService#getOAuthUrl()}
+     * The service will need to update the token and send it back
      * Never call if there is no OAuth login on your service
-     * @param oAuthToken the token
+     * @param oAuthToken the code retrieved before
+     * @return token the valid token
      */
-    void setOAuthToken(String oAuthToken);
+    //String updateToken(String oAuthToken);
 
     /**
      * Retrieve the app key of the service if the service needs
