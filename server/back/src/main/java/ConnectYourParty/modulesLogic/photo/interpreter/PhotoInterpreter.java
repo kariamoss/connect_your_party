@@ -40,7 +40,7 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     public void addPhoto(InputStream stream, String name, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
 
-        Photo photo = new Photo(String.valueOf(DbMock.event.getId()), rName, serviceName);
+        Photo photo = new Photo(rName, serviceName);
 
 
         try {
