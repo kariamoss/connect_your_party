@@ -1,7 +1,6 @@
 package ConnectYourParty.modulesLogic.photo.interpreter;
 
 import ConnectYourParty.businessObjects.photo.Photo;
-import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
@@ -88,7 +87,7 @@ public class PhotoInterpreter implements IPhotoInterpreter {
             arr.add(new PhotoServiceHolder(service.getServiceName(),
                     service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
                     service.getOAuth().getHost() + service.getOAuth().getPath(),
-                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
+                    service.setOAuthToken().getHost() + service.setOAuthToken().getPath(),
                     service.getAppKey(),
                     service.getAppSecret()));
         }

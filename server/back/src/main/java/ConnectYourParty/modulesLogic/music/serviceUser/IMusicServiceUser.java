@@ -1,6 +1,5 @@
 package ConnectYourParty.modulesLogic.music.serviceUser;
 
-import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.objects.music.MusicService;
 

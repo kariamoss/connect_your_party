@@ -1,7 +1,6 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
 import ConnectYourParty.businessObjects.music.Music;
-import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.music.IMusicDatabase;
 import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
@@ -11,7 +10,6 @@ import ConnectYourParty.requestObjects.music.MusicSearchHolder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.json.JsonArray;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +32,13 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public List<Music> getListMusic(String event) {
-        return db.getMusicList();
+    public List<MusicSearchHolder> getListMusic(String event) {
+        List<Music> musicDB = db.getMusicList();
+        List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
+        for(Music ms : musicDB){
+            musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
+        }
+        return musicSearchHolders;
     }
 
     @Override

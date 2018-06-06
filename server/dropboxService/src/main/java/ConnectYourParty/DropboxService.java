@@ -4,16 +4,12 @@ import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
-import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.DownloadBuilder;
 
 
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class DropboxService implements IPhotoService{
@@ -88,7 +84,7 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public URL getOAuthToken() {
+    public void setOAuthToken(String oAuthToken) {
         try {
             return new URL("https://api.dropboxapi.com/oauth2/token");
         } catch (Exception e){
