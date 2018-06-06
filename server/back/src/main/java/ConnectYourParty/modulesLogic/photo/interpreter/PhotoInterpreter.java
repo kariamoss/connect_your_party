@@ -2,6 +2,7 @@ package ConnectYourParty.modulesLogic.photo.interpreter;
 
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.photo.IPhotoDatabase;
+import ConnectYourParty.database.token.ITokenDatabase;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.PhotoAlreadyExistException;
@@ -27,13 +28,13 @@ import java.util.UUID;
 public class PhotoInterpreter implements IPhotoInterpreter {
 
     @EJB
-    IPhotoServiceUser services;
+    private IPhotoServiceUser services;
 
     @EJB
-    IPhotoChooser photoChooser;
+    private IPhotoChooser photoChooser;
 
     @EJB
-    IPhotoDatabase db;
+    private IPhotoDatabase db;
 
     @Override
     public void addPhoto(InputStream stream, String name, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
@@ -47,7 +48,7 @@ public class PhotoInterpreter implements IPhotoInterpreter {
             byte[] bin = new byte[stream.available()];
             stream.read(bin);
             photoChooser.addPhoto(bin, photo);
-        } catch (Exception e){
+        } catch (Exception e) {
             db.removePhoto(photo);
         }
 
@@ -79,17 +80,9 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     public List<PhotoServiceHolder> getServices() {
         List<PhotoServiceHolder> arr = new ArrayList<>();
         for (IPhotoService service : services.getServiceList()) {
-            if (service.getOAuthUrl() == null) {
-                arr.add(new PhotoServiceHolder(service.getServiceName(),
-                        service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
-                continue;
-            }
             arr.add(new PhotoServiceHolder(service.getServiceName(),
-                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
-                    service.getOAuthUrl().getHost() + service.getOAuthUrl().getPath(),
-                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
-                    service.getAppKey(),
-                    service.getAppSecret()));
+                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
+
         }
 
         return arr;

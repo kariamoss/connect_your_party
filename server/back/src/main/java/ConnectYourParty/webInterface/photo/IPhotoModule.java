@@ -1,6 +1,7 @@
 package ConnectYourParty.webInterface.photo;
 
 import ConnectYourParty.requestObjects.photo.UploadRequest;
+import ConnectYourParty.webInterface.IModule;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;

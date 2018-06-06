@@ -1,7 +1,13 @@
 package ConnectYourParty.businessObjects;
 
+import ConnectYourParty.objects.TokenService;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class User {
@@ -12,6 +18,10 @@ public class User {
     @NotNull
     private String surname;
 
+    @NotNull
+    @OneToMany
+    private List<Token> tokenList;
+
     public User(){
 
     }
@@ -19,6 +29,7 @@ public class User {
     public User(String name, String surname) {
         this.name = name;
         this.surname = surname;
+        tokenList = new ArrayList<>();
     }
 
     public String getName() {
@@ -27,5 +38,23 @@ public class User {
 
     public String getSurname() {
         return surname;
+    }
+
+    public List<Token> getTokenList() {
+        return tokenList;
+    }
+
+    public Optional<TokenService> getToken(String serviceHost) {
+        for (Token t : tokenList) {
+            if (t.getServiceName().equals(serviceHost)) {
+                return Optional.of(new TokenService(t.getCode(), t.getAccessToken(), t.getRefreshToken()));
+                // TODO accessToken ou RefreshToken peuvent être null !?
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void addToken(Token token) {
+        tokenList.add(token);
     }
 }

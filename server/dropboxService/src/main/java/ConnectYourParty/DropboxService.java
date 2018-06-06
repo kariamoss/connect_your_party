@@ -3,6 +3,8 @@ package ConnectYourParty;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
+import ConnectYourParty.objects.TokenService;
+import ConnectYourParty.services.IServiceOAuth;
 import ConnectYourParty.services.photo.IPhotoService;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -11,8 +13,9 @@ import com.dropbox.core.v2.DbxClientV2;
 import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Optional;
 
-public class DropboxService implements IPhotoService{
+public class DropboxService implements IPhotoService, IServiceOAuth {
 
     private final String token = "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP";
     private DbxClientV2 client;
@@ -24,7 +27,7 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public void addPhoto(byte[] photo,String path) throws AddPhotoErrorException {
+    public void addPhoto(byte[] photo, String path, Optional<TokenService> token) throws AddPhotoErrorException {
         try {
             InputStream in = new ByteArrayInputStream(photo);
 
@@ -36,7 +39,7 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
+    public byte[] getPhoto(String path, Optional<TokenService> token) throws RetrievePhotoErrorException {
         try {
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -51,7 +54,7 @@ public class DropboxService implements IPhotoService{
     }
 
     @Override
-    public void removePhoto(String path) throws CannotDeletePhotoException {
+    public void removePhoto(String path, Optional<TokenService> token) throws CannotDeletePhotoException {
         try {
             this.client.files().deleteV2(path);
         } catch (Exception e) {
@@ -100,5 +103,10 @@ public class DropboxService implements IPhotoService{
     @Override
     public String getAppSecret() {
         return "lwlzexl2nnypmlq";
+    }
+
+    @Override
+    public String updateToken(String oAuthCode) {
+        return null;
     }
 }

@@ -40,6 +40,9 @@ public class Photo implements Serializable {
         return serviceHost;
     }
 
+    public User getUser() {
+        return user;
+    }
 
     public String getPhotoPath() {
         return this.path;

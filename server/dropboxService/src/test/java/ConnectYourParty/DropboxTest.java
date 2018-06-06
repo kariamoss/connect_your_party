@@ -26,7 +26,7 @@ public class DropboxTest {
     @After
     public void removal() {
         try {
-            service.removePhoto(this.destPath);
+            service.removePhoto(this.destPath, );
         } catch (CannotDeletePhotoException e) {
             // no problem
         }
@@ -39,9 +39,9 @@ public class DropboxTest {
         byte[] buff = new byte[in.available()];
         in.read(buff);
 
-        service.addPhoto(buff,destPath);
+        service.addPhoto(buff,destPath, );
 
-        byte[] recv = this.service.getPhoto(destPath);
+        byte[] recv = this.service.getPhoto(destPath, );
 
         assertTrue(Arrays.equals(buff,recv));
     }
@@ -50,11 +50,11 @@ public class DropboxTest {
     public void removeTest() throws AddPhotoErrorException, CannotDeletePhotoException {
         byte[] buff = new byte[3];
         buff[0] = 1;
-        service.addPhoto(buff,this.destPath); // No exception
+        service.addPhoto(buff,this.destPath, ); // No exception
 
-        service.removePhoto(this.destPath); //No exception
+        service.removePhoto(this.destPath, ); //No exception
 
-        service.addPhoto(buff,this.destPath); // No exception
+        service.addPhoto(buff,this.destPath, ); // No exception
 
     }
 
