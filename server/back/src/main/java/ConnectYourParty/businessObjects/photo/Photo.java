@@ -1,6 +1,8 @@
 package ConnectYourParty.businessObjects.photo;
 
+import ConnectYourParty.businessObjects.Event;
 import ConnectYourParty.businessObjects.User;
+import ConnectYourParty.database.DbMock;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,25 +17,22 @@ public class Photo implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private String eventId;
-
-    @NotNull
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private User user;
+    @Transient
+    private Event event = DbMock.event;
 
     @NotNull
     private String serviceHost;
+
+    @Transient
+    private User user = DbMock.user;
 
     public Photo(){
 
     }
 
-    public Photo(String eventId, String name, User user, String serviceHost) {
+    public Photo(String name, String serviceHost) {
         this.name = name;
-        this.eventId = eventId;
-        this.path = eventId+"/"+name;
-        this.user = user;
+        this.path = this.event.getId()+"/"+name;
         this.serviceHost = serviceHost;
     }
 
@@ -41,9 +40,6 @@ public class Photo implements Serializable {
         return serviceHost;
     }
 
-    public User getUser() {
-        return user;
-    }
 
     public String getPhotoPath() {
         return this.path;

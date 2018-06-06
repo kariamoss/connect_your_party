@@ -37,6 +37,7 @@ public class PhotoDatabase implements IPhotoDatabase{
             throw new AddPhotoErrorException();
         }
         this.entityManager.persist(photo);
+        this.entityManager.flush();
     }
 
     @Override

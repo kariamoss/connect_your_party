@@ -48,7 +48,7 @@ public class PhotoInterpreterTest {
         InputStream stream = mock(InputStream.class);
         when(stream.available()).thenReturn(-1);
 
-        Photo photo = new Photo("test","test",DbMock.user,"dominos");
+        Photo photo = new Photo("test","dominos");
 
         assertEquals(0,db.getPhotoList().size());
         this.interpreter.addPhoto(stream,photo.getName(),photo.getServiceHost());

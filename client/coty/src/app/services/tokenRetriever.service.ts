@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TokenHolder} from "../../model/tokenHolder.model";
 import {Service} from "../../model/service.model";
+import {isUndefined} from "util";
 
 
 @Injectable()
@@ -14,22 +15,22 @@ export class TokenRetrieverService {
   }
 
   retrieveToken(service: Service, code: string, id: number, module: string) {
-        let formData: FormData = new FormData();
-        formData.append('code', code);
-        formData.append('grant_type', 'authorization_code');
-        formData.append('client_id', service.client_id);
-        formData.append('client_secret', service.client_secret);
-        formData.append('redirect_uri', 'http://localhost:4200/authentication/?service=' + service.name);
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        this.httpClient.post('https://' + service.oAuthTokenURL, formData, {headers: headers})
-          .subscribe(
-            data => {
-              this.setToken(service, data['access_token'], data['expires_in'], data['refresh_token']);
-              console.log('Retrieved token for ' + service.name + ' : ' + this.getToken(service))
-            },
-            error => console.log(error)
-          );
+    let formData: FormData = new FormData();
+    formData.append('code', code);
+    formData.append('grant_type', 'authorization_code');
+    formData.append('client_id', service.client_id);
+    formData.append('client_secret', service.client_secret);
+    formData.append('redirect_uri', 'http://localhost:4200/authentication/?service=' + service.name);
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    this.httpClient.post('https://' + service.oAuthTokenURL, formData, {headers: headers})
+      .subscribe(
+        data => {
+          this.setToken(service, data['access_token'], data['expires_in'], data['refresh_token']);
+          console.log('Retrieved token for ' + service.name + ' : ' + this.getToken(service))
+        },
+        error => console.log(error)
+      );
   }
 
   refresh(refresh_token: string, service: Service) {
@@ -55,7 +56,7 @@ export class TokenRetrieverService {
       this.tokens.push(new TokenHolder(access_token, service, refresh_token));
     } else {
       this.tokens[index].access_token = access_token;
-      this.tokens[index].refresh_token  = refresh_token ? refresh_token :  this.tokens[index].refresh_token;
+      this.tokens[index].refresh_token = refresh_token ? refresh_token : this.tokens[index].refresh_token;
     }
   }
 
@@ -65,6 +66,6 @@ export class TokenRetrieverService {
         return tokenHolder.service.name === service.name;
       }
     );
-    return tmp.access_token ? tmp.access_token : null;
+    return tmp ? tmp.access_token : null;
   }
 }
