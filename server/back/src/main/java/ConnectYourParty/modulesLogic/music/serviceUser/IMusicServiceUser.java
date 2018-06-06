@@ -1,12 +1,14 @@
 package ConnectYourParty.modulesLogic.music.serviceUser;
 
+import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.objects.music.MusicService;
 
 import javax.ejb.Local;
-import javax.json.JsonArray;
+import java.util.List;
 
 @Local
 public interface IMusicServiceUser {
-    JsonArray searchMusic(String music, String serviceName) throws NoSuchServiceException;
+    List<MusicService> searchMusic(String music, String serviceName) throws NoSuchServiceException;
 
 }

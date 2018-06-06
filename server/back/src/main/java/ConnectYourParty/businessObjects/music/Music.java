@@ -29,11 +29,9 @@ public class Music {
 
     public Music(){ }
 
-    public Music(String path, Event event, String serviceHost, User user, String title, String artist) {
+    public Music(String path, String serviceHost,String title, String artist) {
         this.path = path;
-        this.event = event;
         this.serviceHost = serviceHost;
-        this.user = user;
         this.title = title;
         this.artist = artist;
     }

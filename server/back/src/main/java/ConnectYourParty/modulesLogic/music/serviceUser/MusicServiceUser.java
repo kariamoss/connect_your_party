@@ -7,7 +7,6 @@ import ConnectYourParty.services.photo.IMusicService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-import javax.json.JsonArray;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +20,8 @@ public class MusicServiceUser implements IMusicServiceUser {
     }
 
     @Override
-    public JsonArray searchMusic(String music, String serviceName) throws NoSuchServiceException {
-        MusicService musicService = this.getService(serviceName).searchMusic(music);
-        Music musicGot = new Music();
-        return null;
+    public List<MusicService> searchMusic(String music, String serviceName) throws NoSuchServiceException {
+        return this.getService(serviceName).searchMusic(music);
     }
 
     private IMusicService getService(String serviceName) throws NoSuchServiceException {
