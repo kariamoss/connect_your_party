@@ -39,7 +39,7 @@ public class CotyPhotoService implements IPhotoService {
     }
 
     @Override
-    public URL getOAuth() {
+    public URL getOAuthUrl() {
         return null;
     }
 
