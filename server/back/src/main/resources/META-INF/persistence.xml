@@ -8,6 +8,7 @@
         <jta-data-source>TCFDataSource</jta-data-source>
 
         <class>ConnectYourParty.businessObjects.photo.Photo</class>
+        <class>ConnectYourParty.businessObjects.music.Music</class>
         <class>ConnectYourParty.businessObjects.Event</class>
         <class>ConnectYourParty.businessObjects.User</class>
 
