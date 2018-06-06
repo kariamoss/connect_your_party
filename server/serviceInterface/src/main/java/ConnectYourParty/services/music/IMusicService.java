@@ -1,4 +1,4 @@
-package ConnectYourParty.services.photo;
+package ConnectYourParty.services.music;
 
 
 import ConnectYourParty.objects.music.MusicService;

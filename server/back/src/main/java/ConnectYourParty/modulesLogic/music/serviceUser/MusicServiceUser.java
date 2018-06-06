@@ -1,9 +1,8 @@
 package ConnectYourParty.modulesLogic.music.serviceUser;
 
-import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.objects.music.MusicService;
-import ConnectYourParty.services.photo.IMusicService;
+import ConnectYourParty.services.music.IMusicService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
