@@ -1,7 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {isUndefined} from "util";
 import {SelectorService} from "../services/selector.service";
-import {TokenRetrieverService} from "../services/tokenRetriever.service";
 import {Subscription} from "rxjs/internal/Subscription";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -20,7 +19,6 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
   error: string;
 
   constructor(private selectorService: SelectorService,
-              private tokenRetriever: TokenRetrieverService,
               private route: ActivatedRoute,
               private router: Router,
               private httpClient : HttpClient,
@@ -57,7 +55,7 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
         }
         setTimeout(() => {
           this.router.navigate(['/events/' + state]);
-        }, 100000 + this.error ? 2000 : 0);
+        }, 1000 + this.error ? 2000 : 0);
       });
     }, 1000);
   }
