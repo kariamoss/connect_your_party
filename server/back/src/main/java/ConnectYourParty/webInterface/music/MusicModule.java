@@ -65,8 +65,9 @@ public class MusicModule implements IMusicModule {
 
     @Override
     public Response getListMusic(String playlist) {
-        return CorsAdder.addCors(
+        /*return CorsAdder.addCors(
                 Response.status(Response.Status.OK).entity(musicInterpreter.getListMusic(playlist)))
-                .build();
+                .build();*/
+        return null;
     }
 }

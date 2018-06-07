@@ -32,18 +32,19 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public List<MusicSearchHolder> getListMusic(String playlist) {
+    public List<MusicSearchHolder> getListMusic(String playlist, String service) throws NoSuchServiceException {
         List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
-        List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlist);
+        List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlist, service);
         for(MusicService ms : musicService){
             musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
         }
         return musicSearchHolders;
     }
 
-    /*@Override
-    public void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException, GetMusicErrorException {
-        MusicService musicService = musicServiceUser.getInfoFromId(music, service);
-        db.addMusic(new Music(music, service, musicService.getTitle(), musicService.getArtist()));
-    }*/
+
+    public void addMusicToPlaylist(String music, String service) throws NoSuchServiceException {
+
+        //MusicService musicService = musicServiceUser.getInfoFromId(music, service);
+        //db.addMusic(new Music(music, service, musicService.getTitle(), musicService.getArtist()));
+    }
 }

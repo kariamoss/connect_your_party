@@ -2,6 +2,7 @@ package ConnectYourParty;
 
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
+import ConnectYourParty.objects.music.PlaylistService;
 import ConnectYourParty.services.music.IMusicService;
 
 import java.io.BufferedReader;
@@ -64,6 +65,16 @@ public class SpotifyService implements IMusicService {
     @Override
     public void addMusicFromId(String id, String playlist) throws GetMusicErrorException {
         //TODO Add to playlist if exist
+    }
+
+    @Override
+    public PlaylistService addPlaylist() {
+        return null;
+    }
+
+    @Override
+    public List<MusicService> getMusicFromPlaylist(String playlist) {
+        return null;
     }
 
     @Override

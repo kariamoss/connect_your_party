@@ -15,5 +15,7 @@ public interface IMusicServiceUser {
 
     void addEventFromId(String id, String playlist, String serviceName) throws NoSuchServiceException, GetMusicErrorException;
 
-    List<MusicService> getMusicFromPlaylist(String playlist);
+    List<MusicService> getMusicFromPlaylist(String playlist, String serviceName) throws NoSuchServiceException;
+
+    void addPlaylist(String serviceName) throws NoSuchServiceException;
 }

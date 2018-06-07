@@ -37,9 +37,14 @@ public class MusicServiceUser implements IMusicServiceUser {
     }
 
     @Override
-    public List<MusicService> getMusicFromPlaylist(String playlist) {
-        //TODO Make request in services
+    public List<MusicService> getMusicFromPlaylist(String playlist, String serviceName) throws NoSuchServiceException {
+        this.getService(serviceName).getMusicFromPlaylist(playlist);
         return null;
+    }
+
+    @Override
+    public void addPlaylist(String serviceName) throws NoSuchServiceException {
+        this.getService(serviceName).addPlaylist();
     }
 
     private IMusicService getService(String serviceName) throws NoSuchServiceException {

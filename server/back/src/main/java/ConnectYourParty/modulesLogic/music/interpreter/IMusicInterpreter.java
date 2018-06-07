@@ -11,7 +11,7 @@ import java.util.List;
 public interface IMusicInterpreter {
     List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException;
 
-    List<MusicSearchHolder> getListMusic(String playlist);
+    List<MusicSearchHolder> getListMusic(String playlist, String service) throws NoSuchServiceException;
 
     //List<MusicSearchHolder> getListMusic(String event);
 
