@@ -20,7 +20,7 @@ import {
   MatDialogModule,
   MatGridListModule,
   MatProgressSpinnerModule,
-  MatTabsModule,
+  MatTabsModule, MatProgressBarModule,
 } from "@angular/material";
 import {EventComponent} from './event/event.component';
 import {EventViewComponent} from './event-view/event-view.component';
@@ -43,6 +43,10 @@ import {PhotoService} from "./services/photo.service";
 import {AppConfigModule} from "./app-config.module";
 import {DevelopersComponent} from './developers/developers.component';
 import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component';
+import {TokenRetrieverService} from "./services/tokenRetriever.service";
+import {AuthenticationProcessComponent} from "./authentication-process/authentication-process.component";
+import {MusicPlayerComponent} from "./music/music-player/music-player.component";
+import {MusicSearchComponent} from "./music/music-search/music-search.component";
 
 @NgModule({
   declarations: [
