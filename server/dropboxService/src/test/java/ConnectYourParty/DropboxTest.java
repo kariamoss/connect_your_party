@@ -67,5 +67,10 @@ public class DropboxTest {
         assertNotNull(service.getServiceIcon());
     }
 
+    @Test
+    public void OAuthTest(){
+        assertNotNull(service.getOAuthUrl());
+    }
+
 
 }

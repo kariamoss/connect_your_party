@@ -7,6 +7,7 @@ import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
+import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import javax.ejb.Local;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Local
 public interface IPhotoServiceUser {
 
-    List<IPhotoService> getServiceList();
+    List<PhotoServiceHolder> getServiceList();
     void removePhoto(Photo photo, Optional<Token> token) throws CannotDeletePhotoException, NoSuchServiceException;
     byte[] getPhoto(Photo photo, Optional<Token> token) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException;
     void addPhoto(Photo photo, byte[] bin, Optional<Token> token) throws AddPhotoErrorException, NoSuchServiceException;

@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Arquillian.class)
 public class DbTest {
 
-    private User user = new User("salut","salut");
 
     @EJB private IPhotoDatabase db;
 

@@ -4,6 +4,8 @@ import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
+import ConnectYourParty.database.service.IServiceRegistry;
+import ConnectYourParty.database.service.ServiceRegistry;
 import ConnectYourParty.database.token.ITokenDatabase;
 import ConnectYourParty.database.token.TokenDatabase;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
@@ -79,10 +81,11 @@ public class PhotoModuleTest {
                 .addPackage(ServiceUser.class.getPackage())
                 .addPackage(ITokenDatabase.class.getPackage())
                 .addPackage(TokenDatabase.class.getPackage())
+                .addPackage(IServiceRegistry.class.getPackage())
+                .addPackage(ServiceRegistry.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoDatabase.class.getPackage());
     }
-
 
     @Test
     public void addAndGetTest() throws Exception{
