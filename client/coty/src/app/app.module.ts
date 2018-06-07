@@ -44,8 +44,9 @@ import {AppConfigModule} from "./app-config.module";
 import {DevelopersComponent} from './developers/developers.component';
 import { SubmitDevComponent } from './developers/submit-dev/submit-dev.component';
 import {TokenRetrieverService} from "./services/tokenRetriever.service";
-import { AuthenticationProcessComponent } from './authentication-process/authentication-process.component';
-import { MusicPlayerComponent } from './music/music-player/music-player.component';
+import {AuthenticationProcessComponent} from "./authentication-process/authentication-process.component";
+import {MusicPlayerComponent} from "./music/music-player/music-player.component";
+import {MusicSearchComponent} from "./music/music-search/music-search.component";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { MusicPlayerComponent } from './music/music-player/music-player.componen
     DevelopersComponent,
     SubmitDevComponent,
     AuthenticationProcessComponent,
+    MusicSearchComponent,
     MusicPlayerComponent,
   ],
   imports: [
@@ -101,4 +103,5 @@ import { MusicPlayerComponent } from './music/music-player/music-player.componen
   bootstrap: [AppComponent],
   entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent,SubmitDevComponent ]
 })
-export class AppModule { }
+export class AppModule {
+}

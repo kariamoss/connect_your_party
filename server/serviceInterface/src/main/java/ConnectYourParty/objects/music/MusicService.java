@@ -24,4 +24,8 @@ public class MusicService {
     public String getArtist() {
         return artist;
     }
+
+    public String toString(){
+        return "\"" + title + "\" de " + artist + " (id="+id+")";
+    }
 }
