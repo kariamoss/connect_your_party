@@ -76,7 +76,7 @@ public interface IPhotoModule {
      * @return JsonArray containing information about the photo services
      */
     @GET()
-    @Path("getPhotoServices")
+    @Path("getServices")
     @Produces(MediaType.APPLICATION_JSON)
     Response getPhotoServices();
 }

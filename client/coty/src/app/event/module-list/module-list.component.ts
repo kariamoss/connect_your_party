@@ -17,7 +17,6 @@ export class ModuleListComponent implements OnInit {
 
   setActive(toto){
     this.selected = toto;
-    console.log('active class : '+toto);
   }
 
 

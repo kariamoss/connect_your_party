@@ -1,13 +1,13 @@
 
 <div id="mainForm">
   <h3>Choisir un service d'upload :</h3>
-<app-service-selector [module]="module"></app-service-selector>
+<app-service-selector [module]="module" [id]="id"></app-service-selector>
 
 
   <hr/>
 
 <h3>Choisir la photo à importer :</h3>
-<form id="addForm"(ngSubmit)="onSubmit()" #f="ngForm">
+<form id="addForm" (ngSubmit)="onSubmit()" #f="ngForm">
   <input  type="file" name="pic" accept="image/*" id="file" (change)="fileChange($event)" ngModel required>
   <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="f.invalid">Envoyer</button>
 </form>
