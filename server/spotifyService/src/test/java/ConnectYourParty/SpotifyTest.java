@@ -37,5 +37,10 @@ public class SpotifyTest {
         List<MusicService> list = service.searchMusic("booba");
         assertEquals(list.size(), service.searchResults);
     }
+
+    @Test
+    public void refreshTest() throws GetMusicErrorException {
+        service.updateToken();
+    }
 }
 

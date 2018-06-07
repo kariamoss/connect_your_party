@@ -1,6 +1,8 @@
 package ConnectYourParty.modulesLogic.music.serviceUser;
 
+import ConnectYourParty.SpotifyService;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
 import ConnectYourParty.services.music.IMusicService;
 
@@ -16,15 +18,16 @@ public class MusicServiceUser implements IMusicServiceUser {
     @PostConstruct
     public void init(){
         serviceMusicList = new ArrayList<>();
+        serviceMusicList.add(new SpotifyService());
     }
 
     @Override
-    public List<MusicService> searchMusic(String music, String serviceName) throws NoSuchServiceException {
+    public List<MusicService> searchMusic(String music, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
         return this.getService(serviceName).searchMusic(music);
     }
 
     @Override
-    public MusicService getInfoFromId(String id, String serviceName) throws NoSuchServiceException {
+    public MusicService getInfoFromId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
         return this.getService(serviceName).getInfoFromId(id);
     }
 
