@@ -1,9 +1,11 @@
 package ConnectYourParty.database.music;
 
 import ConnectYourParty.businessObjects.music.Music;
-import ConnectYourParty.exception.AddMusicException;
-import ConnectYourParty.exception.NoSuchMusicException;
-import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.businessObjects.music.Playlist;
+import ConnectYourParty.exception.music.AddMusicException;
+import ConnectYourParty.exception.music.AddPlaylistException;
+import ConnectYourParty.exception.music.NoSuchMusicException;
+import ConnectYourParty.exception.music.NoSuchPlaylistException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,6 +20,8 @@ import java.util.List;
 public class MusicDatabase implements IMusicDatabase {
     @PersistenceContext
     private EntityManager entityManager;
+
+    /********** Music *********/
 
     @Override
     public List<Music> getMusicList() {
@@ -40,12 +44,6 @@ public class MusicDatabase implements IMusicDatabase {
     }
 
     @Override
-    public void removeMusic(Music music){
-        music = entityManager.merge(music);
-        entityManager.remove(music);
-    }
-
-    @Override
     public Music getMusicFromId(String id) throws NoSuchMusicException {
         Music music = this.entityManager.find(Music.class,id);
         if(music == null){
@@ -55,9 +53,55 @@ public class MusicDatabase implements IMusicDatabase {
     }
 
     @Override
+    public void removeMusic(Music music){
+        music = entityManager.merge(music);
+        entityManager.remove(music);
+    }
+
+    /********** Playlist *********/
+
+    @Override
+    public void addPlaylist(Playlist playlist) throws AddPlaylistException {
+        if(this.getPlaylistList().contains(playlist)){
+            throw new AddPlaylistException("Can't add playlist " + playlist.getId());
+        }
+        this.entityManager.persist(playlist);
+        this.entityManager.flush();
+    }
+
+    @Override
+    public List<Playlist> getPlaylistList() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Playlist> criteria = builder.createQuery(Playlist.class);
+        Root<Playlist> root =  criteria.from(Playlist.class);
+        criteria.select(root);
+        TypedQuery<Playlist> query = entityManager.createQuery(criteria);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public Playlist getPlaylistFromId(String id) throws NoSuchPlaylistException {
+        Playlist playlist = this.entityManager.find(Playlist.class,id);
+        if(playlist == null){
+            throw new NoSuchPlaylistException("Can't find playlist with this id : " + id);
+        }
+        return playlist;
+    }
+
+    @Override
+    public void removePlaylist(Playlist playlist){
+        playlist = entityManager.merge(playlist);
+        entityManager.remove(playlist);
+    }
+
+    @Override
     public void clean() {
         for(Music music : this.getMusicList()){
             this.removeMusic(music);
+        }
+        for(Playlist playlist : this.getPlaylistList()){
+            this.removePlaylist(playlist);
         }
     }
 }

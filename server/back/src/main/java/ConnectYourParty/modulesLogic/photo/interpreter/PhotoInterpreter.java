@@ -2,9 +2,9 @@ package ConnectYourParty.modulesLogic.photo.interpreter;
 
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.photo.IPhotoDatabase;
-import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
-import ConnectYourParty.exception.PhotoAlreadyExistException;
+import ConnectYourParty.exception.photo.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;

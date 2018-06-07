@@ -1,4 +1,4 @@
-package ConnectYourParty.exception;
+package ConnectYourParty.exception.photo;
 
 public class PhotoAlreadyExistException extends Exception {
     public PhotoAlreadyExistException() {}

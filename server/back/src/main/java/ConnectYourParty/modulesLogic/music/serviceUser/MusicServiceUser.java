@@ -31,6 +31,17 @@ public class MusicServiceUser implements IMusicServiceUser {
         return this.getService(serviceName).getInfoFromId(id);
     }
 
+    @Override
+    public void addEventFromId(String id, String playlist, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
+        this.getService(serviceName).addMusicFromId(id, playlist);
+    }
+
+    @Override
+    public List<MusicService> getMusicFromPlaylist(String playlist) {
+        //TODO Make request in services
+        return null;
+    }
+
     private IMusicService getService(String serviceName) throws NoSuchServiceException {
         for(IMusicService service : serviceMusicList){
             if(service.getServiceName().equals(serviceName)){

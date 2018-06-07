@@ -12,4 +12,6 @@ public interface IMusicService extends IService {
     List<MusicService> searchMusic(String search) throws GetMusicErrorException;
 
     MusicService getInfoFromId(String id) throws GetMusicErrorException;
+
+    void addMusicFromId(String id, String playlist) throws GetMusicErrorException;
 }

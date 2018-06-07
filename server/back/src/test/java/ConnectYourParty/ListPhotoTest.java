@@ -2,10 +2,9 @@ package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.businessObjects.photo.Photo;
-import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
-import ConnectYourParty.exception.PhotoAlreadyExistException;
+import ConnectYourParty.exception.photo.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;

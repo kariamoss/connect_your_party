@@ -5,7 +5,7 @@ import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
-import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;

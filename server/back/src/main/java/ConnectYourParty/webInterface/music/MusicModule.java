@@ -1,17 +1,14 @@
 package ConnectYourParty.webInterface.music;
 
-import ConnectYourParty.exception.AddMusicException;
+import ConnectYourParty.exception.music.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.modulesLogic.music.interpreter.IMusicInterpreter;
 import ConnectYourParty.requestObjects.music.MusicEventHolder;
 import ConnectYourParty.webInterface.CorsAdder;
-import ConnectYourParty.webInterface.photo.PhotoModule;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.json.Json;
-import javax.json.JsonArray;
 import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -27,14 +24,14 @@ public class MusicModule implements IMusicModule {
     @Override
     public Response addMusicToEvent(MusicEventHolder musicEventHolder) {
         try {
-            musicInterpreter.addMusicToEvent(musicEventHolder.song, musicEventHolder.eventId, musicEventHolder.service);
+            //musicInterpreter.addMusicToEvent(musicEventHolder.song, musicEventHolder.eventId, musicEventHolder.service);
 
             return CorsAdder.addCors(Response.ok()).build();
         }
-        catch (NoSuchServiceException | AddMusicException | GetMusicErrorException e){
+        /*catch (NoSuchServiceException | AddMusicException | GetMusicErrorException e){
             logger.log(Level.SEVERE, e.getMessage());
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
-        } catch (Exception e){
+        }*/ catch (Exception e){
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
     }
@@ -67,9 +64,9 @@ public class MusicModule implements IMusicModule {
     }
 
     @Override
-    public Response getListMusic(String event) {
+    public Response getListMusic(String playlist) {
         return CorsAdder.addCors(
-                Response.status(Response.Status.OK).entity(musicInterpreter.getListMusic(event)))
+                Response.status(Response.Status.OK).entity(musicInterpreter.getListMusic(playlist)))
                 .build();
     }
 }

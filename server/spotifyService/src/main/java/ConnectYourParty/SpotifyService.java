@@ -20,7 +20,7 @@ public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token = "BQAwSKdtJQUfOA9b5PowTOfZy-OPAhKUe57KFFXUSaUbkzrNnRWJ6-IDCcJe2QnJpbx_9RDhDAhxznq0FuBB-VN80XOKENlbZ0m9-OjMd_JHjWpmw4Ktg22VTjvMLIXEfbWjihoziQEHiyydS4HbyojRiVrCpsWkzu1QEDEEOlZxAX7J1HS-_n_B3Ld6vrudy_0Ua0BM9Cm2d9JbK_316pLJlCQ5FdeTv7QMXpj1gb7XgwOwoqsQx7JoS8CaICz8VW54O9OO";
+    private String token = "BQB_ztZ93VNEUMWSY6f7mKkajKv_o19WCUVDqRrBM144p2iEzG6zmQtSHh79WvZiZJt52nQWOSUtYJyQSPwRVLWwLV_b0KH7JY0NMHYKxZr5u4aGaSffiWSod4y5EKUhnwonQo4rodH29KOAcx5frgTHgi611uVbMqG6Giwnas6uLTfKMS0zbVi-ZRxDiiD3m7e36T5Y3qQIvQm2C0Y5xtYRI36GV_ikupgb6rvCF-XYSfvC9p4sLvt5x9BtQ-Qe3R24WPFsVyU";
     public SpotifyService(){
     }
 
@@ -62,6 +62,11 @@ public class SpotifyService implements IMusicService {
     }
 
     @Override
+    public void addMusicFromId(String id, String playlist) throws GetMusicErrorException {
+        //TODO Add to playlist if exist
+    }
+
+    @Override
     public List<MusicService> searchMusic(String search) throws GetMusicErrorException {
 
         List<MusicService> list = new ArrayList<>();
@@ -94,12 +99,14 @@ public class SpotifyService implements IMusicService {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization","Bearer "+ token);
+            System.out.printf("Status code : "+conn.getResponseCode());
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = rd.readLine()) != null) {
                 result.append(line);
 
             }
+            System.out.println(result.toString());
             rd.close();
         } catch(Exception e){
             throw new GetMusicErrorException("Error on request to Spotify Web Service : "+ baseURL+uri+"\n"+ Arrays.toString(e.getStackTrace()));

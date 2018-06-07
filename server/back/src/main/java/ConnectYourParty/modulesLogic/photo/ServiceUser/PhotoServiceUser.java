@@ -4,7 +4,7 @@ package ConnectYourParty.modulesLogic.photo.ServiceUser;
 import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.DropboxService;
 import ConnectYourParty.businessObjects.photo.Photo;
-import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;

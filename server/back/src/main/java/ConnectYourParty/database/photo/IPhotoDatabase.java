@@ -1,7 +1,7 @@
 package ConnectYourParty.database.photo;
 
 import ConnectYourParty.businessObjects.photo.Photo;
-import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 
 import javax.ejb.Local;
