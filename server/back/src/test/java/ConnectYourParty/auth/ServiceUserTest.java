@@ -1,8 +1,8 @@
-package ConnectYourParty;
+package ConnectYourParty.auth;
 
-import ConnectYourParty.businessObjects.Token;
+import ConnectYourParty.CotyPhotoService;
+import ConnectYourParty.DropboxService;
 import ConnectYourParty.businessObjects.service.ServiceHolder;
-import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.database.service.IServiceRegistry;
@@ -19,13 +19,13 @@ import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
 import ConnectYourParty.modulesLogic.photo.chooser.PhotoChooser;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
-import ConnectYourParty.requestObjects.photo.PhotoHolder;
+import ConnectYourParty.requestObjects.request.NullResponse;
+import ConnectYourParty.requestObjects.request.OAuthHolder;
 import ConnectYourParty.webInterface.IModule;
 import ConnectYourParty.webInterface.Module;
 import ConnectYourParty.webInterface.photo.IPhotoModule;
 import ConnectYourParty.webInterface.photo.PhotoModule;
-import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+import org.bouncycastle.math.raw.Mod;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -35,32 +35,19 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-
-
-import javax.activation.DataHandler;
 import javax.ejb.EJB;
-import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
-public class PhotoModuleTest {
-
-
+public class ServiceUserTest {
 
     @EJB
-    IPhotoModule module;
+    private IServiceRegistry serviceRegistry;
 
-    @EJB
-    ITokenDatabase tokenDatabase;
-
-    @EJB private IServiceRegistry servRegistry;
+    @EJB private IModule module;
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -84,6 +71,8 @@ public class PhotoModuleTest {
                 .addPackage(ServiceUser.class.getPackage())
                 .addPackage(ITokenDatabase.class.getPackage())
                 .addPackage(TokenDatabase.class.getPackage())
+                .addPackage(IModule.class.getPackage())
+                .addPackage(Module.class.getPackage())
                 .addPackage(IServiceRegistry.class.getPackage())
                 .addPackage(ServiceRegistry.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
@@ -91,55 +80,33 @@ public class PhotoModuleTest {
     }
 
     @Test
-    public void addAndGetTest() throws Exception{
-        String imagePath = "test/test.jpg";
+    public void retrieveOAuth() throws Exception{
+        this.serviceRegistry.addServiceHolder(
+                new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO, DropboxService.class));
 
-        servRegistry.addServiceHolder(new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO,DropboxService.class));
+        this.serviceRegistry.addServiceHolder(
+                new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO, CotyPhotoService.class));
 
-        tokenDatabase.addToken(new Token("code", "Dropbox", "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP"));
+        Response response = this.module.retrieveOAuthURL("Dropbox");
 
+        assertEquals(200,response.getStatus());
 
-        URL path = this.getClass().getClassLoader().getResource("image.jpg");
+        OAuthHolder holder = (OAuthHolder)response.getEntity();
+        DropboxService drop = new DropboxService();
 
-        DataHandler nameHandler = new DataHandler(imagePath,"text/plain");
-        DataHandler serviceHandler = new DataHandler("Dropbox","text/plain");
+        assertEquals(holder.getClient_id(),drop.getAppKey());
+        assertEquals(holder.getOAuthURL(),drop.getOAuthUrl().toString());
 
-        MultivaluedHashMap header = new MultivaluedHashMap<String,String>();
-
-
-        Attachment name = new Attachment("name",nameHandler,header);
-        Attachment service = new Attachment("service", serviceHandler,header);
-        Attachment file = new Attachment("file",new FileInputStream(path.getPath()),null);
-
-        MultipartBody body = new MultipartBody(Arrays.asList(name,
-                service,
-                file
-        ));
-
-        Response responseAdd = this.module.addPhoto(body);
-
-        assertEquals(responseAdd.getStatus(),200);
-
-        //assertTrue(db.getPhotosFromEvent().contains(new Photo(imagePath,"test",db.getUser(),coty.getServiceName())));
-
-        Response response = this.module.getPhotoList();
-        List<PhotoHolder> holder = (List<PhotoHolder>) response.getEntity();
-        assertEquals(1,holder.size());
-
-        String event = holder.get(0).photoPath.split("/")[0];
-        String namePhoto = holder.get(0).photoPath.split("/")[1];
-
-        Response responseGet = this.module.getPhoto(event, namePhoto);
-
-        assertEquals(responseGet.getStatus(),200);
-
-        byte[] arr = (byte[])responseGet.getEntity();
-
-        InputStream input = new FileInputStream(path.getPath());
-        byte[] buff = new byte[input.available()];
-        input.read(buff);
-
-        assertTrue(Arrays.equals(arr,buff));
     }
 
+    @Test
+    public void falseService() throws Exception{
+        Response response = this.module.retrieveOAuthURL("azeazeaze");
+
+        assertEquals(200,response.getStatus());
+
+
+        assertTrue(response.getEntity() instanceof NullResponse);
+
+    }
 }

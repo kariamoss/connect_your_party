@@ -2,10 +2,13 @@ package ConnectYourParty.webInterface;
 
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
+import ConnectYourParty.requestObjects.request.NullResponse;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 
+@Stateless
 public class Module implements IModule {
 
     @EJB
@@ -20,8 +23,14 @@ public class Module implements IModule {
 
     @Override
     public Response retrieveOAuthURL(String serviceName) throws NoSuchServiceException {
-        return CorsAdder.addCors(
-                Response.status(Response.Status.OK).entity(interpreter.retrieveOAuthURL(serviceName)))
-                .build();
+        try {
+            return CorsAdder.addCors(
+                    Response.status(Response.Status.OK).entity(interpreter.retrieveOAuthURL(serviceName)))
+                    .build();
+        } catch (Exception e){
+            return CorsAdder.addCors(
+                    Response.status(Response.Status.OK).entity(new NullResponse()))
+                    .build();
+        }
     }
 }

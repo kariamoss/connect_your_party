@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class ServiceHolder {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Enumerated
@@ -23,6 +23,11 @@ public class ServiceHolder {
 
     public ServiceHolder(){
 
+    }
+
+    public ServiceHolder(Module module, Class classBin) {
+        this.module = module;
+        this.classBin = classBin;
     }
 
     public ServiceHolder(Module module, byte[] classBin) throws WrongClassBinaryexception{

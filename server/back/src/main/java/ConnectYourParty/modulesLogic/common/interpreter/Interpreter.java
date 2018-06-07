@@ -3,6 +3,7 @@ package ConnectYourParty.modulesLogic.common.interpreter;
 import ConnectYourParty.database.token.ITokenDatabase;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.modulesLogic.common.serviceUser.IServiceUser;
+import ConnectYourParty.requestObjects.request.OAuthHolder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -23,7 +24,7 @@ public class Interpreter implements IInterpreter {
     }
 
     @Override
-    public URL retrieveOAuthURL(String serviceName) throws NoSuchServiceException {
+    public OAuthHolder retrieveOAuthURL(String serviceName) throws NoSuchServiceException {
         return services.getOAuthURL(serviceName);
     }
 }
