@@ -1,9 +1,8 @@
 package ConnectYourParty.webInterface.photo;
 
-import ConnectYourParty.exception.NoSuchPhotoException;
+import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
-import ConnectYourParty.exception.PhotoAlreadyExistException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoAdderBody;

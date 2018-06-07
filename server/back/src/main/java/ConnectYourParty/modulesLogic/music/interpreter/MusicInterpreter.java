@@ -2,7 +2,6 @@ package ConnectYourParty.modulesLogic.music.interpreter;
 
 import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.database.music.IMusicDatabase;
-import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.modulesLogic.music.serviceUser.IMusicServiceUser;
@@ -33,18 +32,18 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public List<MusicSearchHolder> getListMusic(String event) {
-        List<Music> musicDB = db.getMusicList();
+    public List<MusicSearchHolder> getListMusic(String playlist) {
         List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
-        for(Music ms : musicDB){
+        List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlist);
+        for(MusicService ms : musicService){
             musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
         }
         return musicSearchHolders;
     }
 
-    @Override
+    /*@Override
     public void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException, GetMusicErrorException {
         MusicService musicService = musicServiceUser.getInfoFromId(music, service);
         db.addMusic(new Music(music, service, musicService.getTitle(), musicService.getArtist()));
-    }
+    }*/
 }

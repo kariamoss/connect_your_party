@@ -1,4 +1,4 @@
-package ConnectYourParty.exception;
+package ConnectYourParty.exception.music;
 
 public class NoSuchMusicException extends Exception {
     public NoSuchMusicException(){}

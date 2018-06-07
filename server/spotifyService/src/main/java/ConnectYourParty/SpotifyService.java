@@ -20,8 +20,7 @@ public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token = "BQBAoZWvlFZgiM-UiuQzHCNoYW95pEnvQeEOvJzk7toyLa7H3rOblblvIpWuKcKz01XBxwg309AmdDTAVHJV92G3aAxDlRo3UwnD_A9-xJERcypaKqFwpO5b0hSKfMiph8btlzl3ZZG5_823MMlvL9HR6xUD-2T6Q3n0kFlsrnlkpHwiFT_eDcUx7v4B8CBlcCXbGG7Pdpi8qbthl8yL6W8EGHL4FtP82wPz_XeDTNXifwwqxzZiiMGXnZlQotMIwhA-iWftlkY";
-
+    private String token = "BQB_ztZ93VNEUMWSY6f7mKkajKv_o19WCUVDqRrBM144p2iEzG6zmQtSHh79WvZiZJt52nQWOSUtYJyQSPwRVLWwLV_b0KH7JY0NMHYKxZr5u4aGaSffiWSod4y5EKUhnwonQo4rodH29KOAcx5frgTHgi611uVbMqG6Giwnas6uLTfKMS0zbVi-ZRxDiiD3m7e36T5Y3qQIvQm2C0Y5xtYRI36GV_ikupgb6rvCF-XYSfvC9p4sLvt5x9BtQ-Qe3R24WPFsVyU";
     public SpotifyService(){
     }
 
@@ -60,6 +59,11 @@ public class SpotifyService implements IMusicService {
     @Override
     public MusicService getInfoFromId(String id) throws GetMusicErrorException {
         return JsonToMusic(GET(baseURL + "/tracks/" + id));
+    }
+
+    @Override
+    public void addMusicFromId(String id, String playlist) throws GetMusicErrorException {
+        //TODO Add to playlist if exist
     }
 
     @Override

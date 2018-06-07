@@ -1,6 +1,5 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
-import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.requestObjects.music.MusicSearchHolder;
@@ -12,7 +11,11 @@ import java.util.List;
 public interface IMusicInterpreter {
     List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException;
 
-    List<MusicSearchHolder> getListMusic(String event);
+    List<MusicSearchHolder> getListMusic(String playlist);
 
-    void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException, GetMusicErrorException;
+    //List<MusicSearchHolder> getListMusic(String event);
+
+    //void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException, GetMusicErrorException;
+
+
 }

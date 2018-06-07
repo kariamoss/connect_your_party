@@ -1,11 +1,10 @@
 package ConnectYourParty.music;
 
 import ConnectYourParty.businessObjects.music.Music;
-import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.music.IMusicDatabase;
 import ConnectYourParty.database.music.MusicDatabase;
-import ConnectYourParty.exception.AddMusicException;
-import ConnectYourParty.exception.NoSuchMusicException;
+import ConnectYourParty.exception.music.AddMusicException;
+import ConnectYourParty.exception.music.NoSuchMusicException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -22,7 +21,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Arquillian.class)
-public class DbTest {
+public class DbMusicTest {
 
     @EJB
     IMusicDatabase db;
