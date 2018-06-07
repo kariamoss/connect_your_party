@@ -1,3 +1,17 @@
-<p>
-  music-search works!
-</p>
+<h3>Ajouter un titre</h3>
+<div class="ctn">
+  <div class="salut">
+    <input id="search" #input matInput placeholder="Rechercher une musique" value="pute">
+  <button id="go" (click)="searchMusic(input.value)">Go</button>
+  </div>
+  <br/>
+  <mat-grid-list cols="1" rowHeight="2:1">
+
+    <div #toto class="elem" *ngFor="let music of searchResults" id="{{music.id}}">
+      <button class="plus" (click)="addToPlaylist(toto.id)">+</button>
+      <b>{{music.title}}</b> - {{music.artist}}
+    </div>
+
+
+  </mat-grid-list>
+</div>

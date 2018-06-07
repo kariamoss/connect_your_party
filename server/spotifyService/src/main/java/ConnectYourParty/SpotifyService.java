@@ -20,8 +20,7 @@ public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token = "BQBAoZWvlFZgiM-UiuQzHCNoYW95pEnvQeEOvJzk7toyLa7H3rOblblvIpWuKcKz01XBxwg309AmdDTAVHJV92G3aAxDlRo3UwnD_A9-xJERcypaKqFwpO5b0hSKfMiph8btlzl3ZZG5_823MMlvL9HR6xUD-2T6Q3n0kFlsrnlkpHwiFT_eDcUx7v4B8CBlcCXbGG7Pdpi8qbthl8yL6W8EGHL4FtP82wPz_XeDTNXifwwqxzZiiMGXnZlQotMIwhA-iWftlkY";
-
+    private String token = "BQAwSKdtJQUfOA9b5PowTOfZy-OPAhKUe57KFFXUSaUbkzrNnRWJ6-IDCcJe2QnJpbx_9RDhDAhxznq0FuBB-VN80XOKENlbZ0m9-OjMd_JHjWpmw4Ktg22VTjvMLIXEfbWjihoziQEHiyydS4HbyojRiVrCpsWkzu1QEDEEOlZxAX7J1HS-_n_B3Ld6vrudy_0Ua0BM9Cm2d9JbK_316pLJlCQ5FdeTv7QMXpj1gb7XgwOwoqsQx7JoS8CaICz8VW54O9OO";
     public SpotifyService(){
     }
 
@@ -95,14 +94,12 @@ public class SpotifyService implements IMusicService {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization","Bearer "+ token);
-            System.out.printf("Status code : "+conn.getResponseCode());
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = rd.readLine()) != null) {
                 result.append(line);
 
             }
-            System.out.println(result.toString());
             rd.close();
         } catch(Exception e){
             throw new GetMusicErrorException("Error on request to Spotify Web Service : "+ baseURL+uri+"\n"+ Arrays.toString(e.getStackTrace()));
