@@ -1,6 +1,6 @@
 package ConnectYourParty.modulesLogic.photo.chooser;
 
-import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;

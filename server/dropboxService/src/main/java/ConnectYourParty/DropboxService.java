@@ -4,16 +4,12 @@ import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.services.photo.IPhotoService;
-import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.DownloadBuilder;
 
 
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class DropboxService implements IPhotoService{
@@ -76,5 +72,33 @@ public class DropboxService implements IPhotoService{
         } catch (Exception e){
             return null;
         }
+    }
+
+    @Override
+    public URL getOAuthUrl() {
+        try {
+            return new URL("https://www.dropbox.com/oauth2/authorize");
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public URL getOAuthToken() {
+        try {
+            return new URL("https://api.dropboxapi.com/oauth2/token");
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public String getAppKey() {
+        return "qmoepnnfjdergql";
+    }
+
+    @Override
+    public String getAppSecret() {
+        return "lwlzexl2nnypmlq";
     }
 }

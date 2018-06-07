@@ -1,6 +1,6 @@
 package ConnectYourParty.modulesLogic.photo.ServiceUser;
 
-import ConnectYourParty.businessObjects.Photo;
+import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.exception.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;

@@ -1,6 +1,8 @@
 package ConnectYourParty;
 
 import ConnectYourParty.database.DbMock;
+import ConnectYourParty.database.photo.IPhotoDatabase;
+import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;
 import ConnectYourParty.modulesLogic.photo.ServiceUser.PhotoServiceUser;
 import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
@@ -15,6 +17,7 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
@@ -38,7 +41,6 @@ import java.util.List;
 public class PhotoModuleTest {
 
 
-    @EJB DbMock db;
 
     @EJB
     IPhotoModule module;
@@ -47,7 +49,6 @@ public class PhotoModuleTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addPackage(DbMock.class.getPackage())
                 .addPackage(IPhotoChooser.class.getPackage())
                 .addPackage(PhotoChooser.class.getPackage())
                 .addPackage(IPhotoInterpreter.class.getPackage())
@@ -56,7 +57,10 @@ public class PhotoModuleTest {
                 .addPackage(IPhotoModule.class.getPackage())
                 .addPackage(PhotoModule.class.getPackage())
                 .addPackage(IPhotoServiceUser.class.getPackage())
-                .addPackage(PhotoServiceUser.class.getPackage());
+                .addPackage(PhotoServiceUser.class.getPackage())
+                .addPackage(IPhotoDatabase.class.getPackage())
+                .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
+                .addPackage(PhotoDatabase.class.getPackage());
     }
 
     @Test

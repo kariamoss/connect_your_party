@@ -1,29 +1,36 @@
 package ConnectYourParty.businessObjects;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
+@Entity
 public class Event {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotNull
     private String title;
+
+    @NotNull
     private int nbPeople;
+
+    @NotNull
     private String location;
-    private List<Photo> photos;
+
+    public Event(){
+
+    }
 
     public Event(int id, String title, int nbPeople, String location) {
         this.id = id;
         this.title = title;
         this.nbPeople = nbPeople;
         this.location = location;
-        this.photos = new ArrayList<>();
-    }
-
-    public void addPhoto(Photo photo){
-        this.photos.add(photo);
-    }
-
-    public List<Photo> getPhotos() {
-        return photos;
     }
 
     public int getId() {
