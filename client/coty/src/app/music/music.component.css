@@ -1,0 +1,28 @@
+.connect{
+  text-align: center;
+  margin-top:25px;
+  margin-bottom: 25px;
+}
+
+button{
+  color:#fff;
+  background-color: #3F51B5;
+}
+
+mat-card{
+}
+
+.common{
+  box-sizing: border-box;
+  width:48%;
+  min-height: 70vh;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  padding:20px;
+}
+#first{
+  float:left;
+}
+
+#second{
+  float:right;
+}

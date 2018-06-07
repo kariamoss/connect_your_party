@@ -26,7 +26,7 @@ public class SpotifyTest {
         service = new SpotifyService();
     }
 
-    @Ignore
+    @Test
     public void BoobaRequest() throws GetMusicErrorException {
         MusicService m = service.getInfoFromId("6xqAP7kpdgCy8lERQHh29c");
         assertEquals("Booba",m.getArtist());
