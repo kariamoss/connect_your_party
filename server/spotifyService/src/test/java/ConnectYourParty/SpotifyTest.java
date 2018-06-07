@@ -7,6 +7,7 @@ import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
 import org.json.JSONObject;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -25,20 +26,20 @@ public class SpotifyTest {
         service = new SpotifyService();
     }
 
-    @Test
+    @Ignore
     public void BoobaRequest() throws GetMusicErrorException {
         MusicService m = service.getInfoFromId("6xqAP7kpdgCy8lERQHh29c");
         assertEquals("Booba",m.getArtist());
         assertEquals("113",m.getTitle());
     }
 
-    @Test
-    public void SearchRequest() throws GetMusicErrorException {
+    @Ignore
+    public void SearchRequestGoodLength() throws GetMusicErrorException {
         List<MusicService> list = service.searchMusic("booba");
         assertEquals(list.size(), service.searchResults);
     }
 
-    @Test
+    @Ignore
     public void refreshTest() throws GetMusicErrorException {
         service.updateToken();
     }

@@ -20,7 +20,7 @@ public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token;
+    private String token = "BQBAoZWvlFZgiM-UiuQzHCNoYW95pEnvQeEOvJzk7toyLa7H3rOblblvIpWuKcKz01XBxwg309AmdDTAVHJV92G3aAxDlRo3UwnD_A9-xJERcypaKqFwpO5b0hSKfMiph8btlzl3ZZG5_823MMlvL9HR6xUD-2T6Q3n0kFlsrnlkpHwiFT_eDcUx7v4B8CBlcCXbGG7Pdpi8qbthl8yL6W8EGHL4FtP82wPz_XeDTNXifwwqxzZiiMGXnZlQotMIwhA-iWftlkY";
 
     public SpotifyService(){
     }

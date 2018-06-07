@@ -4,6 +4,7 @@ import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.database.music.IMusicDatabase;
 import ConnectYourParty.exception.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.modulesLogic.music.serviceUser.IMusicServiceUser;
 import ConnectYourParty.objects.music.MusicService;
 import ConnectYourParty.requestObjects.music.MusicSearchHolder;
@@ -22,7 +23,7 @@ public class MusicInterpreter implements IMusicInterpreter {
     IMusicServiceUser musicServiceUser;
 
     @Override
-    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException {
+    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException {
         List<MusicService> musicService = musicServiceUser.searchMusic(search, service);
         List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
         for(MusicService ms : musicService){
@@ -42,7 +43,7 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException {
+    public void addMusicToEvent(String music, String event, String service) throws NoSuchServiceException, AddMusicException, GetMusicErrorException {
         MusicService musicService = musicServiceUser.getInfoFromId(music, service);
         db.addMusic(new Music(music, service, musicService.getTitle(), musicService.getArtist()));
     }
