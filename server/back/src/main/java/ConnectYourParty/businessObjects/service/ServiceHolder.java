@@ -35,6 +35,10 @@ public class ServiceHolder {
         return service;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public int hashCode() {
         return id;
