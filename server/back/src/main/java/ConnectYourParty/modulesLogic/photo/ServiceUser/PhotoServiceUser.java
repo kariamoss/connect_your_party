@@ -16,6 +16,7 @@ import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.objects.TokenService;
 import ConnectYourParty.modulesLogic.service.Subscriber;
 import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
+import ConnectYourParty.services.IService;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import javax.annotation.PostConstruct;
@@ -24,28 +25,29 @@ import javax.ejb.Stateless;
 import java.util.*;
 
 @Stateless
-public class PhotoServiceUser implements IPhotoServiceUser,Subscriber{
+public class PhotoServiceUser implements IPhotoServiceUser, Subscriber {
 
-    @EJB private IServiceRegistry serviceRegistry;
+    @EJB
+    private IServiceRegistry serviceRegistry;
 
     private List<IPhotoService> servicePhotoList;
     private Set<IPhotoService> additionalService;
 
-    private Map<IPhotoService,Integer> ids;
+    private Map<IPhotoService, Integer> ids;
 
     private Module module = Module.PHOTO;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         servicePhotoList = new ArrayList<>();
         servicePhotoList.add(new DropboxService());
         servicePhotoList.add(new CotyPhotoService());
         additionalService = new HashSet<>();
         ids = new HashMap<>();
 
-        ids.put(servicePhotoList.get(0),800);
+        ids.put(servicePhotoList.get(0), 800);
 
-        this.serviceRegistry.subscribe(this,this.module);
+        this.serviceRegistry.subscribe(this, this.module);
     }
 
     @Override
@@ -57,19 +59,8 @@ public class PhotoServiceUser implements IPhotoServiceUser,Subscriber{
 
         List<PhotoServiceHolder> arr = new ArrayList<>();
         for (IPhotoService service : res) {
-            if (service.getOAuthUrl() == null) {
-                arr.add(new PhotoServiceHolder(service.getServiceName(),
-                        service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
-                continue;
-            }
             arr.add(new PhotoServiceHolder(service.getServiceName(),
-                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
-                    service.getOAuthUrl().getHost() + service.getOAuthUrl().getPath(),
-                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
-                    service.getAppKey(),
-                    service.getAppSecret(),
-                            ids.get(service))
-                    );
+                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
         }
 
         return arr;
@@ -105,16 +96,16 @@ public class PhotoServiceUser implements IPhotoServiceUser,Subscriber{
         this.getService(serviceHost).addPhoto(bin, photo.getPrivatePhotoPath(), Optional.empty());
     }
 
-    private IPhotoService getService(String serviceName) throws NoSuchServiceException{
+    private IPhotoService getService(String serviceName) throws NoSuchServiceException {
 
-        for(IPhotoService service : servicePhotoList){
-            if(service.getServiceName().equals(serviceName)){
+        for (IPhotoService service : servicePhotoList) {
+            if (service.getServiceName().equals(serviceName)) {
                 return service;
             }
         }
 
-        for(IPhotoService service : additionalService){
-            if(service.getServiceName().equals(serviceName)){
+        for (IPhotoService service : additionalService) {
+            if (service.getServiceName().equals(serviceName)) {
                 return service;
             }
         }
@@ -126,8 +117,8 @@ public class PhotoServiceUser implements IPhotoServiceUser,Subscriber{
         try {
             IPhotoService serv = (IPhotoService) holder.getService();
             additionalService.add(serv);
-            ids.put(serv,holder.getId());
-        } catch (Exception e){
+            ids.put(serv, holder.getId());
+        } catch (Exception e) {
 
         }
     }
@@ -136,15 +127,15 @@ public class PhotoServiceUser implements IPhotoServiceUser,Subscriber{
     public void onRemove(ServiceHolder holder) {
         try {
             IPhotoService serv = (IPhotoService) holder.getService();
-            additionalService.remove( serv);
+            additionalService.remove(serv);
             ids.remove(serv);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
 
     @Override
     public void onUnsubscribe() {
-        this.serviceRegistry.subscribe(this,this.module);
+        this.serviceRegistry.subscribe(this, this.module);
     }
 }
