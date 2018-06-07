@@ -7,7 +7,7 @@ public class ByteClassLoader extends ClassLoader {
     }
 
 
-    public Class getClassFromByte(byte[] bin){
+    public Class getClassFromByte(byte[] bin) throws ClassFormatError{
         return defineClass(null,bin,0,bin.length);
     }
 }

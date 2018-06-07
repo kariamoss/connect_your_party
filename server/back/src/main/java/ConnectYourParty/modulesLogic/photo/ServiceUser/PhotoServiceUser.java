@@ -12,23 +12,24 @@ import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
+import ConnectYourParty.modulesLogic.service.Subscriber;
+import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Stateless
-public class PhotoServiceUser implements IPhotoServiceUser{
+public class PhotoServiceUser implements IPhotoServiceUser,Subscriber{
 
     @EJB private IServiceRegistry serviceRegistry;
 
     private List<IPhotoService> servicePhotoList;
     private Set<IPhotoService> additionalService;
+
+    private Map<IPhotoService,Integer> ids;
 
     private Module module = Module.PHOTO;
 
@@ -36,32 +37,39 @@ public class PhotoServiceUser implements IPhotoServiceUser{
     public void init(){
         servicePhotoList = new ArrayList<>();
         servicePhotoList.add(new CotyPhotoService());
-
         additionalService = new HashSet<>();
-        updateAddService();
-    }
+        ids = new HashMap<>();
 
-    public void updateAddService(){
-        List<ServiceHolder> res = serviceRegistry.getServiceHolderFromModule(module);
+        ids.put(servicePhotoList.get(0),800);
 
-        for(ServiceHolder holder : res){
-            try {
-                additionalService.add((IPhotoService) holder.getService());
-            } catch (Exception e){
-
-            }
-        }
+        this.serviceRegistry.subscribe(this,this.module);
     }
 
     @Override
-    public List<IPhotoService> getServiceList() {
-        updateAddService();
+    public List<PhotoServiceHolder> getServiceList() {
         List<IPhotoService> res = new ArrayList<>();
 
         res.addAll(additionalService);
         res.addAll(servicePhotoList);
 
-        return res;
+        List<PhotoServiceHolder> arr = new ArrayList<>();
+        for (IPhotoService service : res) {
+            if (service.getOAuthUrl() == null) {
+                arr.add(new PhotoServiceHolder(service.getServiceName(),
+                        service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
+                continue;
+            }
+            arr.add(new PhotoServiceHolder(service.getServiceName(),
+                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
+                    service.getOAuthUrl().getHost() + service.getOAuthUrl().getPath(),
+                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
+                    service.getAppKey(),
+                    service.getAppSecret(),
+                            ids.get(service))
+                    );
+        }
+
+        return arr;
     }
 
     @Override
@@ -80,7 +88,6 @@ public class PhotoServiceUser implements IPhotoServiceUser{
     }
 
     private IPhotoService getService(String serviceName) throws NoSuchServiceException{
-        updateAddService();
 
         for(IPhotoService service : servicePhotoList){
             if(service.getServiceName().equals(serviceName)){
@@ -94,5 +101,32 @@ public class PhotoServiceUser implements IPhotoServiceUser{
             }
         }
         throw new NoSuchServiceException();
+    }
+
+    @Override
+    public void onAdd(ServiceHolder holder) {
+        try {
+            IPhotoService serv = (IPhotoService) holder.getService();
+            additionalService.add(serv);
+            ids.put(serv,holder.getId());
+        } catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onRemove(ServiceHolder holder) {
+        try {
+            IPhotoService serv = (IPhotoService) holder.getService();
+            additionalService.remove( serv);
+            ids.remove(serv);
+        } catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onUnsubscribe() {
+        this.serviceRegistry.subscribe(this,this.module);
     }
 }

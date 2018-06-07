@@ -13,6 +13,7 @@ import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
 import ConnectYourParty.modulesLogic.photo.chooser.PhotoChooser;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
+import ConnectYourParty.requestObjects.photo.PhotoServiceHolder;
 import ConnectYourParty.webInterface.photo.IPhotoModule;
 import ConnectYourParty.webInterface.photo.PhotoModule;
 import ConnectYourParty.webInterface.service.IServiceRoute;
@@ -36,10 +37,12 @@ import javax.ws.rs.core.Response;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(Arquillian.class)
 public class ServiceModuleTest {
@@ -121,6 +124,13 @@ public class ServiceModuleTest {
         getListResponse = this.photoRoute.getPhotoServices();
         assertEquals(200,getListResponse.getStatus());
         assertEquals(nbService+1,((List)getListResponse.getEntity()).size());
+
+        List<Integer> ids = new ArrayList<>();
+
+        for(PhotoServiceHolder holder : (List<PhotoServiceHolder>)getListResponse.getEntity()){
+            assertFalse(ids.contains(holder.id));
+            ids.add(holder.id);
+        }
 
     }
 

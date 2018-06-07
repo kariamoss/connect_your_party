@@ -1,5 +1,6 @@
 package ConnectYourParty.businessObjects.service;
 
+import ConnectYourParty.exception.WrongClassBinaryexception;
 import ConnectYourParty.modulesLogic.service.ByteClassLoader;
 import ConnectYourParty.services.IService;
 
@@ -18,19 +19,28 @@ public class ServiceHolder {
     private Module module;
 
     @NotNull
-    private byte[] classBin;
+    private Class classBin;
 
-    public ServiceHolder(Module module, byte[] classBin) {
+    public ServiceHolder(){
+
+    }
+
+    public ServiceHolder(Module module, byte[] classBin) throws WrongClassBinaryexception{
         this.module = module;
-        this.classBin = classBin;
+        try {
+            ByteClassLoader byteLoader = new ByteClassLoader(this.getClass().getClassLoader());
+            this.classBin = byteLoader.getClassFromByte(classBin);
+        } catch (ClassFormatError e){
+            throw new WrongClassBinaryexception();
+        }
+
     }
 
     public IService getService() throws Exception{
         IService service;
 
-        ByteClassLoader byteLoader = new ByteClassLoader(this.getClass().getClassLoader());
 
-        service = (IService) byteLoader.getClassFromByte(this.classBin).newInstance();
+        service = (IService) this.classBin.newInstance();
 
         return service;
     }
@@ -42,6 +52,10 @@ public class ServiceHolder {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    public Module getModule() {
+        return module;
     }
 
     @Override

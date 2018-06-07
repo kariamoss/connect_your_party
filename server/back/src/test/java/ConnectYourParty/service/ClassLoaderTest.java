@@ -37,10 +37,10 @@ public class ClassLoaderTest {
     }
 
     @Test(expected = ClassFormatError.class)
-    public void wrongByteClassTest(){
+    public void wrongByteClassTest() throws Exception{
         byte[] bin = new byte[10];
 
-        Class serviceClass = this.loader.getClassFromByte(bin);
+        this.loader.getClassFromByte(bin);
 
     }
 

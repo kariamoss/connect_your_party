@@ -56,8 +56,8 @@ public class RegistryTest {
     }
 
     @Test
-    public void removeTest(){
-        ServiceHolder holder = new ServiceHolder(Module.MUSIC,new byte[18]);
+    public void removeTest() throws Exception{
+        ServiceHolder holder = new ServiceHolder(Module.MUSIC,FileReader.readfile());
 
         db.addServiceHolder(holder);
         assertEquals(db.getServiceHolder().size(),1);
@@ -67,9 +67,9 @@ public class RegistryTest {
     }
 
     @Test
-    public void serviceByModuleTest(){
-        ServiceHolder musicHolder = new ServiceHolder(Module.MUSIC,new byte[18]);
-        ServiceHolder photoHolder = new ServiceHolder(Module.PHOTO,new byte[18]);
+    public void serviceByModuleTest() throws Exception{
+        ServiceHolder musicHolder = new ServiceHolder(Module.MUSIC,FileReader.readfile());
+        ServiceHolder photoHolder = new ServiceHolder(Module.PHOTO,FileReader.readfile());
 
         db.addServiceHolder(musicHolder);
         db.addServiceHolder(photoHolder);

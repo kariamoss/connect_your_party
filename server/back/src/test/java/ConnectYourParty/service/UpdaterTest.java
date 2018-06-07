@@ -37,7 +37,7 @@ public class UpdaterTest {
             }
 
             @Override
-            public void onUnsuscribe() {
+            public void onUnsubscribe() {
                 onUnsubscribeCalled++;
             }
         };
@@ -76,6 +76,24 @@ public class UpdaterTest {
 
         assertEquals(0,this.onAddCalled);
         assertEquals(0,this.onRemoveCalled);
+    }
+
+    @Test
+    public void unsubAll(){
+        this.updater.subscribe(this.subs,Module.MUSIC);
+        this.updater.subscribe(this.subs,Module.PHOTO);
+
+        this.updater.unSubscribeAll();
+
+        this.updater.add(null,Module.MUSIC);
+        this.updater.remove(null,Module.MUSIC);
+        this.updater.add(null,Module.PHOTO);
+        this.updater.remove(null,Module.PHOTO);
+
+        assertEquals(0,this.onAddCalled);
+        assertEquals(0,this.onRemoveCalled);
+
+
     }
 
 
