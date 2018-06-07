@@ -23,6 +23,7 @@ public class MusicModule implements IMusicModule {
 
     @Override
     public Response addMusicToEvent(MusicEventHolder musicEventHolder) {
+        //TODO All left is module
         try {
             //musicInterpreter.addMusicToEvent(musicEventHolder.song, musicEventHolder.eventId, musicEventHolder.service);
 

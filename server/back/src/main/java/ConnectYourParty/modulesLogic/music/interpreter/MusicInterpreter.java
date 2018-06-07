@@ -1,11 +1,15 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
 import ConnectYourParty.businessObjects.music.Music;
+import ConnectYourParty.businessObjects.music.Playlist;
 import ConnectYourParty.database.music.IMusicDatabase;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.exception.music.AddPlaylistException;
+import ConnectYourParty.exception.music.NoSuchPlaylistException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.modulesLogic.music.serviceUser.IMusicServiceUser;
 import ConnectYourParty.objects.music.MusicService;
+import ConnectYourParty.objects.music.PlaylistService;
 import ConnectYourParty.requestObjects.music.MusicSearchHolder;
 
 import javax.ejb.EJB;
@@ -41,10 +45,24 @@ public class MusicInterpreter implements IMusicInterpreter {
         return musicSearchHolders;
     }
 
+    @Override
+    public MusicSearchHolder getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
+        MusicService musicService = musicServiceUser.getInfoFromMusicId(id, serviceName);
+        return new MusicSearchHolder(musicService.getId(), musicService.getTitle(), musicService.getArtist());
+    }
 
-    public void addMusicToPlaylist(String music, String service) throws NoSuchServiceException {
-
-        //MusicService musicService = musicServiceUser.getInfoFromId(music, service);
-        //db.addMusic(new Music(music, service, musicService.getTitle(), musicService.getArtist()));
+    @Override
+    public void addMusic(String idMusic, String serviceName) throws NoSuchServiceException, AddPlaylistException, NoSuchPlaylistException, GetMusicErrorException {
+        Playlist playlist;
+        List<Playlist> playlists = db.getPlaylistList();
+        if (playlists.size() == 0){
+            PlaylistService playlistService = musicServiceUser.addPlaylist(serviceName);
+            db.addPlaylist(new Playlist(playlistService.getId(), serviceName));
+            playlist = db.getPlaylistFromId(playlistService.getId());
+        }
+        else{
+            playlist = playlists.get(0);
+        }
+        musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName);
     }
 }
