@@ -11,6 +11,7 @@
         <class>ConnectYourParty.businessObjects.music.Music</class>
         <class>ConnectYourParty.businessObjects.Event</class>
         <class>ConnectYourParty.businessObjects.User</class>
+        <class>ConnectYourParty.businessObjects.Token</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 

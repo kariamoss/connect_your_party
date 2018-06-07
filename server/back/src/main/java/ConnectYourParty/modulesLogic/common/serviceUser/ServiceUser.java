@@ -3,6 +3,7 @@ package ConnectYourParty.modulesLogic.common.serviceUser;
 import ConnectYourParty.DropboxService;
 import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.objects.TokenService;
 import ConnectYourParty.services.IServiceOAuth;
 
 import javax.annotation.PostConstruct;
@@ -24,9 +25,11 @@ public class ServiceUser implements IServiceUser {
 
     @Override
     public Token getToken(String code, String serviceName) throws NoSuchServiceException {
-        Token t = new Token(code, serviceName);
-        t.setAccessToken(this.getService(serviceName).updateToken(code));
-
+        TokenService tokenService = this.getService(serviceName).updateToken(code);
+        Token t = new Token(code, serviceName, tokenService.getAccessToken());
+        if (tokenService.getRefreshToken() != null) {
+            t.setRefreshToken(tokenService.getRefreshToken());
+        }
         return t;
     }
 

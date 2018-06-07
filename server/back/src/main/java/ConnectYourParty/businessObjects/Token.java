@@ -8,12 +8,13 @@ import java.util.Objects;
 @Entity
 public class Token {
 
-    @Id
+    @NotNull
     private String code;
 
-    @NotNull
+    @Id
     private String serviceName;
 
+    @NotNull
     private String accessToken;
 
     private String refreshToken;
@@ -21,9 +22,10 @@ public class Token {
     public Token() {
     }
 
-    public Token(String code, String serviceName) {
+    public Token(String code, String serviceName, String accessToken) {
         this.code = code;
         this.serviceName = serviceName;
+        this.accessToken = accessToken;
     }
 
     public String getCode() {

@@ -20,12 +20,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Stateless
-public class PhotoServiceUser implements IPhotoServiceUser{
+public class PhotoServiceUser implements IPhotoServiceUser {
 
     private List<IPhotoService> servicePhotoList;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         servicePhotoList = new ArrayList<>();
         servicePhotoList.add(new DropboxService());
         servicePhotoList.add(new CotyPhotoService());
@@ -37,29 +37,38 @@ public class PhotoServiceUser implements IPhotoServiceUser{
     }
 
     @Override
-    public void removePhoto(Photo photo) throws CannotDeletePhotoException, NoSuchServiceException {
+    public void removePhoto(Photo photo, Optional<Token> token) throws CannotDeletePhotoException, NoSuchServiceException {
         String serviceHost = photo.getServiceHost();
-        Optional<TokenService> token = photo.getUser().getToken(serviceHost);
-        this.getService(serviceHost).removePhoto(photo.getPrivatePhotoPath(), token);
+        // Optional<TokenService> token = photo.getUser().getToken(serviceHost);
+        if (token.isPresent()) {
+            this.getService(serviceHost).removePhoto(photo.getPrivatePhotoPath(), Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(), token.get().getRefreshToken())));
+        }
+        this.getService(serviceHost).removePhoto(photo.getPrivatePhotoPath(), Optional.empty());
     }
 
     @Override
-    public byte[] getPhoto(Photo photo) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
+    public byte[] getPhoto(Photo photo, Optional<Token> token) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
         String serviceHost = photo.getServiceHost();
-        Optional<TokenService> token = photo.getUser().getToken(serviceHost);
-        return this.getService(serviceHost).getPhoto(photo.getPrivatePhotoPath(), token);
+        // Optional<TokenService> token = photo.getUser().getToken(serviceHost);
+        if (token.isPresent()) {
+            this.getService(serviceHost).getPhoto(photo.getPrivatePhotoPath(), Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(), token.get().getRefreshToken())));
+        }
+        return this.getService(serviceHost).getPhoto(photo.getPrivatePhotoPath(), Optional.empty());
     }
 
     @Override
-    public void addPhoto(Photo photo, byte[] bin) throws AddPhotoErrorException, NoSuchServiceException {
+    public void addPhoto(Photo photo, byte[] bin, Optional<Token> token) throws AddPhotoErrorException, NoSuchServiceException {
         String serviceHost = photo.getServiceHost();
-        Optional<TokenService> token = photo.getUser().getToken(serviceHost);
-        this.getService(serviceHost).addPhoto(bin,photo.getPrivatePhotoPath(), token);
+        // Optional<TokenService> token = photo.getUser().getToken(serviceHost);
+        if (token.isPresent()) {
+            this.getService(serviceHost).addPhoto(bin, photo.getPrivatePhotoPath(), Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(), token.get().getRefreshToken())));
+        }
+        this.getService(serviceHost).addPhoto(bin, photo.getPrivatePhotoPath(), Optional.empty());
     }
 
-    private IPhotoService getService(String serviceName) throws NoSuchServiceException{
-        for(IPhotoService service : servicePhotoList){
-            if(service.getServiceName().equals(serviceName)){
+    private IPhotoService getService(String serviceName) throws NoSuchServiceException {
+        for (IPhotoService service : servicePhotoList) {
+            if (service.getServiceName().equals(serviceName)) {
                 return service;
             }
         }

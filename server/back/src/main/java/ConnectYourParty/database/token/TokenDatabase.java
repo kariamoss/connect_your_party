@@ -5,6 +5,7 @@ import ConnectYourParty.businessObjects.Token;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 @Stateless
 public class TokenDatabase implements ITokenDatabase {
@@ -22,6 +23,15 @@ public class TokenDatabase implements ITokenDatabase {
     public void removeToken(Token token) {
         token = entityManager.merge(token);
         entityManager.remove(token);
+    }
+
+    @Override
+    public Optional<Token> getTokenFromServiceName(String serviceName) {
+        Token token = this.entityManager.find(Token.class, serviceName);
+        if (token == null) {
+            return Optional.empty();
+        }
+        return Optional.of(token);
     }
 
     @Override

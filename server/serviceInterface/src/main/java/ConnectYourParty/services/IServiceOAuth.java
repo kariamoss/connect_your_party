@@ -1,5 +1,7 @@
 package ConnectYourParty.services;
 
+import ConnectYourParty.objects.TokenService;
+
 import java.net.URL;
 
 public interface IServiceOAuth extends IService{
@@ -24,7 +26,7 @@ public interface IServiceOAuth extends IService{
      * @param oAuthCode the code retrieved before
      * @return token the valid token
      */
-    String updateToken(String oAuthCode);
+    TokenService updateToken(String oAuthCode);
 
     /**
      * Retrieve the app key of the service if the service needs

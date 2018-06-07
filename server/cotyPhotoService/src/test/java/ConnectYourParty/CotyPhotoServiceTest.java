@@ -13,6 +13,7 @@ import org.junit.Test;
 import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Optional;
 
 
 public class CotyPhotoServiceTest
@@ -29,7 +30,7 @@ public class CotyPhotoServiceTest
     @After
     public void removePhoto(){
         try {
-            service.removePhoto("image.jpg", );
+            service.removePhoto("image.jpg", Optional.empty());
         } catch (CannotDeletePhotoException e) {
 
         }
@@ -42,21 +43,21 @@ public class CotyPhotoServiceTest
         byte[] buff = new byte[in.available()];
         in.read(buff);
 
-        service.addPhoto(buff,destPath, );
+        service.addPhoto(buff,destPath, Optional.empty());
 
-        byte[] recv = service.getPhoto(destPath, );
+        byte[] recv = service.getPhoto(destPath, Optional.empty());
 
         assertTrue(Arrays.equals(buff,recv));
     }
 
     @Test(expected = RetrievePhotoErrorException.class)
     public void retrieveUnknownPhoto() throws RetrievePhotoErrorException {
-        byte[] recv = service.getPhoto("salut", );
+        byte[] recv = service.getPhoto("salut", Optional.empty());
     }
 
     @Test(expected = CannotDeletePhotoException.class)
     public void deletePhotoExceptionTest() throws CannotDeletePhotoException {
-        service.removePhoto("salut", );
+        service.removePhoto("salut", Optional.empty());
     }
 
     @Test
@@ -66,8 +67,8 @@ public class CotyPhotoServiceTest
         byte[] buff = new byte[in.available()];
         in.read(buff);
 
-        service.addPhoto(buff,destPath, );
+        service.addPhoto(buff,destPath, Optional.empty());
 
-        service.removePhoto(destPath, );
+        service.removePhoto(destPath, Optional.empty());
     }
 }

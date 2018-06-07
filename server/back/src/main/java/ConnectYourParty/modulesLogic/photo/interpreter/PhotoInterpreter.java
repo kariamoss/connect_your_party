@@ -36,6 +36,9 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     @EJB
     private IPhotoDatabase db;
 
+    @EJB
+    private ITokenDatabase tokenDatabase;
+
     @Override
     public void addPhoto(InputStream stream, String name, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
@@ -47,7 +50,7 @@ public class PhotoInterpreter implements IPhotoInterpreter {
             db.addPhoto(photo);
             byte[] bin = new byte[stream.available()];
             stream.read(bin);
-            photoChooser.addPhoto(bin, photo);
+            photoChooser.addPhoto(bin, photo, tokenDatabase.getTokenFromServiceName(photo.getServiceHost()));
         } catch (Exception e) {
             db.removePhoto(photo);
         }
@@ -57,13 +60,13 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     @Override
     public byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
         Photo photo = db.getPhotoFromPath(path);
-        return services.getPhoto(photo);
+        return services.getPhoto(photo, tokenDatabase.getTokenFromServiceName(photo.getServiceHost()));
     }
 
     @Override
     public void removePhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException, CannotDeletePhotoException {
         Photo photo = db.getPhotoFromPath(path);
-        services.removePhoto(photo);
+        services.removePhoto(photo, tokenDatabase.getTokenFromServiceName(photo.getServiceHost()));
     }
 
     @Override
