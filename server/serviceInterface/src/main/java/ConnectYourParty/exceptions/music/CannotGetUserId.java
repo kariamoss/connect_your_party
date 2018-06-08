@@ -1,4 +1,5 @@
 package ConnectYourParty.exceptions.music;
 
-public class CannotGetUserId {
+public class CannotGetUserId extends Exception {
+    public CannotGetUserId(){}
 }

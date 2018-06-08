@@ -25,7 +25,7 @@ public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token = "BQCQQlCoIF52oM59_-0pXYsXaOeZQv12UPhhffusNvscGvdA7jtl-mSrYdIexFnLgdOb3TUs2-OoxKlwalMaP1KX1m-g5FU1FnR5-ABOOl-Vp8rAFX5hxMvShQA45Sfjcm-fiZzlgW5JDnJaGrfePkrMm0-7X9uF4XJAEQTm7m37h2L5jzIorj6iUIgxcnYbXoyVp1ZR6cY-QjBRMnA0B6HIQG3TAK9UlsqqKspWiLRNzTH_PGCEE2wkJfV2KI4_6fIaMRwGQQ";
+    private String token = "BQCYdX3AlTco_k6iay9IBaZAfht44UhMGUdWWdR2vC4AeG4gaxiH1LKeP2NkN5eeHZ3MlYlFkvjWi56y-uChQZura7kAB3ebYpBsZJXkbhMMdP2ys2yVR7wTQrRiGS2tHTdCRmPo21gKZMDSXi1I0MIwCQ7dIkwJTswdDzso_3aIeq4OX6jnDJVkv5vjuoEz0IbeuxYh--qSVjOuTISFyBLDwI9IQsIQznH4yV6EipKXOG5WX_F2oEoA3Yf8Uz6X8tZzO6x-ZQ";
     public SpotifyService(){
     }
 
@@ -68,7 +68,20 @@ public class SpotifyService implements IMusicService {
 
     @Override
     public void addMusicFromId(String id, String playlist) throws GetMusicErrorException {
-        //TODO Add to playlist if exist
+        Optional<String> opt = this.getUserId();
+
+        if(!opt.isPresent()){
+            throw new GetMusicErrorException();
+        }
+
+        String path = this.baseURL+ "/" +
+                "users/" + opt.get() + "/"+
+                "playlists/" + playlist + "/tracks?uris=spotify%3Atrack%3A" + id;
+        try {
+            this.POST(path, "");
+        } catch (Exception e){
+            throw new GetMusicErrorException();
+        }
     }
 
     @Override
@@ -98,7 +111,31 @@ public class SpotifyService implements IMusicService {
 
     @Override
     public List<MusicService> getMusicFromPlaylist(String playlist) {
-        return null;
+        try {
+            Optional<String> opt = this.getUserId();
+
+            if (!opt.isPresent()) {
+                return new ArrayList<>();
+            }
+
+
+            String path = this.baseURL + "/" +
+                    "users/" + opt.get() +
+                    "/playlists/" + playlist + "/tracks";
+
+
+            JSONObject jo = GET(path);
+            JSONArray arr = jo.getJSONArray("items");
+
+            List<MusicService> list = new ArrayList();
+            for (int i = 0; i < arr.length(); i++) {
+                list.add(JsonToMusic(arr.getJSONObject(i).getJSONObject("track")));
+            }
+
+            return list;
+        } catch (Exception e){
+            return new ArrayList<>();
+        }
     }
 
     @Override
