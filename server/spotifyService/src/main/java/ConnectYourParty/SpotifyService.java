@@ -25,7 +25,10 @@ public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token = "BQCYdX3AlTco_k6iay9IBaZAfht44UhMGUdWWdR2vC4AeG4gaxiH1LKeP2NkN5eeHZ3MlYlFkvjWi56y-uChQZura7kAB3ebYpBsZJXkbhMMdP2ys2yVR7wTQrRiGS2tHTdCRmPo21gKZMDSXi1I0MIwCQ7dIkwJTswdDzso_3aIeq4OX6jnDJVkv5vjuoEz0IbeuxYh--qSVjOuTISFyBLDwI9IQsIQznH4yV6EipKXOG5WX_F2oEoA3Yf8Uz6X8tZzO6x-ZQ";
+
+    private String token;
+    private final String refresh_token = "AQAZsfm9j8Hc2EJX_gHAhjAA6sHiXr0e6_xn4HICjEylaNEN_Q_zNbNhMlhiTsQhwMh6uO0snLbRMH1mt6KiJlqL7q76BO_7bFhab3sYTjZtDIEhW_mx1t-53RSxMCuTF6g";
+
     public SpotifyService(){
     }
 
@@ -37,7 +40,7 @@ public class SpotifyService implements IMusicService {
             URL url = new URL("https://accounts.spotify.com/api/token");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            String urlParameters = "client_id="+getAppKey()+"&client_secret="+getAppSecret()+"&grant_type=client_credentials";
+            String urlParameters = "client_id="+getAppKey()+"&client_secret="+getAppSecret()+"&grant_type=refresh_token&refresh_token="+refresh_token;
 
             conn.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -58,7 +61,7 @@ public class SpotifyService implements IMusicService {
         }
 
         JSONObject jo = new JSONObject(result.toString());
-        System.out.println(jo.getString("access_token"));
+        token = jo.getString("access_token");
     }
 
     @Override
@@ -192,7 +195,7 @@ public class SpotifyService implements IMusicService {
             rd.close();
         } catch(Exception e){
             throw new GetMusicErrorException("Error on request to Spotify Web Service : "+ baseURL+uri+"\n"+ Arrays.toString(e.getStackTrace()));
-        }
+        } //catch Exception token expiré(){}
         return new JSONObject(result.toString());
     }
 

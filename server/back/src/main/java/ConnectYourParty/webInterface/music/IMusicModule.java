@@ -18,7 +18,7 @@ public interface IMusicModule {
      * Add a music to the event
      * Take a {@link Json} as input that copy
      * the form of a {@link MusicEventHolder}
-     * The list of musics added can be found with {@link MusicModule#getListMusic(String event)}
+     * The list of musics added can be found with {@link MusicModule#listMusic(String service)}
      * @param musicEventHolder Json object containing a {@link MusicEventHolder}
      */
     @POST()
@@ -38,23 +38,26 @@ public interface IMusicModule {
     Response searchMusic(@PathParam("search") String search, @PathParam("service") String service);
 
     /**
-     * Get the user token from the service wanted
-     * @return Json containg the user token
+     * Retrieve the musics available in the event playlist
+     * @param service The service you want to use
+     * @return {@link JsonArray} containing a list of {@link ConnectYourParty.requestObjects.music.MusicSearchHolder}
      */
     @GET()
-    @Path("getUserToken")
+    @Path("listMusic/{service}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response getUserToken();
+    Response listMusic(@PathParam("service") String service);
 
     /**
-     * Retrieve the list of musics of a particular event
-     * @param event the list of musics as {@link ConnectYourParty.requestObjects.music.MusicSearchHolder}
-     * @return
+     * Retrieve basic information about a specific song id
+     * @param service The service you want to use
+     * @param song The song id
+     * @return {@link JsonArray} containing a {@link ConnectYourParty.requestObjects.music.MusicSearchHolder}
      */
     @GET()
-    @Path("getListMusic/{event}")
+    @Path("infoMusic/{service}/{song}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response getListMusic(@PathParam("event") String event);
+    Response getInfoMusic(@PathParam("service") String service, @PathParam("song") String song);
+
 
 
 }

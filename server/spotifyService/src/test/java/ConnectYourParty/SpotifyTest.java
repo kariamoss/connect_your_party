@@ -8,6 +8,7 @@ import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
 import ConnectYourParty.objects.music.PlaylistService;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -28,6 +29,11 @@ public class SpotifyTest {
         service = new SpotifyService();
     }
 
+    @Before
+    public void lucaspd() throws GetMusicErrorException {
+        service.updateToken();
+    }
+
     @Test
     public void BoobaRequest() throws GetMusicErrorException {
         MusicService m = service.getInfoFromId("6xqAP7kpdgCy8lERQHh29c");
@@ -45,6 +51,7 @@ public class SpotifyTest {
     public void refreshTest() throws GetMusicErrorException {
         service.updateToken();
     }
+
 
     @Test
     public void playlistTest(){

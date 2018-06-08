@@ -4,6 +4,7 @@ import ConnectYourParty.SpotifyService;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
+import ConnectYourParty.objects.music.PlaylistService;
 import ConnectYourParty.services.music.IMusicService;
 
 import javax.annotation.PostConstruct;
@@ -27,24 +28,23 @@ public class MusicServiceUser implements IMusicServiceUser {
     }
 
     @Override
-    public MusicService getInfoFromId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
+    public MusicService getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
         return this.getService(serviceName).getInfoFromId(id);
     }
 
     @Override
-    public void addEventFromId(String id, String playlist, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
+    public void addMusicFromId(String id, String playlist, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
         this.getService(serviceName).addMusicFromId(id, playlist);
     }
 
     @Override
     public List<MusicService> getMusicFromPlaylist(String playlist, String serviceName) throws NoSuchServiceException {
-        this.getService(serviceName).getMusicFromPlaylist(playlist);
-        return null;
+        return this.getService(serviceName).getMusicFromPlaylist(playlist);
     }
 
     @Override
-    public void addPlaylist(String serviceName) throws NoSuchServiceException {
-        this.getService(serviceName).addPlaylist();
+    public PlaylistService addPlaylist(String serviceName) throws NoSuchServiceException {
+        return this.getService(serviceName).addPlaylist();
     }
 
     private IMusicService getService(String serviceName) throws NoSuchServiceException {

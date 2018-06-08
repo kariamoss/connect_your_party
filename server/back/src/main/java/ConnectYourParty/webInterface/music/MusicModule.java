@@ -1,7 +1,8 @@
 package ConnectYourParty.webInterface.music;
 
-import ConnectYourParty.exception.music.AddMusicException;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.exception.music.AddPlaylistException;
+import ConnectYourParty.exception.music.NoSuchPlaylistException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.modulesLogic.music.interpreter.IMusicInterpreter;
 import ConnectYourParty.requestObjects.music.MusicEventHolder;
@@ -24,14 +25,14 @@ public class MusicModule implements IMusicModule {
     @Override
     public Response addMusicToEvent(MusicEventHolder musicEventHolder) {
         try {
-            //musicInterpreter.addMusicToEvent(musicEventHolder.song, musicEventHolder.eventId, musicEventHolder.service);
+            musicInterpreter.addMusic(musicEventHolder.idSong, musicEventHolder.service);
 
             return CorsAdder.addCors(Response.ok()).build();
         }
-        /*catch (NoSuchServiceException | AddMusicException | GetMusicErrorException e){
+        catch (NoSuchServiceException | AddPlaylistException | NoSuchPlaylistException | GetMusicErrorException e){
             logger.log(Level.SEVERE, e.getMessage());
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
-        }*/ catch (Exception e){
+        } catch (Exception e){
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
     }
@@ -53,21 +54,34 @@ public class MusicModule implements IMusicModule {
     }
 
     @Override
-    public Response getUserToken() {
-        //TODO Gérer la connexion
-        return CorsAdder.addCors(
-                Response.status(Response.Status.OK)
-                        .entity("BQDdv4wrb_rlgb8BO3Y576MmqfGHDNEb3OzDLxzYaQofrPw5K41SvYCQSREG0pHXUKOI7VQ" +
-                                "__u_7aPzxiQPoQFAf7bIcWNpv9aG7YEV26enTgguElKz2MzjpoOl2o2iloGt4NquTmVNFP9" +
-                                "XgMdFJsKe6AGSxDG3L5bqt-w"))
-                .build();
+    public Response listMusic(String service) {
+        try {
+            return CorsAdder.addCors(
+                    Response.status(Response.Status.OK).entity(musicInterpreter.getListMusic(service)))
+                    .build();
+        }
+        catch (NoSuchServiceException | NoSuchPlaylistException e){
+            logger.log(Level.SEVERE, e.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+        catch (Exception e){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
     }
 
     @Override
-    public Response getListMusic(String playlist) {
-        /*return CorsAdder.addCors(
-                Response.status(Response.Status.OK).entity(musicInterpreter.getListMusic(playlist)))
-                .build();*/
-        return null;
+    public Response getInfoMusic(String service, String song) {
+        try {
+            return CorsAdder.addCors(
+                    Response.status(Response.Status.OK).entity(musicInterpreter.getInfoFromMusicId(song, service)))
+                    .build();
+        }
+        catch (NoSuchServiceException | GetMusicErrorException e){
+            logger.log(Level.SEVERE, e.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+        catch (Exception e){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
     }
 }
