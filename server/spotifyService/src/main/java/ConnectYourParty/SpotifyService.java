@@ -2,7 +2,6 @@ package ConnectYourParty;
 
 import ConnectYourParty.exceptions.music.CannotGetUserId;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
-import ConnectYourParty.exceptions.music.NoSuchPlaylistException;
 import ConnectYourParty.objects.music.MusicService;
 import ConnectYourParty.objects.music.PlaylistService;
 import ConnectYourParty.services.music.IMusicService;
@@ -177,6 +176,7 @@ public class SpotifyService implements IMusicService {
 
 
     private JSONObject GET(String uri) throws GetMusicErrorException {
+        updateToken();
         StringBuilder result = new StringBuilder();
         try {
             URL url = new URL(uri);
@@ -184,14 +184,12 @@ public class SpotifyService implements IMusicService {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization","Bearer "+ token);
             conn.setRequestProperty("Content-Type","application/json");
-            System.out.printf("Status code : "+conn.getResponseCode());
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = rd.readLine()) != null) {
                 result.append(line);
 
             }
-            System.out.println(result.toString());
             rd.close();
         } catch(Exception e){
             throw new GetMusicErrorException("Error on request to Spotify Web Service : "+ baseURL+uri+"\n"+ Arrays.toString(e.getStackTrace()));
@@ -211,7 +209,6 @@ public class SpotifyService implements IMusicService {
         conn.setRequestProperty("Authorization", "Bearer " + token);
         conn.getOutputStream().write(body.getBytes("UTF8"));
 
-        System.out.println("Status code : " + conn.getResponseCode());
 
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String line;

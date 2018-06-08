@@ -14,15 +14,23 @@ mat-card{
 
 .common{
   box-sizing: border-box;
-  width:48%;
+  width:50%;
   min-height: 70vh;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  border-top: 2px solid lightgray;
+  border-bottom:2px solid lightgray;
   padding:20px;
 }
 #first{
   float:left;
+  border-left: 2px solid lightgray;
+  border-right: 2px solid lightgray;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 #second{
   float:right;
+  border-right: 2px solid lightgray;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
