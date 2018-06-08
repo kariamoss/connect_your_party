@@ -3,24 +3,26 @@ package ConnectYourParty;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
+import ConnectYourParty.objects.TokenService;
 import ConnectYourParty.services.photo.IPhotoService;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Optional;
 
 public class CotyPhotoService implements IPhotoService {
     @Override
-    public void addPhoto(byte[] photo, String path) throws AddPhotoErrorException {
+    public void addPhoto(byte[] photo, String path, Optional<TokenService> token) throws AddPhotoErrorException {
         Photos.addPicture(photo, path);
     }
 
     @Override
-    public byte[] getPhoto(String path) throws RetrievePhotoErrorException {
+    public byte[] getPhoto(String path, Optional<TokenService> token) throws RetrievePhotoErrorException {
         return Photos.retrievePhoto(path);
     }
 
     @Override
-    public void removePhoto(String path) throws CannotDeletePhotoException {
+    public void removePhoto(String path, Optional<TokenService> token) throws CannotDeletePhotoException {
         Photos.removePhoto(path);
     }
 
@@ -36,25 +38,5 @@ public class CotyPhotoService implements IPhotoService {
         } catch (MalformedURLException e) {
             return null;
         }
-    }
-
-    @Override
-    public URL getOAuthUrl() {
-        return null;
-    }
-
-    @Override
-    public URL getOAuthToken() {
-        return null;
-    }
-
-    @Override
-    public String getAppKey() {
-        return null;
-    }
-
-    @Override
-    public String getAppSecret() {
-        return null;
     }
 }

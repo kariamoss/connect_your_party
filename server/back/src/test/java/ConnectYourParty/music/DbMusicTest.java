@@ -36,6 +36,7 @@ public class DbMusicTest {
         return ShrinkWrap.create(JavaArchive.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addPackage(IMusicDatabase.class.getPackage())
+                .addPackage(Music.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(MusicDatabase.class.getPackage());
     }

@@ -6,6 +6,7 @@ import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoAdderBody;
+import ConnectYourParty.webInterface.Module;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import ConnectYourParty.webInterface.CorsAdder;
 
@@ -23,7 +24,7 @@ public class PhotoModule implements IPhotoModule {
     Logger logger = Logger.getLogger(PhotoModule.class.getName());
 
     @EJB
-    IPhotoInterpreter interpreter;
+    private IPhotoInterpreter interpreter;
 
     @Override
     public Response addPhoto(MultipartBody body) {

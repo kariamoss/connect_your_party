@@ -1,5 +1,6 @@
 package ConnectYourParty.modulesLogic.photo.ServiceUser;
 
+import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
@@ -11,13 +12,14 @@ import ConnectYourParty.services.photo.IPhotoService;
 
 import javax.ejb.Local;
 import java.util.List;
+import java.util.Optional;
 
 @Local
 public interface IPhotoServiceUser {
 
     List<PhotoServiceHolder> getServiceList();
-    void removePhoto(Photo photo) throws CannotDeletePhotoException, NoSuchServiceException;
-    byte[] getPhoto(Photo photo) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException;
-    void addPhoto(Photo photo, byte[] bin) throws AddPhotoErrorException, NoSuchServiceException;
+    void removePhoto(Photo photo, Optional<Token> token) throws CannotDeletePhotoException, NoSuchServiceException;
+    byte[] getPhoto(Photo photo, Optional<Token> token) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException;
+    void addPhoto(Photo photo, byte[] bin, Optional<Token> token) throws AddPhotoErrorException, NoSuchServiceException;
 
 }

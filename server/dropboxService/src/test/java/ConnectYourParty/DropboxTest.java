@@ -6,16 +6,20 @@ import static org.junit.Assert.assertNotNull;
 
 import ConnectYourParty.exceptions.photo.AddPhotoErrorException;
 import ConnectYourParty.exceptions.photo.CannotDeletePhotoException;
+import ConnectYourParty.objects.TokenService;
 import org.junit.*;
 
+import javax.swing.text.html.Option;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class DropboxTest {
     private static DropboxService service;
     private String destPath = "/test/imageTests.jpg";
+    private final String token = "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP";
 
     @BeforeClass
     public static void init(){
@@ -26,7 +30,7 @@ public class DropboxTest {
     @After
     public void removal() {
         try {
-            service.removePhoto(this.destPath);
+            service.removePhoto(this.destPath, Optional.of(new TokenService("code", token, null)));
         } catch (CannotDeletePhotoException e) {
             // no problem
         }
@@ -39,9 +43,9 @@ public class DropboxTest {
         byte[] buff = new byte[in.available()];
         in.read(buff);
 
-        service.addPhoto(buff,destPath);
+        service.addPhoto(buff,destPath, Optional.of(new TokenService("code", token, null)));
 
-        byte[] recv = this.service.getPhoto(destPath);
+        byte[] recv = this.service.getPhoto(destPath, Optional.of(new TokenService("code", token, null)));
 
         assertTrue(Arrays.equals(buff,recv));
     }
@@ -50,11 +54,11 @@ public class DropboxTest {
     public void removeTest() throws AddPhotoErrorException, CannotDeletePhotoException {
         byte[] buff = new byte[3];
         buff[0] = 1;
-        service.addPhoto(buff,this.destPath); // No exception
+        service.addPhoto(buff,this.destPath, Optional.of(new TokenService("code", token, null))); // No exception
 
-        service.removePhoto(this.destPath); //No exception
+        service.removePhoto(this.destPath, Optional.of(new TokenService("code", token, null))); //No exception
 
-        service.addPhoto(buff,this.destPath); // No exception
+        service.addPhoto(buff,this.destPath, Optional.of(new TokenService("code", token, null))); // No exception
 
     }
 

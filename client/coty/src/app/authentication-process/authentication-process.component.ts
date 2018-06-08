@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {isUndefined} from "util";
 import {SelectorService} from "../services/selector.service";
-import {TokenRetrieverService} from "../services/tokenRetriever.service";
 import {Subscription} from "rxjs/internal/Subscription";
 import {ActivatedRoute, Router} from "@angular/router";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {APP_CONFIG, AppConfig} from "../app-config.module";
 
 @Component({
   selector: 'app-authentication-process',
@@ -14,11 +15,14 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
 
   updatePass: Subscription;
   sub: Subscription;
+  authentication: boolean = true;
+  error: string;
 
   constructor(private selectorService: SelectorService,
-              private tokenRetriever: TokenRetrieverService,
               private route: ActivatedRoute,
-              private router: Router,) {
+              private router: Router,
+              private httpClient : HttpClient,
+              @Inject(APP_CONFIG) private config: AppConfig,) {
   }
 
   ngOnInit() {
@@ -34,12 +38,28 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
         queryService = this.selectorService.getServiceByName(module, params.service);
         this.selectorService.changeSelectedService(module, queryService);
         code = params.code;
+        this.error = params.error_description;
         if (!isUndefined(code)) {
-          this.tokenRetriever.retrieveToken(queryService, code, id, module);
+         let body = new URLSearchParams();
+         body.set('code', code);
+         body.set('serviceName', params.service);
+          // '{"code": "'+ code +'", "serviceName": "' + params.service + '"}'
+          this.httpClient.post('http://' + this.config.apiEndpoint + "/back-1.0-SNAPSHOT/sendOAuthCode", body.toString(),
+            {
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).subscribe(
+              data => {
+                console.log('Success');
+              },
+              error => console.log(error)
+            );
+        } else if (this.error) {
+          this.authentication = false;
+          this.selectorService.changeSelectedService(module, null);
         }
         setTimeout(() => {
           this.router.navigate(['/events/' + state]);
-        }, 1000);
+        }, 30000 + this.error ? 2000 : 0);
       });
     }, 1000);
   }

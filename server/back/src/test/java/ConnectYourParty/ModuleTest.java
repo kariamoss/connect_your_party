@@ -1,15 +1,10 @@
-package ConnectYourParty.photo;
+package ConnectYourParty;
 
-import ConnectYourParty.CotyPhotoService;
-import ConnectYourParty.businessObjects.Token;
-import ConnectYourParty.businessObjects.service.ServiceHolder;
-import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
-import ConnectYourParty.database.service.IServiceRegistry;
-import ConnectYourParty.database.service.ServiceRegistry;
 import ConnectYourParty.database.token.ITokenDatabase;
 import ConnectYourParty.database.token.TokenDatabase;
+import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
 import ConnectYourParty.modulesLogic.common.interpreter.Interpreter;
 import ConnectYourParty.modulesLogic.common.serviceUser.IServiceUser;
@@ -20,48 +15,32 @@ import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
 import ConnectYourParty.modulesLogic.photo.chooser.PhotoChooser;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
-import ConnectYourParty.requestObjects.photo.PhotoHolder;
 import ConnectYourParty.webInterface.IModule;
 import ConnectYourParty.webInterface.Module;
 import ConnectYourParty.webInterface.photo.IPhotoModule;
 import ConnectYourParty.webInterface.photo.PhotoModule;
-import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+import cucumber.api.java.ca.I;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-
-
-import javax.activation.DataHandler;
 import javax.ejb.EJB;
-import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
+@Ignore
 @RunWith(Arquillian.class)
-public class PhotoModuleTest {
+public class ModuleTest {
 
+    @EJB IModule module;
 
-
-    @EJB
-    IPhotoModule module;
-
-    @EJB
-    ITokenDatabase tokenDatabase;
-
-    @EJB private IServiceRegistry servRegistry;
+    @EJB ITokenDatabase tokenDatabase;
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -85,62 +64,13 @@ public class PhotoModuleTest {
                 .addPackage(ServiceUser.class.getPackage())
                 .addPackage(ITokenDatabase.class.getPackage())
                 .addPackage(TokenDatabase.class.getPackage())
-                .addPackage(IServiceRegistry.class.getPackage())
-                .addPackage(ServiceRegistry.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoDatabase.class.getPackage());
     }
 
     @Test
-    public void addAndGetTest() throws Exception{
-        String imagePath = "test/test.jpg";
+    public void sendOAuthTest() throws NoSuchServiceException {
+        Response response = this.module.sendOAuthCode("code", "Dropbox");
 
-        servRegistry.addServiceHolder(new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO,DropboxService.class));
-
-        tokenDatabase.addToken(new Token("code", "Dropbox", "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP"));
-
-
-        URL path = this.getClass().getClassLoader().getResource("image.jpg");
-
-        DataHandler nameHandler = new DataHandler(imagePath,"text/plain");
-        DataHandler serviceHandler = new DataHandler("Dropbox","text/plain");
-
-        MultivaluedHashMap header = new MultivaluedHashMap<String,String>();
-
-
-        Attachment name = new Attachment("name",nameHandler,header);
-        Attachment service = new Attachment("service", serviceHandler,header);
-        Attachment file = new Attachment("file",new FileInputStream(path.getPath()),null);
-
-        MultipartBody body = new MultipartBody(Arrays.asList(name,
-                service,
-                file
-        ));
-
-        Response responseAdd = this.module.addPhoto(body);
-
-        assertEquals(responseAdd.getStatus(),200);
-
-        //assertTrue(db.getPhotosFromEvent().contains(new Photo(imagePath,"test",db.getUser(),coty.getServiceName())));
-
-        Response response = this.module.getPhotoList();
-        List<PhotoHolder> holder = (List<PhotoHolder>) response.getEntity();
-        assertEquals(1,holder.size());
-
-        String event = holder.get(0).photoPath.split("/")[0];
-        String namePhoto = holder.get(0).photoPath.split("/")[1];
-
-        Response responseGet = this.module.getPhoto(event, namePhoto);
-
-        assertEquals(responseGet.getStatus(),200);
-
-        byte[] arr = (byte[])responseGet.getEntity();
-
-        InputStream input = new FileInputStream(path.getPath());
-        byte[] buff = new byte[input.available()];
-        input.read(buff);
-
-        assertTrue(Arrays.equals(arr,buff));
     }
-
 }

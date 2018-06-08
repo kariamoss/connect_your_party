@@ -6,7 +6,6 @@ import {isNull} from "util";
 import {MatDialogRef} from "@angular/material";
 import {PhotoService} from "../../services/photo.service";
 import {APP_CONFIG, AppConfig} from "../../app-config.module";
-import {TokenRetrieverService} from "../../services/tokenRetriever.service";
 
 @Component({
   selector: 'app-add-photo',
@@ -25,7 +24,6 @@ export class AddPhotoComponent implements OnInit {
               private httpClient: HttpClient,
               private dialogRef: MatDialogRef<AddPhotoComponent>,
               private photoService: PhotoService,
-              private tokenRetriever: TokenRetrieverService,
               @Inject(APP_CONFIG) private config: AppConfig,) {
   }
 
@@ -40,9 +38,6 @@ export class AddPhotoComponent implements OnInit {
     }
     this.formData.append('service', service.name);
     this.formData.append('eventId', this.id.toString());
-    if (this.tokenRetriever.getToken(service)) {
-      this.formData.append('access_token', this.tokenRetriever.getToken(service));
-    }
     this.uploading = true;
     this.httpClient.post('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/photo/addPhoto', this.formData, {headers: this.headers})
       .subscribe(
