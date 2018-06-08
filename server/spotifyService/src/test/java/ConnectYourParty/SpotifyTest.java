@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,9 +27,13 @@ public class SpotifyTest {
         service = new SpotifyService();
     }
 
+    @Before
+    public void lucaspd() throws GetMusicErrorException {
+        service.updateToken();
+    }
+
     @Test
     public void BoobaRequest() throws GetMusicErrorException {
-        service.updateToken();
         MusicService m = service.getInfoFromId("6xqAP7kpdgCy8lERQHh29c");
         assertEquals("Booba",m.getArtist());
         assertEquals("113",m.getTitle());
@@ -36,7 +41,6 @@ public class SpotifyTest {
 
     @Test
     public void SearchRequestGoodLength() throws GetMusicErrorException {
-        service.updateToken();
         List<MusicService> list = service.searchMusic("booba");
         assertEquals(list.size(), service.searchResults);
     }
