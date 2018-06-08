@@ -21,7 +21,9 @@ public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token = "BQB_ztZ93VNEUMWSY6f7mKkajKv_o19WCUVDqRrBM144p2iEzG6zmQtSHh79WvZiZJt52nQWOSUtYJyQSPwRVLWwLV_b0KH7JY0NMHYKxZr5u4aGaSffiWSod4y5EKUhnwonQo4rodH29KOAcx5frgTHgi611uVbMqG6Giwnas6uLTfKMS0zbVi-ZRxDiiD3m7e36T5Y3qQIvQm2C0Y5xtYRI36GV_ikupgb6rvCF-XYSfvC9p4sLvt5x9BtQ-Qe3R24WPFsVyU";
+    private String token;
+    private final String refresh_token = "AQAZsfm9j8Hc2EJX_gHAhjAA6sHiXr0e6_xn4HICjEylaNEN_Q_zNbNhMlhiTsQhwMh6uO0snLbRMH1mt6KiJlqL7q76BO_7bFhab3sYTjZtDIEhW_mx1t-53RSxMCuTF6g";
+
     public SpotifyService(){
     }
 
@@ -33,7 +35,7 @@ public class SpotifyService implements IMusicService {
             URL url = new URL("https://accounts.spotify.com/api/token");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            String urlParameters = "client_id="+getAppKey()+"&client_secret="+getAppSecret()+"&grant_type=client_credentials";
+            String urlParameters = "client_id="+getAppKey()+"&client_secret="+getAppSecret()+"&grant_type=refresh_token&refresh_token="+refresh_token;
 
             conn.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -54,7 +56,7 @@ public class SpotifyService implements IMusicService {
         }
 
         JSONObject jo = new JSONObject(result.toString());
-        System.out.println(jo.getString("access_token"));
+        token = jo.getString("access_token");
     }
 
     @Override
@@ -121,7 +123,7 @@ public class SpotifyService implements IMusicService {
             rd.close();
         } catch(Exception e){
             throw new GetMusicErrorException("Error on request to Spotify Web Service : "+ baseURL+uri+"\n"+ Arrays.toString(e.getStackTrace()));
-        }
+        } //catch Exception token expiré(){}
         return new JSONObject(result.toString());
     }
 

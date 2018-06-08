@@ -28,20 +28,18 @@ public class SpotifyTest {
 
     @Test
     public void BoobaRequest() throws GetMusicErrorException {
+        service.updateToken();
         MusicService m = service.getInfoFromId("6xqAP7kpdgCy8lERQHh29c");
         assertEquals("Booba",m.getArtist());
         assertEquals("113",m.getTitle());
     }
 
-    @Ignore
+    @Test
     public void SearchRequestGoodLength() throws GetMusicErrorException {
+        service.updateToken();
         List<MusicService> list = service.searchMusic("booba");
         assertEquals(list.size(), service.searchResults);
     }
 
-    @Ignore
-    public void refreshTest() throws GetMusicErrorException {
-        service.updateToken();
-    }
 }
 
