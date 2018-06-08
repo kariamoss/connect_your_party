@@ -200,6 +200,8 @@ public class SpotifyService implements IMusicService {
     }
 
     private String POST(String uri, String body) throws Exception{
+
+        updateToken();
         StringBuilder result = new StringBuilder();
 
         URL url = new URL(uri);
