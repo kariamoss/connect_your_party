@@ -43,7 +43,7 @@ public class MusicInterpreter implements IMusicInterpreter {
         }
         else{
             List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
-            List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlists.get(1).getId(), service);
+            List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlists.get(0).getId(), service);
             for(MusicService ms : musicService){
                 musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
             }
