@@ -1,5 +1,6 @@
-package ConnectYourParty;
+package ConnectYourParty.photo;
 
+import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
