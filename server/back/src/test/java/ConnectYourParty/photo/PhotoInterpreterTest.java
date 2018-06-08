@@ -1,4 +1,4 @@
-package ConnectYourParty;
+package ConnectYourParty.photo;
 
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.businessObjects.photo.Photo;
@@ -29,7 +29,7 @@ public class PhotoInterpreterTest {
     private IPhotoInterpreter interpreter;
 
     @EJB
-    private IPhotoInterpreter db;
+    private IPhotoDatabase db;
 
     @Deployment
     public static JavaArchive createDeployment() {

@@ -1,10 +1,12 @@
 package ConnectYourParty;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
+import ConnectYourParty.objects.music.PlaylistService;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -45,5 +47,31 @@ public class SpotifyTest {
         assertEquals(list.size(), service.searchResults);
     }
 
-}
+    @Test
+    public void refreshTest() throws GetMusicErrorException {
+        service.updateToken();
+    }
 
+
+    @Test
+    public void playlistTest(){
+        PlaylistService play = service.addPlaylist();
+        assertNotNull(play.getId());
+    }
+
+    @Test
+    public void addMusicToPlaylist() throws  Exception{
+        PlaylistService play = service.addPlaylist();
+        String id = "6xqAP7kpdgCy8lERQHh29c";
+        service.addMusicFromId("6xqAP7kpdgCy8lERQHh29c" ,play.getId());
+        service.addMusicFromId("6xqAP7kpdgCy8lERQHh29c" ,play.getId());
+
+        List<MusicService> list = service.getMusicFromPlaylist(play.getId());
+
+        assertEquals(2,list.size());
+
+        assertEquals(id,list.get(0).getId());
+    }
+
+
+}

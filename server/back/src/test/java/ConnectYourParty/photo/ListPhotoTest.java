@@ -1,4 +1,4 @@
-package ConnectYourParty;
+package ConnectYourParty.photo;
 
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.businessObjects.photo.Photo;

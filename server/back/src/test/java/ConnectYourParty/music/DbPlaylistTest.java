@@ -41,7 +41,7 @@ public class DbPlaylistTest {
 
     @Test
     public void addPlaylistTest() throws Exception{
-        Playlist playlist = new Playlist("salut", "spotify");
+        Playlist playlist = new Playlist("salut", "Spotify");
 
         db.addPlaylist(playlist);
         List<Playlist> playlists = db.getPlaylistList();
@@ -55,7 +55,7 @@ public class DbPlaylistTest {
 
     @Test
     public void removeTest() throws Exception{
-        Playlist playlist = new Playlist("salut", "spotify");
+        Playlist playlist = new Playlist("salut", "Spotify");
 
         db.addPlaylist(playlist);
         List<Playlist> playlists = db.getPlaylistList();
@@ -68,8 +68,8 @@ public class DbPlaylistTest {
 
     @Test(expected = AddPlaylistException.class)
     public void doublePlaylist() throws AddPlaylistException{
-        Playlist playlist1 = new Playlist("salut", "spotify");
-        Playlist playlist2 = new Playlist("salut", "spotify");
+        Playlist playlist1 = new Playlist("salut", "Spotify");
+        Playlist playlist2 = new Playlist("salut", "Spotify");
 
         db.addPlaylist(playlist1);
         db.addPlaylist(playlist2);
@@ -78,7 +78,7 @@ public class DbPlaylistTest {
     @Test
     public void playlistRetrievalTest() throws NoSuchPlaylistException, AddPlaylistException {
         String id = "salut";
-        Playlist playlist = new Playlist(id, "spotify");
+        Playlist playlist = new Playlist(id, "Spotify");
         db.addPlaylist(playlist);
 
         assertEquals(playlist, db.getPlaylistFromId(id));
@@ -87,7 +87,7 @@ public class DbPlaylistTest {
     @Test(expected = NoSuchPlaylistException.class)
     public void playlistFailRetrievalTest() throws Exception {
         String id = "salut";
-        Playlist playlist = new Playlist(id, "spotify");
+        Playlist playlist = new Playlist(id, "Spotify");
         db.addPlaylist(playlist);
 
         db.getPlaylistFromId("fff");

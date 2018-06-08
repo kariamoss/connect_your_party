@@ -13,14 +13,14 @@ public class MusicTest {
 
     @Test
     public void musicEqualTest(){
-        Music music = new Music("salut", "spotify", "Pitbull", "Dalle");
+        Music music = new Music("salut", "Spotify", "Pitbull", "Dalle");
         assertEquals(music, music);
     }
 
     @Test
-    public void photoNotEqualTest(){
-        Music music1 = new Music("salut", "spotify", "Pitbull", "Dalle");
-        Music music2 = new Music("hey", "spotify", "Pitbull", "Dalle");
+    public void musicNotEqualTest(){
+        Music music1 = new Music("salut", "Spotify", "Pitbull", "Dalle");
+        Music music2 = new Music("hey", "Spotify", "Pitbull", "Dalle");
 
         assertNotEquals(music1, music2);
     }
