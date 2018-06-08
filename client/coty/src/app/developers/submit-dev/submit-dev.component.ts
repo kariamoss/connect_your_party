@@ -27,9 +27,9 @@ export class SubmitDevComponent implements OnInit {
   }
 
   onSubmit() {
-    /*
+
     this.formData.append('module', this.module);
-    this.formData.append('name', this.serviceFileName);
+    this.formData.append('name', this.serviceName);
     this.uploading = true;
 
     this.httpClient.post('http://' + this.config.apiEndpoint + '/back-1.0-SNAPSHOT/service/addService', this.formData, {headers: this.headers})
@@ -40,7 +40,7 @@ export class SubmitDevComponent implements OnInit {
         error => console.log(error),
         () => this.uploading = false,
       );
-     */
+
     this.uploading=true;
     console.log('service submitted to lucas');
     console.log('name : ' + this.serviceName);

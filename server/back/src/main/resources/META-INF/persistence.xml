@@ -12,6 +12,7 @@
         <class>ConnectYourParty.businessObjects.music.Playlist</class>
         <class>ConnectYourParty.businessObjects.Event</class>
         <class>ConnectYourParty.businessObjects.User</class>
+        <class>ConnectYourParty.businessObjects.service.ServiceHolder</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
