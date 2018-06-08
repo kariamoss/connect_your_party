@@ -15,7 +15,12 @@ public class TokenDatabase implements ITokenDatabase {
 
     @Override
     public void addToken(Token token) {
-        this.entityManager.persist(token);
+        if (this.entityManager.find(Token.class, token.getServiceName()) == null) {
+            this.entityManager.persist(token);
+            this.entityManager.flush();
+            return;
+        }
+        this.entityManager.merge(token);
         this.entityManager.flush();
     }
 

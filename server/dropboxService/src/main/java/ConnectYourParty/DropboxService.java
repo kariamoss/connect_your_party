@@ -15,10 +15,14 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.*;
 
 public class DropboxService implements IPhotoService, IServiceOAuth {
+
+    Logger logger = Logger.getLogger(DropboxService.class.getName());
 
     // private final String token = "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP";
     private DbxClientV2 client;
@@ -116,6 +120,7 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
 
     @Override
     public TokenService updateToken(String oAuthCode) {
+        // System.setProperty("http.keepAlive", "false");
         StringBuilder result = new StringBuilder();
         JSONObject resultJSON = new JSONObject();
         String parameters = "code=" + oAuthCode +
@@ -128,21 +133,36 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
         int postDataLength = postData.length;
         try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setInstanceFollowRedirects(false);
+
+            // conn.setInstanceFollowRedirects(false);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
+            // conn.setRequestProperty("charset", "utf-8");
             conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
             conn.setUseCaches(false);
+            conn.setDoOutput(true);
 
-            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
+            OutputStream os = conn.getOutputStream();
+            os.write(postData);
+            os.flush();
+            os.close();
+
+            int responseCode = conn.getResponseCode();
+            logger.log(Level.INFO, "POST response code : " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+                rd.close();
+                resultJSON = new JSONObject(result.toString());
+            } else {
+                throw new RuntimeException("Response from service server : " + responseCode);
             }
-            resultJSON = new JSONObject(result);
-        } catch (IOException e) {
+
+        } catch (IOException | RuntimeException e) {
             e.printStackTrace();
         }
         return new TokenService(oAuthCode, resultJSON.getString("access_token"), oAuthCode);

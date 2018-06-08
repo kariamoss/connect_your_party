@@ -40,10 +40,14 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
         code = params.code;
         this.error = params.error_description;
         if (!isUndefined(code)) {
-          let headers = new HttpHeaders();
-          headers.append('Content-Type', 'application/json');
-          this.httpClient.post('https://' + this.config.apiEndpoint + "/sendOAuthCode", {code: code, serviceName: params.service}, {headers: headers})
-            .subscribe(
+         let body = new URLSearchParams();
+         body.set('code', code);
+         body.set('serviceName', params.service);
+          // '{"code": "'+ code +'", "serviceName": "' + params.service + '"}'
+          this.httpClient.post('http://' + this.config.apiEndpoint + "/back-1.0-SNAPSHOT/sendOAuthCode", body.toString(),
+            {
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).subscribe(
               data => {
                 console.log('Success');
               },
@@ -55,7 +59,7 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
         }
         setTimeout(() => {
           this.router.navigate(['/events/' + state]);
-        }, 1000 + this.error ? 2000 : 0);
+        }, 30000 + this.error ? 2000 : 0);
       });
     }, 1000);
   }

@@ -42,14 +42,15 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
     headers.append("Content-Type", 'application/json');
     const result = this.httpClient.get<OAuthResult>('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/retrieveOAuthURL/' + newService.name, {headers: headers});
     result.subscribe(data => {
-      if (data.oAuthURL) {
-        window.location.href = "https://" + data.oAuthURL + '?' +
+      if (data.OAuthURL) {
+        window.location.href = data.OAuthURL + '?' +
           'client_id=' + data.client_id +
           '&redirect_uri=http://localhost:4200/authentication/?service='+ newService.name +
           '&response_type=code' +
           '&state= ' + this.id +'/'+ this.module;
       }
-    });
+    },
+      error => console.log(error));
   }
 /*
   forgetToken() {
@@ -68,6 +69,6 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
 }
 
 interface OAuthResult {
-  oAuthURL: string,
+  OAuthURL: string,
   client_id: string,
 }

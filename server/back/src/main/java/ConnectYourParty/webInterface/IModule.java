@@ -13,8 +13,8 @@ public interface IModule {
 
     @POST()
     @Path("sendOAuthCode")
-    @Consumes(MediaType.APPLICATION_JSON)
-    Response sendOAuthCode(String code, String serviceName) throws NoSuchServiceException;
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    Response sendOAuthCode(@FormParam("code") String code, @FormParam("serviceName") String serviceName) throws NoSuchServiceException;
 
     @GET()
     @Path("retrieveOAuthURL/{service}")
