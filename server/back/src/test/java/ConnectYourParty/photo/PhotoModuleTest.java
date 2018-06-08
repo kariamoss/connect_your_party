@@ -4,6 +4,8 @@ import ConnectYourParty.CotyPhotoService;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
+import ConnectYourParty.database.service.IServiceRegistry;
+import ConnectYourParty.database.service.ServiceRegistry;
 import ConnectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;
 import ConnectYourParty.modulesLogic.photo.ServiceUser.PhotoServiceUser;
 import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
@@ -60,6 +62,8 @@ public class PhotoModuleTest {
                 .addPackage(IPhotoServiceUser.class.getPackage())
                 .addPackage(PhotoServiceUser.class.getPackage())
                 .addPackage(IPhotoDatabase.class.getPackage())
+                .addPackage(IServiceRegistry.class.getPackage())
+                .addPackage(ServiceRegistry.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoDatabase.class.getPackage());
     }
@@ -72,7 +76,7 @@ public class PhotoModuleTest {
         URL path = this.getClass().getClassLoader().getResource("image.jpg");
 
         DataHandler nameHandler = new DataHandler(imagePath,"text/plain");
-        DataHandler serviceHandler = new DataHandler("Dropbox","text/plain");
+        DataHandler serviceHandler = new DataHandler(coty.getServiceName(),"text/plain");
 
         MultivaluedHashMap header = new MultivaluedHashMap<String,String>();
 

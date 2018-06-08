@@ -77,21 +77,6 @@ public class PhotoInterpreter implements IPhotoInterpreter {
 
     @Override
     public List<PhotoServiceHolder> getServices() {
-        List<PhotoServiceHolder> arr = new ArrayList<>();
-        for (IPhotoService service : services.getServiceList()) {
-            if (service.getOAuthUrl() == null) {
-                arr.add(new PhotoServiceHolder(service.getServiceName(),
-                        service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
-                continue;
-            }
-            arr.add(new PhotoServiceHolder(service.getServiceName(),
-                    service.getServiceIcon().getHost() + service.getServiceIcon().getPath(),
-                    service.getOAuthUrl().getHost() + service.getOAuthUrl().getPath(),
-                    service.getOAuthToken().getHost() + service.getOAuthToken().getPath(),
-                    service.getAppKey(),
-                    service.getAppSecret()));
-        }
-
-        return arr;
+        return this.services.getServiceList();
     }
 }
