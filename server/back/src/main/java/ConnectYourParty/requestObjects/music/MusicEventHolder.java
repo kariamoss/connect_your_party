@@ -1,11 +1,21 @@
 package ConnectYourParty.requestObjects.music;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class MusicEventHolder {
-    public String idSong;
+    @XmlElement
+    private String idSong;
+
+    @XmlElement
     public String service;
 
-    public MusicEventHolder(String idSong, String service) {
-        this.idSong = idSong;
-        this.service = service;
+    public String getIdSong() {
+        return idSong;
+    }
+
+    public String getService() {
+        return service;
     }
 }
