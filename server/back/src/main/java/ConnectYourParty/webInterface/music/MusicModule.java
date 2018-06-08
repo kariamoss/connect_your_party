@@ -31,9 +31,9 @@ public class MusicModule implements IMusicModule {
         }
         catch (NoSuchServiceException | AddPlaylistException | NoSuchPlaylistException | GetMusicErrorException e){
             logger.log(Level.SEVERE, e.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         } catch (Exception e){
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }
 
@@ -46,10 +46,10 @@ public class MusicModule implements IMusicModule {
         }
         catch (NoSuchServiceException | GetMusicErrorException e){
             logger.log(Level.SEVERE, e.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
         catch (Exception e){
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }
 
@@ -62,10 +62,10 @@ public class MusicModule implements IMusicModule {
         }
         catch (NoSuchServiceException | NoSuchPlaylistException e){
             logger.log(Level.SEVERE, e.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
         catch (Exception e){
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }
 
@@ -78,10 +78,10 @@ public class MusicModule implements IMusicModule {
         }
         catch (NoSuchServiceException | GetMusicErrorException e){
             logger.log(Level.SEVERE, e.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
         catch (Exception e){
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }
 }
