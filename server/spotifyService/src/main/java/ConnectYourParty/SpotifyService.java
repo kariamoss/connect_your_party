@@ -106,6 +106,7 @@ public class SpotifyService implements IMusicService {
 
 
     private JSONObject GET(String uri) throws GetMusicErrorException {
+        updateToken();
         StringBuilder result = new StringBuilder();
         try {
             URL url = new URL(uri);
