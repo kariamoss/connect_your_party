@@ -1,10 +1,12 @@
 package ConnectYourParty;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
+import ConnectYourParty.objects.music.PlaylistService;
 import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -33,15 +35,21 @@ public class SpotifyTest {
         assertEquals("113",m.getTitle());
     }
 
-    @Ignore
+    @Test
     public void SearchRequestGoodLength() throws GetMusicErrorException {
         List<MusicService> list = service.searchMusic("booba");
         assertEquals(list.size(), service.searchResults);
     }
 
-    @Ignore
+    @Test
     public void refreshTest() throws GetMusicErrorException {
         service.updateToken();
+    }
+
+    @Test
+    public void playlistTest(){
+        PlaylistService play = service.addPlaylist();
+        assertNotNull(play.getId());
     }
 }
 

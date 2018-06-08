@@ -1,6 +1,8 @@
 package ConnectYourParty;
 
+import ConnectYourParty.exceptions.music.CannotGetUserId;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
+import ConnectYourParty.exceptions.music.NoSuchPlaylistException;
 import ConnectYourParty.objects.music.MusicService;
 import ConnectYourParty.objects.music.PlaylistService;
 import ConnectYourParty.services.music.IMusicService;
@@ -15,13 +17,15 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
 import org.json.*;
 
 public class SpotifyService implements IMusicService {
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
-    private String token = "BQB_ztZ93VNEUMWSY6f7mKkajKv_o19WCUVDqRrBM144p2iEzG6zmQtSHh79WvZiZJt52nQWOSUtYJyQSPwRVLWwLV_b0KH7JY0NMHYKxZr5u4aGaSffiWSod4y5EKUhnwonQo4rodH29KOAcx5frgTHgi611uVbMqG6Giwnas6uLTfKMS0zbVi-ZRxDiiD3m7e36T5Y3qQIvQm2C0Y5xtYRI36GV_ikupgb6rvCF-XYSfvC9p4sLvt5x9BtQ-Qe3R24WPFsVyU";
+    private String token = "BQCQQlCoIF52oM59_-0pXYsXaOeZQv12UPhhffusNvscGvdA7jtl-mSrYdIexFnLgdOb3TUs2-OoxKlwalMaP1KX1m-g5FU1FnR5-ABOOl-Vp8rAFX5hxMvShQA45Sfjcm-fiZzlgW5JDnJaGrfePkrMm0-7X9uF4XJAEQTm7m37h2L5jzIorj6iUIgxcnYbXoyVp1ZR6cY-QjBRMnA0B6HIQG3TAK9UlsqqKspWiLRNzTH_PGCEE2wkJfV2KI4_6fIaMRwGQQ";
     public SpotifyService(){
     }
 
@@ -69,7 +73,27 @@ public class SpotifyService implements IMusicService {
 
     @Override
     public PlaylistService addPlaylist() {
-        return null;
+        JSONObject body = new JSONObject();
+
+        body.put("name","Coty");
+        body.put("public",false);
+        body.put("collaborative",true);
+
+        try {
+            String uri;
+            Optional<String> opt = this.getUserId();
+            if(opt.isPresent()){
+                uri = this.baseURL +"/users/"+opt.get()+"/playlists";
+            } else {
+                throw new CannotGetUserId();
+            }
+
+            JSONObject response = new JSONObject(this.POST(uri, body.toString()));
+
+            return new PlaylistService(response.getString("id"));
+        } catch (Exception e){
+            return new PlaylistService(null);
+        }
     }
 
     @Override
@@ -101,6 +125,15 @@ public class SpotifyService implements IMusicService {
         return list;
     }
 
+    private Optional<String> getUserId(){
+        try {
+            JSONObject response = this.GET(this.baseURL + "/me");
+            return Optional.of(response.getString("id"));
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
 
 
     private JSONObject GET(String uri) throws GetMusicErrorException {
@@ -110,6 +143,7 @@ public class SpotifyService implements IMusicService {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization","Bearer "+ token);
+            conn.setRequestProperty("Content-Type","application/json");
             System.out.printf("Status code : "+conn.getResponseCode());
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
@@ -125,7 +159,30 @@ public class SpotifyService implements IMusicService {
         return new JSONObject(result.toString());
     }
 
+    private String POST(String uri, String body) throws Exception{
+        StringBuilder result = new StringBuilder();
+
+        URL url = new URL(uri);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Authorization", "Bearer " + token);
+        conn.getOutputStream().write(body.getBytes("UTF8"));
+
+        System.out.println("Status code : " + conn.getResponseCode());
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+        rd.close();
+
+        return result.toString();
+    }
+
     private MusicService JsonToMusic(JSONObject jo){
+
         String id = jo.getString("id");
         String title = jo.getString("name");
         String author = jo.getJSONArray("artists").getJSONObject(0).getString("name");
