@@ -1,13 +1,11 @@
 package ConnectYourParty.requestObjects.music;
 
 public class MusicEventHolder {
-    public String song;
-    public String eventId;
+    public String idSong;
     public String service;
 
-    public MusicEventHolder(String song, String eventId, String service) {
-        this.song = song;
-        this.eventId = eventId;
+    public MusicEventHolder(String idSong, String service) {
+        this.idSong = idSong;
         this.service = service;
     }
 }
