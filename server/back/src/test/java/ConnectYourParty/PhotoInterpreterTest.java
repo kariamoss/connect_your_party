@@ -4,6 +4,8 @@ import ConnectYourParty.database.DbMock;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
+import ConnectYourParty.database.token.ITokenDatabase;
+import ConnectYourParty.database.token.TokenDatabase;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -40,7 +42,9 @@ public class PhotoInterpreterTest {
                 .addPackage(PhotoDatabase.class.getPackage())
                 .addPackage(IPhotoInterpreter.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
-                .addPackage(PhotoInterpreter.class.getPackage());
+                .addPackage(PhotoInterpreter.class.getPackage())
+                .addPackage(ITokenDatabase.class.getPackage())
+                .addPackage(TokenDatabase.class.getPackage());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package ConnectYourParty.modulesLogic.photo.interpreter;
 
+import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.token.ITokenDatabase;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Stateless
@@ -42,8 +44,12 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     @Override
     public void addPhoto(InputStream stream, String name, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
         String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
+        Token token;
+        if (tokenDatabase.getTokenFromServiceName(serviceName).isPresent())
+            token = tokenDatabase.getTokenFromServiceName(serviceName).get();
+        else token = null;
 
-        Photo photo = new Photo(rName, serviceName);
+        Photo photo = new Photo(rName, serviceName, token);
 
 
         try {
@@ -60,13 +66,13 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     @Override
     public byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException {
         Photo photo = db.getPhotoFromPath(path);
-        return services.getPhoto(photo, tokenDatabase.getTokenFromServiceName(photo.getServiceHost()));
+        return services.getPhoto(photo, photo.getAccessToken());
     }
 
     @Override
     public void removePhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException, CannotDeletePhotoException {
         Photo photo = db.getPhotoFromPath(path);
-        services.removePhoto(photo, tokenDatabase.getTokenFromServiceName(photo.getServiceHost()));
+        services.removePhoto(photo, photo.getAccessToken());
     }
 
     @Override

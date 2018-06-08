@@ -1,12 +1,15 @@
 package ConnectYourParty.businessObjects.photo;
 
 import ConnectYourParty.businessObjects.Event;
+import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.database.DbMock;
 
 import javax.persistence.*;
+import javax.swing.text.html.Option;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Optional;
 
 @Entity
 public class Photo implements Serializable {
@@ -26,6 +29,9 @@ public class Photo implements Serializable {
     @Transient
     private User user = DbMock.user;
 
+    @ManyToOne
+    private Token accessToken;
+
     public Photo(){
 
     }
@@ -34,6 +40,14 @@ public class Photo implements Serializable {
         this.name = name;
         this.path = this.event.getId()+"/"+name;
         this.serviceHost = serviceHost;
+        this.accessToken = null;
+    }
+
+    public Photo(String name, String serviceHost, Token accessToken) {
+        this.name = name;
+        this.path = this.event.getId()+"/"+name;
+        this.serviceHost = serviceHost;
+        this.accessToken = accessToken;
     }
 
     public String getServiceHost() {
@@ -65,5 +79,10 @@ public class Photo implements Serializable {
     public boolean equals(Object obj) {
         return obj.getClass().equals(Photo.class) &&
                 this.getPhotoPath().equals(((Photo) obj).getPhotoPath());
+    }
+
+    public Optional<Token> getAccessToken() {
+
+        return Optional.of(accessToken);
     }
 }
