@@ -57,11 +57,14 @@ public class SpotifyTest {
         PlaylistService play = service.addPlaylist();
         String id = "6xqAP7kpdgCy8lERQHh29c";
         service.addMusicFromId("6xqAP7kpdgCy8lERQHh29c" ,play.getId());
+        service.addMusicFromId("6xqAP7kpdgCy8lERQHh29c" ,play.getId());
 
         List<MusicService> list = service.getMusicFromPlaylist(play.getId());
 
-        assertEquals(1,list.size());
+        assertEquals(2,list.size());
 
         assertEquals(id,list.get(0).getId());
     }
+
+
 }
