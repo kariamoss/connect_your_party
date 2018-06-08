@@ -35,7 +35,7 @@ public interface IMusicModule {
     @GET()
     @Path("searchMusic/{service}/{search}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response searchMusic(@PathParam("search") String search, @PathParam("service") String service);
+    Response searchMusic(@PathParam("service") String service, @PathParam("search") String search);
 
     /**
      * Retrieve the musics available in the event playlist

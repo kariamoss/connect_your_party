@@ -38,7 +38,7 @@ public class MusicModule implements IMusicModule {
     }
 
     @Override
-    public Response searchMusic(String search, String service) {
+    public Response searchMusic(String service, String search) {
         try {
             return CorsAdder.addCors(
                     Response.status(Response.Status.OK).entity(musicInterpreter.searchMusic(search, service)))
