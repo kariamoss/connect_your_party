@@ -41,7 +41,7 @@ export class MusicSearchComponent implements OnInit {
       idSong, service
     };
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.httpClient.post(url, body, {headers: headers});
+    this.httpClient.post(url, body, {headers: headers}).subscribe();
   }
 
 }

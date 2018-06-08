@@ -15,9 +15,6 @@ export class MusicListComponent implements OnInit {
 
   ngOnInit(){
     this.getList();
-    this.musicList.push(new MusicModel(1,"Alors on danse","Rachel Matteo"));
-    this.musicList.push(new MusicModel(2,"Prenez moi","Rachel Matteo"));
-    this.musicList.push(new MusicModel(3,"Jusqu'au bout","Rachel Matteo"));
   }
 
   getList(){

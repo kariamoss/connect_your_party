@@ -13,7 +13,7 @@ import java.util.List;
 public interface IMusicInterpreter {
     List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException;
 
-    List<MusicSearchHolder> getListMusic(String service) throws NoSuchServiceException, NoSuchPlaylistException;
+    List<MusicSearchHolder> getListMusic(String service) throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException;
 
     MusicSearchHolder getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException;
 
