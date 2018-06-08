@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Photo} from "../../../model/photo.model";
 import {MusicModel} from "../../../model/music.model";
 
@@ -25,7 +25,7 @@ export class MusicSearchComponent implements OnInit {
     this.httpClient.get(url)
       .subscribe(data => {
           for (let i = 0; i < 10; i++) {
-            let m = new MusicModel(data[i]['id'],data[i]['title'],data[i]['artist']);
+            let m = new MusicModel(data[i]['id'], data[i]['title'], data[i]['artist']);
             this.searchResults.push(m);
           }
         }
@@ -33,8 +33,15 @@ export class MusicSearchComponent implements OnInit {
 
   }
 
-  addToPlaylist(id){
-    console.log(id);
+  addToPlaylist(id) {
+    let url = "http://localhost:8080/back-1.0-SNAPSHOT/music/addMusic";
+    let idSong = id;
+    let service = "Spotify";
+    const body = {
+      idSong, service
+    };
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    this.httpClient.post(url, body, {headers: headers});
   }
 
 }
