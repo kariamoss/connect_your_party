@@ -1,6 +1,7 @@
 package ConnectYourParty.photo;
 
 import ConnectYourParty.CotyPhotoService;
+import ConnectYourParty.DropboxService;
 import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.service.ServiceHolder;
 import ConnectYourParty.database.DbMock;
@@ -95,7 +96,7 @@ public class PhotoModuleTest {
     public void addAndGetTest() throws Exception{
         String imagePath = "test/test.jpg";
 
-        servRegistry.addServiceHolder(new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO,DropboxService.class));
+        servRegistry.addServiceHolder(new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO, DropboxService.class));
 
         tokenDatabase.addToken(new Token("code", "Dropbox", "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP"));
 

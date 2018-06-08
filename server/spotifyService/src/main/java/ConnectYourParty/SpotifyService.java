@@ -242,21 +242,12 @@ public class SpotifyService implements IMusicService {
         }
     }
 
-    @Override
-    public URL getOAuthUrl() {
-        return null;
-    }
-    @Override
-    public URL getOAuthToken() {
-        return null;
-    }
 
-    @Override
     public String getAppKey() {
         return "6086d2f27df04485a1e378bdb127646c";
     }
 
-    @Override
+
     public String getAppSecret() {
         return "0d57beb5c2174c8aa2da8a46f2081b03";
     }
