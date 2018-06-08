@@ -16,7 +16,7 @@ export class MusicSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchMusic("pute")
+    this.searchMusic("hello");
   }
 
   searchMusic(input) {

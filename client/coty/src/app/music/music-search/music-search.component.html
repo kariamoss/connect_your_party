@@ -1,15 +1,25 @@
 <h3>Ajouter un titre</h3>
 <div class="ctn">
   <div class="salut">
-    <input id="search" #input matInput placeholder="Rechercher une musique" value="pute">
-  <button id="go" (click)="searchMusic(input.value)">Go</button>
+    <input id="search" (keyup.enter)="searchMusic(input.value)" #input matInput placeholder="Rechercher une musique">
+    <button id="go" (click)="searchMusic(input.value)">Go</button>
   </div>
   <br/>
   <mat-grid-list cols="1" rowHeight="2:1">
 
-    <div #toto class="elem" *ngFor="let music of searchResults" id="{{music.id}}">
-      <button class="plus" (click)="addToPlaylist(toto.id)">+</button>
-      <b>{{music.title}}</b> - {{music.artist}}
+    <div class="load" *ngIf="searchResults.length == 0">
+      <div id="loading">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+
+    </div>
+
+
+    <div *ngIf="searchResults.length>0">
+      <div #toto class="elem" *ngFor="let music of searchResults" id="{{music.id}}">
+        <button class="plus" (click)="addToPlaylist(toto.id)">+</button>
+        <b>{{music.title}}</b> - {{music.artist}}
+      </div>
     </div>
 
 
