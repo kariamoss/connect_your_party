@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class MusicEventHolder {
     @XmlElement
-    private String idSong;
+    public String idSong;
 
     @XmlElement
     public String service;

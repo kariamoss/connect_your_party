@@ -30,7 +30,7 @@ public class Playlist {
 
     @Override
     public int hashCode() {
-        return this.getId().hashCode();
+        return this.id.hashCode();
     }
 
     @Override
