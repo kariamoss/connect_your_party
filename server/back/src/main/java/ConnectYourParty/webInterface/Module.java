@@ -1,5 +1,6 @@
 package ConnectYourParty.webInterface;
 
+import ConnectYourParty.database.DbMock;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.NoSuchUserException;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
@@ -24,7 +25,7 @@ public class Module implements IModule {
         // JSONObject object = new JSONObject(text);
         try {
             logger.log(Level.INFO, "Code reçu : " + code + " et nom du service : " + serviceName);
-            interpreter.sendOAuthCode(code, serviceName, userId);
+            interpreter.sendOAuthCode(code, serviceName, DbMock.user.getName());
             return CorsAdder.addCors(Response.ok()).build();
         } catch (Exception e){
             return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();
