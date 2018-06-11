@@ -6,6 +6,15 @@ public class PhotoAdderBody {
     private String name;
     private String service;
     private InputStream input;
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;
@@ -34,6 +43,7 @@ public class PhotoAdderBody {
     public boolean check(){
         return name != null &&
                 service != null &&
+                userId != null &&
                 input != null;
     }
 }

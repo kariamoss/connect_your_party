@@ -4,8 +4,8 @@ import ConnectYourParty.database.DbMock;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
-import ConnectYourParty.database.token.ITokenDatabase;
-import ConnectYourParty.database.token.TokenDatabase;
+import ConnectYourParty.database.user.IUserRegistry;
+import ConnectYourParty.database.user.UserRegistry;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -43,8 +43,8 @@ public class PhotoInterpreterTest {
                 .addPackage(IPhotoInterpreter.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoInterpreter.class.getPackage())
-                .addPackage(ITokenDatabase.class.getPackage())
-                .addPackage(TokenDatabase.class.getPackage());
+                .addPackage(IUserRegistry.class.getPackage())
+                .addPackage(UserRegistry.class.getPackage());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PhotoInterpreterTest {
         Photo photo = new Photo("test","dominos");
 
         assertEquals(0,db.getPhotoList().size());
-        this.interpreter.addPhoto(stream,photo.getName(),photo.getServiceHost());
+        this.interpreter.addPhoto(stream,photo.getName(),photo.getServiceHost(),DbMock.user.getName());
 
         assertEquals(0,db.getPhotoList().size());
     }

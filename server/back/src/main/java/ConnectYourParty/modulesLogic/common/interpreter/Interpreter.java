@@ -1,7 +1,10 @@
 package ConnectYourParty.modulesLogic.common.interpreter;
 
-import ConnectYourParty.database.token.ITokenDatabase;
+import ConnectYourParty.businessObjects.Token;
+import ConnectYourParty.businessObjects.User;
+import ConnectYourParty.database.user.IUserRegistry;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.exception.NoSuchUserException;
 import ConnectYourParty.modulesLogic.common.serviceUser.IServiceUser;
 import ConnectYourParty.requestObjects.request.OAuthHolder;
 
@@ -13,14 +16,18 @@ import java.net.URL;
 public class Interpreter implements IInterpreter {
 
     @EJB
-    private ITokenDatabase tokenDatabase;
+    private IUserRegistry userRegistry;
 
     @EJB
     private IServiceUser services;
 
     @Override
-    public void sendOAuthCode(String code, String serviceName) throws NoSuchServiceException {
-        tokenDatabase.addToken(services.getToken(code, serviceName));
+    public void sendOAuthCode(String code, String serviceName, String userId) throws NoSuchServiceException, NoSuchUserException {
+        Token token = services.getToken(code, serviceName);
+
+        User user = userRegistry.getUserById(userId);
+
+        userRegistry.addToken(user,token);
     }
 
     @Override

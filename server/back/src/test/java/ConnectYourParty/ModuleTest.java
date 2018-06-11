@@ -1,9 +1,14 @@
 package ConnectYourParty;
 
+import ConnectYourParty.businessObjects.User;
+import ConnectYourParty.businessObjects.service.ServiceHolder;
+import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
-import ConnectYourParty.database.token.ITokenDatabase;
-import ConnectYourParty.database.token.TokenDatabase;
+import ConnectYourParty.database.service.IServiceRegistry;
+import ConnectYourParty.database.service.ServiceRegistry;
+import ConnectYourParty.database.user.IUserRegistry;
+import ConnectYourParty.database.user.UserRegistry;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
 import ConnectYourParty.modulesLogic.common.interpreter.Interpreter;
@@ -34,13 +39,20 @@ import org.junit.runner.RunWith;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+
+
 @Ignore
 @RunWith(Arquillian.class)
 public class ModuleTest {
 
     @EJB IModule module;
 
-    @EJB ITokenDatabase tokenDatabase;
+    @EJB IUserRegistry userRegistry;
+
+    @EJB private IServiceRegistry serviceRegistry;
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -61,16 +73,29 @@ public class ModuleTest {
                 .addPackage(IInterpreter.class.getPackage())
                 .addPackage(Interpreter.class.getPackage())
                 .addPackage(IServiceUser.class.getPackage())
+                .addPackage(IServiceRegistry.class.getPackage())
+                .addPackage(ServiceRegistry.class.getPackage())
                 .addPackage(ServiceUser.class.getPackage())
-                .addPackage(ITokenDatabase.class.getPackage())
-                .addPackage(TokenDatabase.class.getPackage())
+                .addPackage(IUserRegistry.class.getPackage())
+                .addPackage(UserRegistry.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoDatabase.class.getPackage());
     }
 
     @Test
-    public void sendOAuthTest() throws NoSuchServiceException {
-        Response response = this.module.sendOAuthCode("code", "Dropbox");
+    public void sendOAuthTest() throws Exception {
 
+        this.serviceRegistry.addServiceHolder(new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO,
+                DropboxService.class));
+
+        Response response = this.module.sendOAuthCode("code", "Dropbox", DbMock.user.getName());
+
+        assertEquals(200,response.getStatus());
+
+        User user = this.userRegistry.getUserById(DbMock.user.getName());
+
+        assertNotEquals(0,user.getTokenList().size());
     }
+
+
 }

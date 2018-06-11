@@ -1,5 +1,6 @@
 package ConnectYourParty.modulesLogic.photo.interpreter;
 
+import ConnectYourParty.exception.NoSuchUserException;
 import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.photo.PhotoAlreadyExistException;
@@ -17,7 +18,7 @@ import java.util.List;
 @Local
 public interface IPhotoInterpreter {
 
-    void addPhoto(InputStream stream, String path, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException;
+    void addPhoto(InputStream stream, String path, String serviceName, String userId) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException, NoSuchUserException;
     byte[] getPhoto(String path) throws RetrievePhotoErrorException, NoSuchServiceException, NoSuchPhotoException;
     void removePhoto(String path) throws RetrievePhotoErrorException,NoSuchServiceException, NoSuchPhotoException,CannotDeletePhotoException;
 

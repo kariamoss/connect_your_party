@@ -1,6 +1,8 @@
 package ConnectYourParty.webInterface;
 
+import ConnectYourParty.database.DbMock;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.exception.NoSuchUserException;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
 import ConnectYourParty.requestObjects.request.NullResponse;
 
@@ -19,13 +21,15 @@ public class Module implements IModule {
     private IInterpreter interpreter;
 
     @Override
-    public Response sendOAuthCode(String code, String serviceName) throws NoSuchServiceException {
+    public Response sendOAuthCode(String code, String serviceName, String userId) throws NoSuchServiceException {
         // JSONObject object = new JSONObject(text);
-
-        logger.log(Level.INFO, "Code reçu : " + code + " et nom du service : " + serviceName);
-        interpreter.sendOAuthCode(code, serviceName);
-
-        return CorsAdder.addCors(Response.ok()).build();
+        try {
+            logger.log(Level.INFO, "Code reçu : " + code + " et nom du service : " + serviceName);
+            interpreter.sendOAuthCode(code, serviceName, DbMock.user.getName());
+            return CorsAdder.addCors(Response.ok()).build();
+        } catch (Exception e){
+            return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();
+        }
     }
 
     @Override

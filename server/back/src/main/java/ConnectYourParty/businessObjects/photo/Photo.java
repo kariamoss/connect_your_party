@@ -82,7 +82,7 @@ public class Photo implements Serializable {
     }
 
     public Optional<Token> getAccessToken() {
-        if (accessToken == null) {
+if (accessToken == null) {
             return Optional.empty();
         }
         return Optional.of(accessToken);

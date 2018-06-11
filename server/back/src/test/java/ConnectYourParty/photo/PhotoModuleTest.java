@@ -9,8 +9,8 @@ import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.database.service.IServiceRegistry;
 import ConnectYourParty.database.service.ServiceRegistry;
-import ConnectYourParty.database.token.ITokenDatabase;
-import ConnectYourParty.database.token.TokenDatabase;
+import ConnectYourParty.database.user.IUserRegistry;
+import ConnectYourParty.database.user.UserRegistry;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
 import ConnectYourParty.modulesLogic.common.interpreter.Interpreter;
 import ConnectYourParty.modulesLogic.common.serviceUser.IServiceUser;
@@ -60,7 +60,7 @@ public class PhotoModuleTest {
     IPhotoModule module;
 
     @EJB
-    ITokenDatabase tokenDatabase;
+    IUserRegistry userRegistry;
 
     @EJB private IServiceRegistry servRegistry;
 
@@ -84,8 +84,8 @@ public class PhotoModuleTest {
                 .addPackage(Interpreter.class.getPackage())
                 .addPackage(IServiceUser.class.getPackage())
                 .addPackage(ServiceUser.class.getPackage())
-                .addPackage(ITokenDatabase.class.getPackage())
-                .addPackage(TokenDatabase.class.getPackage())
+                .addPackage(IUserRegistry.class.getPackage())
+                .addPackage(UserRegistry.class.getPackage())
                 .addPackage(IServiceRegistry.class.getPackage())
                 .addPackage(ServiceRegistry.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
@@ -96,26 +96,26 @@ public class PhotoModuleTest {
     public void addAndGetTest() throws Exception{
         String imagePath = "test/test.jpg";
 
-        servRegistry.addServiceHolder(new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO, DropboxService.class));
-
-        tokenDatabase.addToken(new Token("code", "Dropbox", "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP"));
-
+        servRegistry.addServiceHolder(new ServiceHolder(ConnectYourParty.businessObjects.service.Module.PHOTO, CotyPhotoService.class));
 
         URL path = this.getClass().getClassLoader().getResource("image.jpg");
 
         DataHandler nameHandler = new DataHandler(imagePath,"text/plain");
-        DataHandler serviceHandler = new DataHandler("Dropbox","text/plain");
+        DataHandler userIdHandler = new DataHandler(DbMock.user.getName(),"text/plain");
+        DataHandler serviceHandler = new DataHandler(new CotyPhotoService().getServiceName(),"text/plain");
 
         MultivaluedHashMap header = new MultivaluedHashMap<String,String>();
 
 
         Attachment name = new Attachment("name",nameHandler,header);
+        Attachment userId = new Attachment("userId",userIdHandler,header);
         Attachment service = new Attachment("service", serviceHandler,header);
         Attachment file = new Attachment("file",new FileInputStream(path.getPath()),null);
 
         MultipartBody body = new MultipartBody(Arrays.asList(name,
                 service,
-                file
+                file,
+                userId
         ));
 
         Response responseAdd = this.module.addPhoto(body);
