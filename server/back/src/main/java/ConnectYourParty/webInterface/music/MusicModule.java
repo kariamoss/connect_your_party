@@ -41,12 +41,8 @@ public class MusicModule implements IMusicModule {
             return CorsAdder.addCors(
                     Response.status(Response.Status.OK).entity(musicInterpreter.searchMusic(search, service)))
                     .build();
-        }
-        catch (NoSuchServiceException | GetMusicErrorException e){
+        } catch (Exception e){
             logger.log(Level.SEVERE, e.getMessage());
-            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
-        }
-        catch (Exception e){
             return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }
@@ -57,12 +53,8 @@ public class MusicModule implements IMusicModule {
             return CorsAdder.addCors(
                     Response.status(Response.Status.OK).entity(musicInterpreter.getListMusic(service)))
                     .build();
-        }
-        catch (NoSuchServiceException | NoSuchPlaylistException e){
+        } catch (Exception e){
             logger.log(Level.SEVERE, e.getMessage());
-            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
-        }
-        catch (Exception e){
             return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }
@@ -73,12 +65,8 @@ public class MusicModule implements IMusicModule {
             return CorsAdder.addCors(
                     Response.status(Response.Status.OK).entity(musicInterpreter.getInfoFromMusicId(song, service)))
                     .build();
-        }
-        catch (NoSuchServiceException | GetMusicErrorException e){
+        } catch (Exception e){
             logger.log(Level.SEVERE, e.getMessage());
-            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
-        }
-        catch (Exception e){
             return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }

@@ -1,11 +1,15 @@
 package ConnectYourParty.music;
 
+import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.music.IMusicDatabase;
 import ConnectYourParty.database.music.MusicDatabase;
+import ConnectYourParty.database.token.ITokenDatabase;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.music.AddPlaylistException;
 import ConnectYourParty.exception.music.NoSuchPlaylistException;
+import ConnectYourParty.exceptions.MissingTokenException;
+import ConnectYourParty.exceptions.music.CannotCreatePlaylistException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.modulesLogic.music.interpreter.IMusicInterpreter;
 import ConnectYourParty.modulesLogic.music.interpreter.MusicInterpreter;
@@ -39,9 +43,14 @@ public class MusicInterpreterTest {
     @EJB
     private IMusicInterpreter musicInterpreter;
 
+    @EJB
+    ITokenDatabase tokenDB;
+
     @Before
     public void clean(){
         this.db.clean();
+        this.tokenDB.clean();
+        tokenDB.addToken(new Token());
     }
 
     @Deployment
@@ -59,7 +68,7 @@ public class MusicInterpreterTest {
     }
 
     @Ignore
-    public void createPlaylistWhenEmpty() throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException, GetMusicErrorException {
+    public void createPlaylistWhenEmpty() throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException {
 
         assertEquals(0, db.getPlaylistList().size());
 

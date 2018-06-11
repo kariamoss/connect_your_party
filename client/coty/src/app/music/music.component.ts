@@ -19,7 +19,7 @@ export class MusicComponent implements OnInit {
 
   connect() {
     let clientid = "6086d2f27df04485a1e378bdb127646c";
-    let redirect = "http://localhost:4200/authentication/?service=spotify";
+    let redirect = "http://localhost:4200/authentication/?service=Spotify";
     let scopes = "user-library-read user-library-modify playlist-read-private playlist-modify-public playlist-modify-private " +
       "playlist-read-collaborative user-read-private streaming";
     let state = this.param.sharedId+"/music";
@@ -30,5 +30,4 @@ export class MusicComponent implements OnInit {
     console.log(url);
     window.location.href = url;
   }
-
 }

@@ -1,5 +1,7 @@
 package ConnectYourParty;
 
+import ConnectYourParty.exceptions.MissingTokenException;
+import ConnectYourParty.exceptions.music.CannotCreatePlaylistException;
 import ConnectYourParty.exceptions.music.CannotGetUserId;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.TokenService;
@@ -25,58 +27,24 @@ import org.json.*;
 
 public class SpotifyService implements IMusicService, IServiceOAuth {
 
-    Logger logger = Logger.getLogger(SpotifyService.class.getName());
-
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
 
-    private String token;
-    private final String test_refresh_token = "AQAZsfm9j8Hc2EJX_gHAhjAA6sHiXr0e6_xn4HICjEylaNEN_Q_zNbNhMlhiTsQhwMh6uO0snLbRMH1mt6KiJlqL7q76BO_7bFhab3sYTjZtDIEhW_mx1t-53RSxMCuTF6g";
 
     public SpotifyService() {
     }
 
 
-    public void updateTestToken() throws GetMusicErrorException {
-
-        StringBuilder result = new StringBuilder();
-        try {
-            URL url = new URL("https://accounts.spotify.com/api/token");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            String urlParameters = "client_id=" + getAppKey() + "&client_secret=" + getAppSecret() + "&grant_type=refresh_token&refresh_token=" + test_refresh_token;
-
-            conn.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-
-            }
-
-            rd.close();
-        } catch (Exception e) {
-            throw new GetMusicErrorException("Error on request to Spotify Web Service : \n" + Arrays.toString(e.getStackTrace()));
-        }
-
-        JSONObject jo = new JSONObject(result.toString());
-        token = jo.getString("access_token");
+    @Override
+    public MusicService getInfoFromId(String id, Optional<TokenService> token) throws GetMusicErrorException, MissingTokenException {
+        TokenService tokenService = getTokenService(token);
+        return JsonToMusic(GET(baseURL + "/tracks/" + id, tokenService));
     }
 
     @Override
-    public MusicService getInfoFromId(String id, Optional<TokenService> token) throws GetMusicErrorException {
-        return JsonToMusic(GET(baseURL + "/tracks/" + id, token));
-    }
-
-    @Override
-    public void addMusicFromId(String id, String playlist, Optional<TokenService> token) throws GetMusicErrorException {
-        logger.log(Level.INFO, "addMusicFromId");
-        Optional<String> opt = this.getUserId(token);
+    public void addMusicFromId(String id, String playlist, Optional<TokenService> token) throws GetMusicErrorException, MissingTokenException {
+        TokenService tokenService = getTokenService(token);
+        Optional<String> opt = this.getUserId(tokenService);
 
         if (!opt.isPresent()) {
             throw new GetMusicErrorException();
@@ -86,15 +54,15 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
                 "users/" + opt.get() + "/" +
                 "playlists/" + playlist + "/tracks?uris=spotify%3Atrack%3A" + id;
         try {
-            this.POST(path, "", token);
+            this.POST(path, "", tokenService);
         } catch (Exception e) {
-            throw new GetMusicErrorException();
+            throw new GetMusicErrorException("Cannot add music id " + id);
         }
     }
 
     @Override
-    public PlaylistService addPlaylist(Optional<TokenService> token) {
-        logger.log(Level.INFO, "addPlaylist");
+    public PlaylistService addPlaylist(Optional<TokenService> token) throws MissingTokenException, CannotCreatePlaylistException {
+        TokenService tokenService = getTokenService(token);
         JSONObject body = new JSONObject();
 
         body.put("name", "Coty");
@@ -103,53 +71,52 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
 
         try {
             String uri;
-            Optional<String> opt = this.getUserId(token);
+            Optional<String> opt = this.getUserId(tokenService);
             if (opt.isPresent()) {
                 uri = this.baseURL + "/users/" + opt.get() + "/playlists";
             } else {
                 throw new CannotGetUserId();
             }
 
-            JSONObject response = new JSONObject(this.POST(uri, body.toString(), token));
+            JSONObject response = new JSONObject(this.POST(uri, body.toString(), tokenService));
 
             return new PlaylistService(response.getString("id"));
         } catch (Exception e) {
-            return new PlaylistService(null);
+            throw new CannotCreatePlaylistException("Cannot create spotify playlist");
         }
     }
 
     @Override
-    public List<MusicService> getMusicFromPlaylist(String playlist, Optional<TokenService> token) {
-        try {
-            Optional<String> opt = this.getUserId(token);
+    public List<MusicService> getMusicFromPlaylist(String playlist, Optional<TokenService> token) throws MissingTokenException, GetMusicErrorException {
+        TokenService tokenService = getTokenService(token);
 
-            if (!opt.isPresent()) {
-                return new ArrayList<>();
-            }
+        Optional<String> opt = this.getUserId(tokenService);
 
-
-            String path = this.baseURL + "/" +
-                    "users/" + opt.get() +
-                    "/playlists/" + playlist + "/tracks";
-
-
-            JSONObject jo = GET(path, token);
-            JSONArray arr = jo.getJSONArray("items");
-
-            List<MusicService> list = new ArrayList();
-            for (int i = 0; i < arr.length(); i++) {
-                list.add(JsonToMusic(arr.getJSONObject(i).getJSONObject("track")));
-            }
-
-            return list;
-        } catch (Exception e) {
+        if (!opt.isPresent()) {
             return new ArrayList<>();
         }
+
+
+        String path = this.baseURL + "/" +
+                "users/" + opt.get() +
+                "/playlists/" + playlist + "/tracks";
+
+
+        JSONObject jo = GET(path, tokenService);
+        JSONArray arr = jo.getJSONArray("items");
+
+        List<MusicService> list = new ArrayList<>();
+        for (int i = 0; i < arr.length(); i++) {
+            list.add(JsonToMusic(arr.getJSONObject(i).getJSONObject("track")));
+        }
+
+        return list;
+
     }
 
     @Override
-    public List<MusicService> searchMusic(String search, Optional<TokenService> token) throws GetMusicErrorException {
-        logger.log(Level.INFO, "searchMusic");
+    public List<MusicService> searchMusic(String search, Optional<TokenService> token) throws GetMusicErrorException, MissingTokenException {
+        TokenService tokenService = getTokenService(token);
 
         List<MusicService> list = new ArrayList<>();
 
@@ -161,7 +128,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
             e.printStackTrace();
         }
 
-        JSONObject jo = GET(baseURL + "/search?" + query, token);
+        JSONObject jo = GET(baseURL + "/search?" + query, tokenService);
         JSONArray arr = jo.getJSONObject("tracks").getJSONArray("items");
 
 
@@ -172,7 +139,14 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
         return list;
     }
 
-    private Optional<String> getUserId(Optional<TokenService> token) {
+    private TokenService getTokenService(Optional<TokenService> token) throws MissingTokenException {
+        if(token.isPresent()){
+            return token.get();
+        }
+        throw new MissingTokenException();
+    }
+
+    private Optional<String> getUserId(TokenService token) {
         try {
             JSONObject response = this.GET(this.baseURL + "/me", token);
             return Optional.of(response.getString("id"));
@@ -182,43 +156,44 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
     }
 
 
-    private JSONObject GET(String uri, Optional<TokenService> token) throws GetMusicErrorException {
-
-        updateTestToken(); //to remove
+    private JSONObject GET(String uri, TokenService token) throws GetMusicErrorException {
+        //We refresh the access token
+        String accessToken = updateAccessToken(token.getRefreshToken());
 
         StringBuilder result = new StringBuilder();
-        if (token.isPresent()) {
-            try {
-                URL url = new URL(uri);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Authorization", "Bearer " + token.get().getAccessToken());
-                conn.setRequestProperty("Content-Type", "application/json");
-                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line;
-                while ((line = rd.readLine()) != null) {
-                    result.append(line);
 
-                }
-                rd.close();
-            } catch (Exception e) {
-                throw new GetMusicErrorException("Error on request to Spotify Web Service : " + baseURL + uri + "\n" + Arrays.toString(e.getStackTrace()));
-            } //catch Exception token expiré(){}
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setRequestProperty("Content-Type", "application/json");
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+
+            }
+            rd.close();
+        } catch (Exception e) {
+            throw new GetMusicErrorException("Error on request to Spotify Web Service : " + baseURL + uri + "\n" + Arrays.toString(e.getStackTrace()));
         }
+
         return new JSONObject(result.toString());
     }
 
-    private String POST(String uri, String body, Optional<TokenService> token) throws Exception {
+    private String POST(String uri, String body, TokenService token) throws Exception {
+        //We refresh the access token
+        String accessToken = updateAccessToken(token.getRefreshToken());
 
         StringBuilder result = new StringBuilder();
 
-        if (token.isPresent()) {
-            URL url = new URL(uri);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "Bearer " + token.get().getAccessToken());
-            conn.getOutputStream().write(body.getBytes("UTF8"));
+        URL url = new URL(uri);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+        conn.getOutputStream().write(body.getBytes("UTF8"));
 
 
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -227,7 +202,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
             result.append(line);
         }
         rd.close();
-}
+
         return result.toString();
     }
 
@@ -253,9 +228,11 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
         }
     }
 
-
     public String getAppKey() {
         return "6086d2f27df04485a1e378bdb127646c";
+    }
+    public String getAppSecret() {
+        return "0d57beb5c2174c8aa2da8a46f2081b03";
     }
 
 
@@ -268,8 +245,8 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
         }
     }
 
-    @Override
-    public URL getOAuthToken() {
+
+    private URL getOAuthToken() {
         try {
             return new URL("https://accounts.spotify.com/api/token");
         } catch (Exception e) {
@@ -277,12 +254,9 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
         }
     }
 
-    public String getAppSecret() {
-        return "0d57beb5c2174c8aa2da8a46f2081b03";
-    }
 
     @Override
-    public TokenService updateToken(String code) {
+    public TokenService generateToken(String code) {
         StringBuilder result = new StringBuilder();
         JSONObject resultJSON = new JSONObject();
         String parameters = "code=" + code +
@@ -325,6 +299,38 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
             e.printStackTrace();
         }
         return new TokenService(code, resultJSON.getString("access_token"), resultJSON.getString("refresh_token"));
+    }
+
+    public String updateAccessToken(String refreshToken) throws GetMusicErrorException {
+
+        StringBuilder result = new StringBuilder();
+        try {
+            URL url = new URL("https://accounts.spotify.com/api/token");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            String urlParameters = "client_id=" + getAppKey() + "&client_secret=" + getAppSecret()
+                    + "&grant_type=refresh_token&refresh_token=" + refreshToken;
+
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+
+            }
+
+            rd.close();
+        } catch (Exception e) {
+            throw new GetMusicErrorException("Error on request to Spotify Web Service : \n" + Arrays.toString(e.getStackTrace()));
+        }
+
+        JSONObject jo = new JSONObject(result.toString());
+        return jo.getString("access_token");
     }
 
 }

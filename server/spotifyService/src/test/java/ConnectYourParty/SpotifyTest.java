@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import ConnectYourParty.exceptions.MissingTokenException;
+import ConnectYourParty.exceptions.music.CannotCreatePlaylistException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.TokenService;
 import ConnectYourParty.objects.music.MusicService;
@@ -25,43 +27,39 @@ public class SpotifyTest {
      * Requequette Test :-)
      */
     private static SpotifyService service;
-    private final String token = "AQAZsfm9j8Hc2EJX_gHAhjAA6sHiXr0e6_xn4HICjEylaNEN_Q_zNbNhMlhiTsQhwMh6uO0snLbRMH1mt6KiJlqL7q76BO_7bFhab3sYTjZtDIEhW_mx1t-53RSxMCuTF6g";
+    private final String refreshToken = "AQAZsfm9j8Hc2EJX_gHAhjAA6sHiXr0e6_xn4HICjEylaNEN_Q_zNbNhMlhiTsQhwMh6uO0snLbRMH1mt6KiJlqL7q76BO_7bFhab3sYTjZtDIEhW_mx1t-53RSxMCuTF6g";
 
     @BeforeClass
     public static void init() {
         service = new SpotifyService();
     }
 
-    /*
-
-    @Before
-    public void lucaspd() throws GetMusicErrorException {
-        service.updateTestToken();
-    }
 
     @Test
-    public void BoobaRequest() throws GetMusicErrorException {
-        MusicService m = service.getInfoFromId("6xqAP7kpdgCy8lERQHh29c",Optional.of(new TokenService("code", token, null)));
+    public void BoobaRequest() throws GetMusicErrorException, MissingTokenException {
+        MusicService m = service.getInfoFromId("6xqAP7kpdgCy8lERQHh29c",Optional.of(
+                new TokenService("code", null, refreshToken)));
         assertEquals("Booba",m.getArtist());
         assertEquals("113",m.getTitle());
     }
 
     @Test
-    public void SearchRequestGoodLength() throws GetMusicErrorException {
-        List<MusicService> list = service.searchMusic("booba",Optional.of(new TokenService("code", token, null)));
+    public void SearchRequestGoodLength() throws GetMusicErrorException, MissingTokenException {
+        List<MusicService> list = service.searchMusic("booba",Optional.of(
+                new TokenService("code", null, refreshToken)));
         assertEquals(list.size(), service.searchResults);
     }
 
 
     @Test
-    public void playlistTest(){
-        PlaylistService play = service.addPlaylist(Optional.of(new TokenService("code", token, null)));
+    public void playlistTest() throws CannotCreatePlaylistException, MissingTokenException {
+        PlaylistService play = service.addPlaylist(Optional.of(new TokenService("code", null, refreshToken)));
         assertNotNull(play.getId());
     }
 
     @Test
     public void addMusicToPlaylist() throws  Exception{
-        Optional<TokenService> opt = Optional.of(new TokenService("code", token, null));
+        Optional<TokenService> opt = Optional.of(new TokenService("code", null, refreshToken));
         PlaylistService play = service.addPlaylist(opt);
         String id = "6xqAP7kpdgCy8lERQHh29c";
         service.addMusicFromId("6xqAP7kpdgCy8lERQHh29c" ,play.getId(),opt);
@@ -73,6 +71,6 @@ public class SpotifyTest {
 
         assertEquals(id,list.get(0).getId());
     }
-    */
+
 
 }

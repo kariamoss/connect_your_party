@@ -1,6 +1,5 @@
 package ConnectYourParty.modulesLogic.common.serviceUser;
 
-import ConnectYourParty.DropboxService;
 import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.service.ServiceHolder;
 import ConnectYourParty.database.service.IServiceRegistry;
@@ -9,11 +8,8 @@ import ConnectYourParty.objects.TokenService;
 import ConnectYourParty.requestObjects.request.OAuthHolder;
 import ConnectYourParty.services.IServiceOAuth;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -25,7 +21,7 @@ public class ServiceUser implements IServiceUser {
 
     @Override
     public Token getToken(String code, String serviceName) throws NoSuchServiceException {
-        TokenService tokenService = this.getService(serviceName).updateToken(code);
+        TokenService tokenService = this.getService(serviceName).generateToken(code);
         Token t = new Token(code, serviceName, tokenService.getAccessToken());
         if (tokenService.getRefreshToken() != null) {
             t.setRefreshToken(tokenService.getRefreshToken());

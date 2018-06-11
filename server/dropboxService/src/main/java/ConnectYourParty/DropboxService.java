@@ -99,8 +99,7 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
         }
     }
 
-    @Override
-    public URL getOAuthToken() {
+    private URL getOAuthToken() {
         try {
             return new URL("https://api.dropboxapi.com/oauth2/token");
         } catch (Exception e) {
@@ -113,13 +112,12 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
         return "qmoepnnfjdergql";
     }
 
-    @Override
     public String getAppSecret() {
         return "lwlzexl2nnypmlq";
     }
 
     @Override
-    public TokenService updateToken(String oAuthCode) {
+    public TokenService generateToken(String oAuthCode) {
         // System.setProperty("http.keepAlive", "false");
         StringBuilder result = new StringBuilder();
         JSONObject resultJSON = new JSONObject();

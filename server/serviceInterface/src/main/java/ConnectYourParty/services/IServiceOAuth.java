@@ -15,10 +15,6 @@ public interface IServiceOAuth extends IService{
     URL getOAuthUrl();
 
 
-    //TODO Pass those two methods in services and use updateToken
-    URL getOAuthToken();
-    String getAppSecret();
-
     /**
      * When the OAuth code is retrieved with {@link IServiceOAuth#getOAuthUrl()}
      * The service will need to update the token and send it back
@@ -26,7 +22,7 @@ public interface IServiceOAuth extends IService{
      * @param oAuthCode the code retrieved before
      * @return token the valid token
      */
-    TokenService updateToken(String oAuthCode);
+    TokenService generateToken(String oAuthCode);
 
     /**
      * Retrieve the app key of the service if the service needs

@@ -43,7 +43,7 @@ public class DbMusicTest {
 
     @Test
     public void addMusicTest() throws Exception{
-        Music music = new Music("salut", "spotify", "Pitbull", "Dalle");
+        Music music = new Music("salut", "Spotify", "Pitbull", "Dalle");
 
         db.addMusic(music);
         List<Music> photos = db.getMusicList();
@@ -57,7 +57,7 @@ public class DbMusicTest {
 
     @Test
     public void removeTest() throws Exception{
-        Music music = new Music("salut", "spotify", "Pitbull", "Dalle");
+        Music music = new Music("salut", "Spotify", "Pitbull", "Dalle");
 
         db.addMusic(music);
         List<Music> musics = db.getMusicList();
@@ -70,8 +70,8 @@ public class DbMusicTest {
 
     @Test(expected = AddMusicException.class)
     public void doublePhoto() throws AddMusicException{
-        Music music1 = new Music("salut", "spotify", "Pitbull", "Dalle");
-        Music music2 = new Music("salut", "spotify", "Pitbull", "Dalle");
+        Music music1 = new Music("salut", "Spotify", "Pitbull", "Dalle");
+        Music music2 = new Music("salut", "Spotify", "Pitbull", "Dalle");
 
         db.addMusic(music1);
         db.addMusic(music2);
@@ -80,7 +80,7 @@ public class DbMusicTest {
     @Test
     public void photoRetrievalTest() throws Exception{
         String id = "salut";
-        Music music = new Music(id, "spotify", "Pitbull", "Dalle");
+        Music music = new Music(id, "Spotify", "Pitbull", "Dalle");
         db.addMusic(music);
 
         assertEquals(music, db.getMusicFromId(id));
@@ -89,7 +89,7 @@ public class DbMusicTest {
     @Test(expected = NoSuchMusicException.class)
     public void photoFailRetrievalTest() throws Exception{
         String id = "salut";
-        Music music = new Music(id, "spotify", "Pitbull", "Dalle");
+        Music music = new Music(id, "Spotify", "Pitbull", "Dalle");
         db.addMusic(music);
 
         db.getMusicFromId("fff");

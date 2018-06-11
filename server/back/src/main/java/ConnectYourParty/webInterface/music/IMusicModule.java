@@ -58,6 +58,4 @@ public interface IMusicModule {
     @Produces(MediaType.APPLICATION_JSON)
     Response getInfoMusic(@PathParam("service") String service, @PathParam("song") String song);
 
-
-
 }

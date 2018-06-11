@@ -6,6 +6,8 @@ import ConnectYourParty.database.token.ITokenDatabase;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.music.AddPlaylistException;
 import ConnectYourParty.exception.music.NoSuchPlaylistException;
+import ConnectYourParty.exceptions.MissingTokenException;
+import ConnectYourParty.exceptions.music.CannotCreatePlaylistException;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.modulesLogic.music.serviceUser.IMusicServiceUser;
 import ConnectYourParty.objects.music.MusicService;
@@ -29,7 +31,7 @@ public class MusicInterpreter implements IMusicInterpreter {
     ITokenDatabase tokenDB;
 
     @Override
-    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException {
+    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException {
         List<MusicService> musicService = musicServiceUser.searchMusic(search, service,tokenDB.getTokenFromServiceName(service));
         List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
         for(MusicService ms : musicService){
@@ -39,7 +41,7 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public List<MusicSearchHolder> getListMusic(String service) throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException {
+    public List<MusicSearchHolder> getListMusic(String service) throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException, GetMusicErrorException, MissingTokenException {
         List<Playlist> playlists = db.getPlaylistList();
         if (playlists.size() == 0){
             // Empty playlist
@@ -47,7 +49,8 @@ public class MusicInterpreter implements IMusicInterpreter {
         }
         else{
             List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
-            List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlists.get(0).getId(), service,tokenDB.getTokenFromServiceName(service));
+            List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlists.get(0).getId(),
+                    service,tokenDB.getTokenFromServiceName(service));
             for(MusicService ms : musicService){
                 musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
             }
@@ -56,13 +59,14 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public MusicSearchHolder getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
+    public MusicSearchHolder getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException {
         MusicService musicService = musicServiceUser.getInfoFromMusicId(id, serviceName,tokenDB.getTokenFromServiceName(serviceName));
         return new MusicSearchHolder(musicService.getId(), musicService.getTitle(), musicService.getArtist());
     }
 
     @Override
-    public void addMusic(String idMusic, String serviceName) throws NoSuchServiceException, AddPlaylistException, NoSuchPlaylistException, GetMusicErrorException {
+    public void addMusic(String idMusic, String serviceName) throws NoSuchServiceException, AddPlaylistException,
+            NoSuchPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException {
         Playlist playlist;
         List<Playlist> playlists = db.getPlaylistList();
         if (playlists.size() == 0){
