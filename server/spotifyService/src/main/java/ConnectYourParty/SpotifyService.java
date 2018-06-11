@@ -17,10 +17,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.*;
 
 public class SpotifyService implements IMusicService {
+
+    Logger logger = Logger.getLogger(SpotifyService.class.getName());
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
@@ -70,6 +74,7 @@ public class SpotifyService implements IMusicService {
 
     @Override
     public void addMusicFromId(String id, String playlist) throws GetMusicErrorException {
+        logger.log(Level.INFO, "addMusicFromId");
         Optional<String> opt = this.getUserId();
 
         if(!opt.isPresent()){
@@ -88,6 +93,7 @@ public class SpotifyService implements IMusicService {
 
     @Override
     public PlaylistService addPlaylist() {
+        logger.log(Level.INFO, "addPlaylist");
         JSONObject body = new JSONObject();
 
         body.put("name","Coty");
@@ -142,6 +148,7 @@ public class SpotifyService implements IMusicService {
 
     @Override
     public List<MusicService> searchMusic(String search) throws GetMusicErrorException {
+        logger.log(Level.INFO, "searchMusic");
 
         List<MusicService> list = new ArrayList<>();
 
@@ -216,7 +223,6 @@ public class SpotifyService implements IMusicService {
             result.append(line);
         }
         rd.close();
-
         return result.toString();
     }
 

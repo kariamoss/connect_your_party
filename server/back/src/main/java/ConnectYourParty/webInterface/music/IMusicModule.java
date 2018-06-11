@@ -23,8 +23,8 @@ public interface IMusicModule {
      */
     @POST()
     @Path("addMusic")
-    @Consumes(MediaType.APPLICATION_JSON)
-    Response addMusicToEvent(MusicEventHolder musicEventHolder);
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    Response addMusicToEvent(@FormParam("idSong") String code, @FormParam("service") String service);
 
     /**
      * Search for a music in the service passed as argument

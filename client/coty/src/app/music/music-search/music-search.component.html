@@ -17,7 +17,7 @@
 
     <div *ngIf="searchResults.length>0">
       <div #toto class="elem" *ngFor="let music of searchResults" id="{{music.id}}">
-        <button class="plus" (click)="addToPlaylist(toto.id)">+</button>
+        <button class="plus" (click)="addToPlaylist(music.id)">+</button>
         <b>{{music.title}}</b> - {{music.artist}}
       </div>
     </div>
