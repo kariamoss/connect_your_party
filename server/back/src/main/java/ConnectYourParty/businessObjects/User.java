@@ -1,5 +1,6 @@
 package ConnectYourParty.businessObjects;
 
+import ConnectYourParty.businessObjects.service.UserStatus;
 import ConnectYourParty.objects.TokenService;
 import ConnectYourParty.requestObjects.UserHolder;
 
@@ -28,6 +29,8 @@ public class User {
     )
     private List<Token> tokenList;
 
+    private UserStatus status;
+
     public User(){
         tokenList = new ArrayList<>();
     }
@@ -35,6 +38,14 @@ public class User {
     public User(String name, String surname) {
         this.name = name;
         this.surname = surname;
+        this.status = UserStatus.DEFAULT;
+        this.tokenList = new ArrayList<>();
+    }
+
+    public User(String name, String surname, UserStatus status) {
+        this.name = name;
+        this.surname = surname;
+        this.status = status;
         tokenList = new ArrayList<>();
     }
 
@@ -64,6 +75,6 @@ public class User {
     }
 
     public UserHolder toHolder(){
-        return new UserHolder(this.name,this.surname);
+        return new UserHolder(this.name,this.surname,this.status.getStatus());
     }
 }
