@@ -1,5 +1,7 @@
 package ConnectYourParty.user;
 
+import ConnectYourParty.businessObjects.Token;
+import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
@@ -57,8 +59,23 @@ public class UserRegistryTest {
     }
 
     @Test
-    public void addTokenTest(){
+    public void findUserTest(){
         assertEquals(DbMock.user.getName(),
                 this.registry.getUserById(DbMock.user.getName()).getName());
+    }
+
+    @Test
+    public void addTokenTest(){
+        User user = this.registry.getUserById(DbMock.user.getName());
+        assertEquals(0,user.getTokenList().size());
+
+        Token token = new Token("salu","Dropbox","aaaa");
+        Token token2 = new Token("azezae","Dropbox","azezae");
+
+        this.registry.addToken(user,token);
+        this.registry.addToken(user,token2);
+
+        user = this.registry.getUserById(DbMock.user.getName());
+        assertEquals(2,user.getTokenList().size());
     }
 }

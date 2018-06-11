@@ -40,13 +40,24 @@ public class UserRegistry implements IUserRegistry{
 
     @Override
     public void addToken(User user, Token token){
+        initCheck();
         user.addToken(token);
-        manager.merge(token);
+        manager.merge(user);
     }
 
     @Override
     public User getUserById(String id) {
+        initCheck();
         return this.manager.find(User.class,id);
+    }
+
+    public void initCheck(){
+        if(this.getUserList().size() == 0){
+            manager.persist(DbMock.user);
+            manager.persist(DbMock.user1);
+            manager.persist(DbMock.user2);
+            manager.persist(DbMock.user3);
+        }
     }
 
 
