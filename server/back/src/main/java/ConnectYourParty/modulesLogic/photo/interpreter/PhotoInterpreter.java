@@ -1,9 +1,11 @@
 package ConnectYourParty.modulesLogic.photo.interpreter;
 
 import ConnectYourParty.businessObjects.Token;
+import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.photo.IPhotoDatabase;
-import ConnectYourParty.database.token.ITokenDatabase;
+import ConnectYourParty.database.user.IUserRegistry;
+import ConnectYourParty.exception.NoSuchUserException;
 import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.photo.PhotoAlreadyExistException;
@@ -39,24 +41,27 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     private IPhotoDatabase db;
 
     @EJB
-    private ITokenDatabase tokenDatabase;
+    private IUserRegistry userRegistry;
 
     @Override
-    public void addPhoto(InputStream stream, String name, String serviceName) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException {
+    public void addPhoto(InputStream stream, String name, String serviceName,String userId) throws IOException, AddPhotoErrorException, PhotoAlreadyExistException, NoSuchUserException {
         String rName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(name);
-        Token token;
-        if (tokenDatabase.getTokenFromServiceName(serviceName).isPresent())
-            token = tokenDatabase.getTokenFromServiceName(serviceName).get();
-        else token = null;
+        Optional<Token> token;
+        Photo photo;
+        User user = userRegistry.getUserById(userId);
 
-        Photo photo = new Photo(rName, serviceName, token);
+        if (user.getToken(serviceName).isPresent())
+            token = Optional.of(user.getToken(serviceName).get());
+        else token = Optional.empty();
 
+        photo = new Photo(rName, serviceName, token.isPresent()?token.get():null);
 
         try {
+
             db.addPhoto(photo);
             byte[] bin = new byte[stream.available()];
             stream.read(bin);
-            photoChooser.addPhoto(bin, photo, tokenDatabase.getTokenFromServiceName(photo.getServiceHost()));
+            photoChooser.addPhoto(bin, photo, token);
         } catch (Exception e) {
             db.removePhoto(photo);
         }

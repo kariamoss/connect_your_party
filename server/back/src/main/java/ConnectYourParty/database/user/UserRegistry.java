@@ -4,6 +4,7 @@ import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.DbMock;
+import ConnectYourParty.exception.NoSuchUserException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -40,13 +41,30 @@ public class UserRegistry implements IUserRegistry{
 
     @Override
     public void addToken(User user, Token token){
+        initCheck();
         user.addToken(token);
-        manager.merge(token);
+        manager.merge(user);
     }
 
     @Override
-    public User getUserById(String id) {
-        return this.manager.find(User.class,id);
+    public User getUserById(String id) throws NoSuchUserException {
+        initCheck();
+        User user =  this.manager.find(User.class,id);
+
+        if(user == null){
+            throw new NoSuchUserException();
+        }
+
+        return user;
+    }
+
+    public void initCheck(){
+        if(this.getUserList().size() == 0){
+            manager.persist(DbMock.user);
+            manager.persist(DbMock.user1);
+            manager.persist(DbMock.user2);
+            manager.persist(DbMock.user3);
+        }
     }
 
 
