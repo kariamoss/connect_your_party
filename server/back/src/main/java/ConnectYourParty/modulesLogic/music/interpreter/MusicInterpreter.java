@@ -1,8 +1,8 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
-import ConnectYourParty.businessObjects.music.Music;
 import ConnectYourParty.businessObjects.music.Playlist;
 import ConnectYourParty.database.music.IMusicDatabase;
+import ConnectYourParty.database.token.ITokenDatabase;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exception.music.AddPlaylistException;
 import ConnectYourParty.exception.music.NoSuchPlaylistException;
@@ -25,9 +25,12 @@ public class MusicInterpreter implements IMusicInterpreter {
     @EJB
     IMusicServiceUser musicServiceUser;
 
+    @EJB
+    ITokenDatabase tokenDB;
+
     @Override
     public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException {
-        List<MusicService> musicService = musicServiceUser.searchMusic(search, service);
+        List<MusicService> musicService = musicServiceUser.searchMusic(search, service,tokenDB.getTokenFromServiceName(service));
         List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
         for(MusicService ms : musicService){
             musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
@@ -46,7 +49,7 @@ public class MusicInterpreter implements IMusicInterpreter {
         }
         else{
             List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
-            List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlists.get(0).getId(), service);
+            List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlists.get(0).getId(), service,tokenDB.getTokenFromServiceName(service));
             for(MusicService ms : musicService){
                 musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
             }
@@ -56,7 +59,7 @@ public class MusicInterpreter implements IMusicInterpreter {
 
     @Override
     public MusicSearchHolder getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException {
-        MusicService musicService = musicServiceUser.getInfoFromMusicId(id, serviceName);
+        MusicService musicService = musicServiceUser.getInfoFromMusicId(id, serviceName,tokenDB.getTokenFromServiceName(serviceName));
         return new MusicSearchHolder(musicService.getId(), musicService.getTitle(), musicService.getArtist());
     }
 
@@ -65,13 +68,13 @@ public class MusicInterpreter implements IMusicInterpreter {
         Playlist playlist;
         List<Playlist> playlists = db.getPlaylistList();
         if (playlists.size() == 0){
-            PlaylistService playlistService = musicServiceUser.addPlaylist(serviceName);
+            PlaylistService playlistService = musicServiceUser.addPlaylist(serviceName,tokenDB.getTokenFromServiceName(serviceName));
             db.addPlaylist(new Playlist(playlistService.getId(), serviceName));
             playlist = db.getPlaylistFromId(playlistService.getId());
         }
         else{
             playlist = playlists.get(0);
         }
-        musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName);
+        musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName,tokenDB.getTokenFromServiceName(serviceName));
     }
 }
