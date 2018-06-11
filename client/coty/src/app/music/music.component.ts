@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ParametersService} from "../services/parameters.service";
+import {ParametersService} from "../services/parameters.service";
 
 @Component({
   selector: 'app-music',
@@ -22,12 +23,17 @@ export class MusicComponent implements OnInit {
     let redirect = "http://localhost:4200/authentication/?service=Spotify";
     let scopes = "user-library-read user-library-modify playlist-read-private playlist-modify-public playlist-modify-private " +
       "playlist-read-collaborative user-read-private streaming";
-    let state = this.param.sharedId+"/music";
     let url = 'https://accounts.spotify.com/authorize' +
       '?response_type=code' +
       '&client_id=' + clientid + '&scope=' + encodeURIComponent(scopes) +
-      '&redirect_uri=' + encodeURIComponent(redirect)+"&state="+state;
+      '&redirect_uri=' + encodeURIComponent(redirect) + '&state=' + this.param.sharedId;
     console.log(url);
     window.location.href = url;
   }
+
+  salut(){
+    //recuperer l'uri de la playlist
+    //ouvrir l'appli
+  }
+
 }
