@@ -25,7 +25,7 @@ public class User {
     private List<Token> tokenList;
 
     public User(){
-
+        tokenList = new ArrayList<>();
     }
 
     public User(String name, String surname) {
