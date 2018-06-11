@@ -21,7 +21,8 @@ export class MusicListComponent implements OnInit {
     let url = "http://localhost:8080/back-1.0-SNAPSHOT/music/listMusic/Spotify";
     this.httpClient.get(url)
       .subscribe(songs => {
-          for (let song in songs) {
+          for (let song of songs) {
+            console.log(song);
             let m = new MusicModel(song['id'],song['title'],song['artist']);
             this.musicList.push(m);
           }

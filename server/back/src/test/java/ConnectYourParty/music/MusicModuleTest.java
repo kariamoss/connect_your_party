@@ -47,28 +47,25 @@ public class MusicModuleTest {
 
     @Test
     public void addMusicWithNewPlaylistTest(){
-        MusicEventHolder musicEventHolder = new MusicEventHolder();
-        musicEventHolder.idSong = "6xqAP7kpdgCy8lERQHh29c";
-        musicEventHolder.service = "Spotify";
-        //musicModule.addMusicToEvent(musicEventHolder);
+        String idSong = "6xqAP7kpdgCy8lERQHh29c";
+        String service = "Spotify";
+        musicModule.addMusicToEvent(idSong, service);
     }
 
     @Test
     public void addMusicWithSamePlaylistTest(){
-        MusicEventHolder musicEventHolder = new MusicEventHolder();
-        musicEventHolder.idSong = "6xqAP7kpdgCy8lERQHh29c";
-        musicEventHolder.service = "Spotify";
-        //musicModule.addMusicToEvent(musicEventHolder);
-        //musicModule.addMusicToEvent(musicEventHolder);
-        //musicModule.addMusicToEvent(musicEventHolder);
+        String idSong = "6xqAP7kpdgCy8lERQHh29c";
+        String service = "Spotify";
+        musicModule.addMusicToEvent(idSong, service);
+        musicModule.addMusicToEvent(idSong, service);
+        musicModule.addMusicToEvent(idSong, service);
     }
 
     @Test
     public void retrieveMusicTest(){
-        MusicEventHolder musicEventHolder = new MusicEventHolder();
-        musicEventHolder.idSong = "6xqAP7kpdgCy8lERQHh29c";
-        musicEventHolder.service = "Spotify";
-        //musicModule.addMusicToEvent(musicEventHolder);
+        String idSong = "6xqAP7kpdgCy8lERQHh29c";
+        String service = "Spotify";
+        musicModule.addMusicToEvent(idSong, service);
         musicModule.listMusic("Spotify");
     }
 }

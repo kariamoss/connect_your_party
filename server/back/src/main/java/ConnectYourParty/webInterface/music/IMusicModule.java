@@ -19,7 +19,7 @@ public interface IMusicModule {
      * Take a {@link Json} as input that copy
      * the form of a {@link MusicEventHolder}
      * The list of musics added can be found with {@link MusicModule#listMusic(String service)}
-     * @param musicEventHolder Json object containing a {@link MusicEventHolder}
+     * @param @String idSong and @String service in a FORM_URLENCODED
      */
     @POST()
     @Path("addMusic")
