@@ -1,5 +1,6 @@
 package ConnectYourParty.webInterface.photo;
 
+import ConnectYourParty.database.DbMock;
 import ConnectYourParty.exception.photo.NoSuchPhotoException;
 import ConnectYourParty.exception.NoSuchServiceException;
 import ConnectYourParty.exceptions.photo.RetrievePhotoErrorException;
@@ -36,7 +37,7 @@ public class PhotoModule implements IPhotoModule {
             String service = photo.getService();
 
 
-            interpreter.addPhoto(input, name,service, photo.getUserId());
+            interpreter.addPhoto(input, name,service, DbMock.user.getName());
 
             return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
