@@ -3,6 +3,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ParametersService} from "../services/parameters.service";
 import {EventService} from "../services/events.service";
 import {isUndefined} from "util";
+import {MatDialog} from "@angular/material";
+import {AddPhotoComponent} from "../photos/add-photo/add-photo.component";
+import {UserSwitchComponent} from "../user-switch/user-switch.component";
 
 @Component({
   selector: 'app-event',
@@ -17,6 +20,7 @@ export class EventComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private parameters: ParametersService,
+              private dialog: MatDialog,
               private eventService: EventService) { }
 
   ngOnInit() {
@@ -30,6 +34,10 @@ export class EventComponent implements OnInit {
 
   getEventName() {
     return this.eventService.getEventById(+this.id).title;
+  }
+
+  switchUser(){
+    this.dialog.open(UserSwitchComponent);
   }
 
 

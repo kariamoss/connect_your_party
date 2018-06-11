@@ -2,19 +2,10 @@
 
   <a>{{this.getEventName()}}</a>
 
-  <!--  Replaced by module-list-component
-  <a routerLink="details">
-    <button mat-raised-button><mat-icon>description</mat-icon>Description</button>
-  </a>
-  <a routerLink="photos">
-    <button mat-raised-button><mat-icon>photo_camera</mat-icon>Photos</button>
-  </a>
-  <a routerLink="shopping">
-    <button mat-raised-button><mat-icon>shopping_cart</mat-icon>Liste de courses</button>
-  </a>
-
-  -->
   <span class="example-spacer"></span>
+
+    <mat-icon class="users" (click)="switchUser()">group</mat-icon>
+
 
   <a routerLink="/events" id="back">
     <button mat-raised-button>

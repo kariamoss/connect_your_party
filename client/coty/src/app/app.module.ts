@@ -47,6 +47,8 @@ import {AuthenticationProcessComponent} from "./authentication-process/authentic
 import {MusicPlayerComponent} from "./music/music-player/music-player.component";
 import {MusicSearchComponent} from "./music/music-search/music-search.component";
 import { MusicListComponent } from './music/music-list/music-list.component';
+import { UserSwitchComponent } from './user-switch/user-switch.component';
+import {UserService} from "./services/user.service";
 
 @NgModule({
   declarations: [
@@ -70,6 +72,7 @@ import { MusicListComponent } from './music/music-list/music-list.component';
     MusicSearchComponent,
     MusicPlayerComponent,
     MusicListComponent,
+    UserSwitchComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,9 +102,10 @@ import { MusicListComponent } from './music/music-list/music-list.component';
     SelectorService,
     ShoppingListService,
     PhotoService,
+    UserService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent,SubmitDevComponent ]
+  entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent,SubmitDevComponent,UserSwitchComponent]
 })
 export class AppModule {
 }
