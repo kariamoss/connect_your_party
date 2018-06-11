@@ -61,16 +61,22 @@ public class User {
         return tokenList;
     }
 
-    public Optional<TokenService> getToken(String serviceHost) {
+    public Optional<Token> getToken(String serviceHost) {
         for (Token t : tokenList) {
             if (t.getServiceName().equals(serviceHost)) {
-                return Optional.of(new TokenService(t.getCode(), t.getAccessToken(), t.getRefreshToken()));
+                return Optional.of(t);
             }
         }
         return Optional.empty();
     }
 
     public void addToken(Token token) {
+        for(Token tok : tokenList){
+            if(tok.getServiceName().equals(tok.getServiceName())){
+                tokenList.remove(tok);
+                break;
+            }
+        }
         tokenList.add(token);
     }
 

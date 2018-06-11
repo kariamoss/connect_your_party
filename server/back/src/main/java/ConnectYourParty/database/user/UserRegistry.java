@@ -4,6 +4,7 @@ import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.DbMock;
+import ConnectYourParty.exception.NoSuchUserException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -46,9 +47,15 @@ public class UserRegistry implements IUserRegistry{
     }
 
     @Override
-    public User getUserById(String id) {
+    public User getUserById(String id) throws NoSuchUserException {
         initCheck();
-        return this.manager.find(User.class,id);
+        User user =  this.manager.find(User.class,id);
+
+        if(user == null){
+            throw new NoSuchUserException();
+        }
+
+        return user;
     }
 
     public void initCheck(){

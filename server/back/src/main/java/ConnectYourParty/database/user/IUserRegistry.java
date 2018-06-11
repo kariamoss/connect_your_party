@@ -2,6 +2,7 @@ package ConnectYourParty.database.user;
 
 import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.User;
+import ConnectYourParty.exception.NoSuchUserException;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -11,5 +12,5 @@ public interface IUserRegistry {
 
     List<User> getUserList();
     void addToken(User user, Token token);
-    User getUserById(String id);
+    User getUserById(String id) throws NoSuchUserException;
 }
