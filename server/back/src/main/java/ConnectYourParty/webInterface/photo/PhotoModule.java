@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +31,7 @@ public class PhotoModule implements IPhotoModule {
     @Override
     public Response addPhoto(MultipartBody body) {
         try {
-
+            logger.log(Level.INFO,"starting photo upload");
             PhotoAdderBody photo = parseBody(body);
             String name = photo.getName();
             InputStream input = photo.getInput();
@@ -38,14 +39,18 @@ public class PhotoModule implements IPhotoModule {
 
 
             interpreter.addPhoto(input, name,service, DbMock.user.getName());
-
+            logger.log(Level.INFO,"finishing photo upload");
             return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
             logger.log(Level.SEVERE, e.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            logger.log(Level.SEVERE, e.getMessage());
+            return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();
         }
         catch (Exception e){
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            logger.log(Level.SEVERE, e.toString());
+
+            logger.log(Level.SEVERE, Arrays.toString(e.getStackTrace()) );
+            return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();
         }
     }
 
@@ -88,12 +93,11 @@ public class PhotoModule implements IPhotoModule {
         photo.setName(body.getAttachmentObject("name",String.class));
         photo.setInput( body.getAttachment("file").getDataHandler().getInputStream());
         photo.setService( body.getAttachmentObject("service",String.class));
-        photo.setUserId( body.getAttachmentObject("userId",String.class));
+        photo.setUserId(DbMock.user.getName());
 
         if(!photo.check()){
             photo.setName(body.getAttachment("name").getDataHandler().getContent().toString());
             photo.setService(body.getAttachment("service").getDataHandler().getContent().toString());
-            photo.setUserId(body.getAttachment("userId").getDataHandler().getContent().toString());
         }
 
         return photo;
