@@ -10,6 +10,7 @@ import ConnectYourParty.webInterface.CorsAdder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.json.Json;
 import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -23,16 +24,13 @@ public class MusicModule implements IMusicModule {
     Logger logger = Logger.getLogger(MusicModule.class.getName());
 
     @Override
-    public Response addMusicToEvent(MusicEventHolder musicEventHolder) {
+    public Response addMusicToEvent(String idSong, String service) {
         try {
-            musicInterpreter.addMusic(musicEventHolder.idSong, musicEventHolder.service);
-
+            logger.log(Level.INFO, "Adding music " + idSong);
+            musicInterpreter.addMusic(idSong, service);
             return CorsAdder.addCors(Response.ok()).build();
-        }
-        catch (NoSuchServiceException | AddPlaylistException | NoSuchPlaylistException | GetMusicErrorException e){
-            logger.log(Level.SEVERE, e.getMessage());
-            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         } catch (Exception e){
+            logger.log(Level.SEVERE, e.getMessage());
             return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
         }
     }

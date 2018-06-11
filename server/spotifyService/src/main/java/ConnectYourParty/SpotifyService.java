@@ -18,10 +18,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import org.json.*;
 
 public class SpotifyService implements IMusicService, IServiceOAuth {
+
+    Logger logger = Logger.getLogger(SpotifyService.class.getName());
 
     public final int searchResults = 10;
     private final String baseURL = "https://api.spotify.com/v1";
@@ -71,6 +75,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
 
     @Override
     public void addMusicFromId(String id, String playlist, Optional<TokenService> token) throws GetMusicErrorException {
+        logger.log(Level.INFO, "addMusicFromId");
         Optional<String> opt = this.getUserId(token);
 
         if (!opt.isPresent()) {
@@ -89,6 +94,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
 
     @Override
     public PlaylistService addPlaylist(Optional<TokenService> token) {
+        logger.log(Level.INFO, "addPlaylist");
         JSONObject body = new JSONObject();
 
         body.put("name", "Coty");
@@ -143,6 +149,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
 
     @Override
     public List<MusicService> searchMusic(String search, Optional<TokenService> token) throws GetMusicErrorException {
+        logger.log(Level.INFO, "searchMusic");
 
         List<MusicService> list = new ArrayList<>();
 
@@ -214,14 +221,13 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
             conn.getOutputStream().write(body.getBytes("UTF8"));
 
 
-            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            }
-            rd.close();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
         }
-
+        rd.close();
+}
         return result.toString();
     }
 

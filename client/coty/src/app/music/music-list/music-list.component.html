@@ -3,8 +3,13 @@
 </h3>
 
 <ul>
-<li #toto class="elem" *ngFor="let music of musicList" id="{{music.id}}">
-  <b>{{music.title}}</b> - {{music.artist}}
-</li>
+  <ng-container *ngIf="musicList.length > 0">
+    <li  #toto class="elem" *ngFor="let music of musicList" id="{{music.id}}">
+      <b>{{music.title}}</b> - {{music.artist}}
+    </li>
+  </ng-container>
 
+  <li *ngIf="musicList.length == 0">
+    Pas de musiques dans la playlist collaborative
+  </li>
 </ul>
