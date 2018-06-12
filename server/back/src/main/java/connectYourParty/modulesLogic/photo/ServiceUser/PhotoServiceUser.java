@@ -37,7 +37,7 @@ public class PhotoServiceUser implements IPhotoServiceUser, Subscriber {
     @PostConstruct
     public void init() {
         servicePhotoList = new HashSet<>();
-        List<ServiceHolder> serviceHolders = this.serviceRegistry.getServiceHolder();
+        List<ServiceHolder> serviceHolders = this.serviceRegistry.getServiceHolderFromModule(Module.PHOTO);
         ids = new HashMap<>();
 
         for(ServiceHolder holder : serviceHolders){

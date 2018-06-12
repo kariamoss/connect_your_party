@@ -2,6 +2,7 @@ package connectYourParty.photo;
 
 import connectYourParty.CotyPhotoService;
 import connectYourParty.DropboxService;
+import connectYourParty.SpotifyService;
 import connectYourParty.businessObjects.Token;
 import connectYourParty.businessObjects.User;
 import connectYourParty.businessObjects.service.ServiceHolder;
@@ -33,6 +34,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -89,6 +91,12 @@ public class PhotoModuleTest {
                 .addPackage(ServiceRegistry.class.getPackage())
                 .addAsManifestResource(new ClassLoaderAsset("META-INF/persistence.xml"), "persistence.xml")
                 .addPackage(PhotoDatabase.class.getPackage());
+    }
+
+    @Before
+    public void dbClean(){
+        this.servRegistry.clean();
+        this.photoDatabase.clean();
     }
 
     @Test
@@ -196,6 +204,19 @@ public class PhotoModuleTest {
         input.read(buff);
 
         assertTrue(Arrays.equals(arr,buff));
+    }
+
+    @Test
+    public void addingOtherModuleService(){
+        this.servRegistry.addServiceHolder(new ServiceHolder(
+                connectYourParty.businessObjects.service.Module.MUSIC, SpotifyService.class
+        ));
+
+        Response serviceList = this.module.getPhotoServices();
+
+        List<ServiceHolder> services = (List<ServiceHolder>) serviceList.getEntity();
+
+        assertEquals(0,services.size());
     }
 
 }
