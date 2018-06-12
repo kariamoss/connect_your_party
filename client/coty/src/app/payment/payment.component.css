@@ -1,0 +1,65 @@
+.salut{
+  text-align: center;
+  padding-top:25px;
+}
+
+.costs{
+  margin:25px 0px;
+}
+
+.costs div{
+  display: inline-grid;
+  box-sizing: border-box;
+}
+
+.trucs{
+  width:70%;
+}
+
+.total{
+  width:30%;
+  border-left: 1px solid #a7a6a5;
+  padding-left: 15px;
+
+}
+
+mat-form-field{
+  width:60%;
+  float:left;
+  display: inline-grid;
+  padding-bottom: unset;
+}
+
+
+#add{
+  width:70px;
+  background-color: #3F51B5;
+  color:#fff;
+}
+
+#add:hover{
+  background-color: #273270;
+}
+
+ul{
+  padding: unset;
+  padding-left: 15px;
+}
+
+li{
+  line-height: 30px;
+}
+
+
+#pay{
+  background-color: #3F51B5;
+  color:#fff;
+}
+
+#pay:hover{
+  background-color: #273270;
+}
+
+
+
+

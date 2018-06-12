@@ -13,6 +13,7 @@ export class EventCardComponent implements OnInit{
   participants: number;
   location;
   color;
+  type;
   @Input() id: number;
 
 
@@ -27,6 +28,7 @@ export class EventCardComponent implements OnInit{
     this.location = event.location;
     this.color = {"background-color" : event.color};
     this.img_url = '../../../assets/'+event.photo;
+    this.type = event.type;
   }
 
 }

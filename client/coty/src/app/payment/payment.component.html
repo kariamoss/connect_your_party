@@ -1,0 +1,27 @@
+<div class="salut">
+  <button id="pay" mat-button>Participer au remboursement</button>
+</div>
+
+<mat-card class="costs">
+  <div class="trucs">
+    <div *ngIf="userS.currentUserIsAdmin()">
+      <mat-form-field>
+        <input #input1 matInput placeholder="Ajouter une dépense" (keyup.enter)="addElem(input1.value,input2.value)"
+               type="text"/>
+      </mat-form-field>
+      <mat-form-field id="deuz">
+        <input #input2 matInput placeholder="Prix" (keyup.enter)="addElem(input1.value,input2.value)" type="number"/>
+      </mat-form-field>
+      <button mat-button id="add" (click)="addElem(input1.value,input2.value)">Ajouter</button>
+    </div>
+    <h3 *ngIf="!userS.currentUserIsAdmin()">Liste des dépenses </h3>
+    <ul>
+      <li *ngFor="let item of costList">{{item['name']}} {{item['price']}} €</li>
+    </ul>
+  </div>
+  <div class="total">
+    Total des dépenses :<h3>{{totalCost}} €</h3>
+    soit : <h3>{{pricepp}} € par personne</h3>
+  </div>
+</mat-card>
+
