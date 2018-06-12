@@ -27,3 +27,7 @@ li div{
 .active{
   border:2px solid #3F51B5;
 }
+
+.btn{
+  text-align: center;
+}

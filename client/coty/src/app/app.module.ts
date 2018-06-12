@@ -75,10 +75,10 @@ import {UserService} from "./services/user.service";
     UserSwitchComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppConfigModule,
     FormsModule,
-    HttpClientModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatButtonModule,
@@ -98,11 +98,11 @@ import {UserService} from "./services/user.service";
     MatProgressBarModule,
   ],
   providers: [
+    UserService,
     EventService,
     SelectorService,
     ShoppingListService,
     PhotoService,
-    UserService
   ],
   bootstrap: [AppComponent],
   entryComponents: [ServiceSelectorComponent, PhotoDialogComponent, AddPhotoComponent,SubmitDevComponent,UserSwitchComponent]

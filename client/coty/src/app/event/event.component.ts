@@ -6,6 +6,7 @@ import {isUndefined} from "util";
 import {MatDialog} from "@angular/material";
 import {AddPhotoComponent} from "../photos/add-photo/add-photo.component";
 import {UserSwitchComponent} from "../user-switch/user-switch.component";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-event',
