@@ -35,9 +35,6 @@ public class PhotoInterpreter implements IPhotoInterpreter {
     private IPhotoServiceUser services;
 
     @EJB
-    private IPhotoChooser photoChooser;
-
-    @EJB
     private IPhotoDatabase db;
 
     @EJB
@@ -61,7 +58,7 @@ public class PhotoInterpreter implements IPhotoInterpreter {
             db.addPhoto(photo);
             byte[] bin = new byte[stream.available()];
             stream.read(bin);
-            photoChooser.addPhoto(bin, photo, token);
+            services.addPhoto(photo, bin, token);
         } catch (Exception e) {
             db.removePhoto(photo);
         }

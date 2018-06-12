@@ -1,8 +1,6 @@
 package ConnectYourParty.photo;
 
 import ConnectYourParty.CotyPhotoService;
-import ConnectYourParty.DropboxService;
-import ConnectYourParty.businessObjects.Token;
 import ConnectYourParty.businessObjects.service.ServiceHolder;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.photo.IPhotoDatabase;
@@ -17,8 +15,6 @@ import ConnectYourParty.modulesLogic.common.serviceUser.IServiceUser;
 import ConnectYourParty.modulesLogic.common.serviceUser.ServiceUser;
 import ConnectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;
 import ConnectYourParty.modulesLogic.photo.ServiceUser.PhotoServiceUser;
-import ConnectYourParty.modulesLogic.photo.chooser.IPhotoChooser;
-import ConnectYourParty.modulesLogic.photo.chooser.PhotoChooser;
 import ConnectYourParty.modulesLogic.photo.interpreter.IPhotoInterpreter;
 import ConnectYourParty.modulesLogic.photo.interpreter.PhotoInterpreter;
 import ConnectYourParty.requestObjects.photo.PhotoHolder;
@@ -68,8 +64,6 @@ public class PhotoModuleTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addPackage(IPhotoChooser.class.getPackage())
-                .addPackage(PhotoChooser.class.getPackage())
                 .addPackage(IPhotoInterpreter.class.getPackage())
                 .addPackage(PhotoInterpreter.class.getPackage())
                 .addPackage(IPhotoServiceUser.class.getPackage())

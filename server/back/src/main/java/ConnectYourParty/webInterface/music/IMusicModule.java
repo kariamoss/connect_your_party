@@ -58,4 +58,14 @@ public interface IMusicModule {
     @Produces(MediaType.APPLICATION_JSON)
     Response getInfoMusic(@PathParam("service") String service, @PathParam("song") String song);
 
+    /**
+     * Retrieve playlist url about a specific event
+     * @param service The service you want to use
+     * @param event The event id
+     * @return {@link Json} containing a unique String "playlistUrl"
+     */
+    @GET()
+    @Path("playlist/{service}/{event}")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response getPlaylistUrl(@PathParam("service") String service, @PathParam("event") String event);
 }

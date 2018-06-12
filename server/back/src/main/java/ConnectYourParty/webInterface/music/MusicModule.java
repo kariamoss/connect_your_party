@@ -1,16 +1,11 @@
 package ConnectYourParty.webInterface.music;
 
-import ConnectYourParty.exception.NoSuchServiceException;
-import ConnectYourParty.exception.music.AddPlaylistException;
-import ConnectYourParty.exception.music.NoSuchPlaylistException;
-import ConnectYourParty.exceptions.music.GetMusicErrorException;
+
 import ConnectYourParty.modulesLogic.music.interpreter.IMusicInterpreter;
-import ConnectYourParty.requestObjects.music.MusicEventHolder;
 import ConnectYourParty.webInterface.CorsAdder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.json.Json;
 import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -64,6 +59,18 @@ public class MusicModule implements IMusicModule {
         try {
             return CorsAdder.addCors(
                     Response.status(Response.Status.OK).entity(musicInterpreter.getInfoFromMusicId(song, service)))
+                    .build();
+        } catch (Exception e){
+            logger.log(Level.SEVERE, e.getMessage());
+            return CorsAdder.addCors(Response.status(Response.Status.NOT_ACCEPTABLE)).build();
+        }
+    }
+
+    @Override
+    public Response getPlaylistUrl(String service, String event) {
+        try {
+            return CorsAdder.addCors(
+                    Response.status(Response.Status.OK).entity(musicInterpreter.getPlaylistUrlFromEvent(service, event)))
                     .build();
         } catch (Exception e){
             logger.log(Level.SEVERE, e.getMessage());

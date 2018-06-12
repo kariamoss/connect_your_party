@@ -71,18 +71,30 @@ public class MusicInterpreter implements IMusicInterpreter {
     @Override
     public void addMusic(String idMusic, String serviceName) throws NoSuchServiceException, AddPlaylistException,
             NoSuchPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException, NoSuchUserException {
+
+        Playlist playlist = getEventPlaylist(serviceName);
+        musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName,
+                userRegistry.getUserById(DbMock.user.getName()).getToken(serviceName));
+    }
+
+    @Override
+    public String getPlaylistUrlFromEvent(String service, String event) throws NoSuchPlaylistException, NoSuchUserException, NoSuchServiceException, MissingTokenException, GetMusicErrorException, CannotCreatePlaylistException, AddPlaylistException {
+        return getEventPlaylist(service).getId();
+    }
+
+    private Playlist getEventPlaylist(String service) throws NoSuchUserException, AddPlaylistException, NoSuchPlaylistException, CannotCreatePlaylistException, MissingTokenException, GetMusicErrorException, NoSuchServiceException {
         Playlist playlist;
         List<Playlist> playlists = db.getPlaylistList();
+
         if (playlists.size() == 0){
-            PlaylistService playlistService = musicServiceUser.addPlaylist(serviceName,
-                    userRegistry.getUserById(DbMock.user.getName()).getToken(serviceName));
-            db.addPlaylist(new Playlist(playlistService.getId(), serviceName));
+            PlaylistService playlistService = musicServiceUser.addPlaylist(service,
+                    userRegistry.getUserById(DbMock.user.getName()).getToken(service));
+            db.addPlaylist(new Playlist(playlistService.getId(), service));
             playlist = db.getPlaylistFromId(playlistService.getId());
         }
         else{
             playlist = playlists.get(0);
         }
-        musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName,
-                userRegistry.getUserById(DbMock.user.getName()).getToken(serviceName));
+        return playlist;
     }
 }
