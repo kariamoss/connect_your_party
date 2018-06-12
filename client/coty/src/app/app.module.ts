@@ -49,6 +49,7 @@ import {MusicSearchComponent} from "./music/music-search/music-search.component"
 import { MusicListComponent } from './music/music-list/music-list.component';
 import { UserSwitchComponent } from './user-switch/user-switch.component';
 import {UserService} from "./services/user.service";
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import {UserService} from "./services/user.service";
     MusicPlayerComponent,
     MusicListComponent,
     UserSwitchComponent,
+    PaymentComponent,
   ],
   imports: [
     HttpClientModule,

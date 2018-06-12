@@ -23,4 +23,10 @@
       Musique
     </div>
   </button>
+  <button #btn5 [ngClass]="{'activeStyle' : selected == 'btn5.value'}" (click)="setActive('btn5.value')" mat-button class="hvr-grow" routerLink="payment" value="payment">
+    <div class="content">
+      <mat-icon style="font-size:x-large">attach_money</mat-icon>
+      Paiement
+    </div>
+  </button>
 </mat-radio-group>
