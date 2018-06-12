@@ -7,8 +7,6 @@ import ConnectYourParty.database.photo.IPhotoDatabase;
 import ConnectYourParty.database.photo.PhotoDatabase;
 import ConnectYourParty.database.service.IServiceRegistry;
 import ConnectYourParty.database.service.ServiceRegistry;
-import ConnectYourParty.database.token.ITokenDatabase;
-import ConnectYourParty.database.token.TokenDatabase;
 import ConnectYourParty.modulesLogic.common.interpreter.IInterpreter;
 import ConnectYourParty.modulesLogic.common.interpreter.Interpreter;
 import ConnectYourParty.modulesLogic.common.serviceUser.IServiceUser;
@@ -69,8 +67,6 @@ public class ServiceUserTest {
                 .addPackage(Interpreter.class.getPackage())
                 .addPackage(IServiceUser.class.getPackage())
                 .addPackage(ServiceUser.class.getPackage())
-                .addPackage(ITokenDatabase.class.getPackage())
-                .addPackage(TokenDatabase.class.getPackage())
                 .addPackage(IModule.class.getPackage())
                 .addPackage(Module.class.getPackage())
                 .addPackage(IServiceRegistry.class.getPackage())

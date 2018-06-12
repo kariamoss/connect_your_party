@@ -1,9 +1,11 @@
 package ConnectYourParty.modulesLogic.music.interpreter;
 
 import ConnectYourParty.businessObjects.music.Playlist;
+import ConnectYourParty.database.DbMock;
 import ConnectYourParty.database.music.IMusicDatabase;
-import ConnectYourParty.database.token.ITokenDatabase;
+import ConnectYourParty.database.user.IUserRegistry;
 import ConnectYourParty.exception.NoSuchServiceException;
+import ConnectYourParty.exception.NoSuchUserException;
 import ConnectYourParty.exception.music.AddPlaylistException;
 import ConnectYourParty.exception.music.NoSuchPlaylistException;
 import ConnectYourParty.exceptions.MissingTokenException;
@@ -28,11 +30,11 @@ public class MusicInterpreter implements IMusicInterpreter {
     IMusicServiceUser musicServiceUser;
 
     @EJB
-    ITokenDatabase tokenDB;
+    IUserRegistry userRegistry;
 
     @Override
-    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException {
-        List<MusicService> musicService = musicServiceUser.searchMusic(search, service,tokenDB.getTokenFromServiceName(service));
+    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException, NoSuchUserException {
+        List<MusicService> musicService = musicServiceUser.searchMusic(search, service,userRegistry.getUserById(DbMock.user.getName()).getToken(service));
         List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
         for(MusicService ms : musicService){
             musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
@@ -41,7 +43,7 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public List<MusicSearchHolder> getListMusic(String service) throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException, GetMusicErrorException, MissingTokenException {
+    public List<MusicSearchHolder> getListMusic(String service) throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException, GetMusicErrorException, MissingTokenException, NoSuchUserException {
         List<Playlist> playlists = db.getPlaylistList();
         if (playlists.size() == 0){
             // Empty playlist
@@ -50,7 +52,7 @@ public class MusicInterpreter implements IMusicInterpreter {
         else{
             List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
             List<MusicService> musicService = musicServiceUser.getMusicFromPlaylist(playlists.get(0).getId(),
-                    service,tokenDB.getTokenFromServiceName(service));
+                    service,userRegistry.getUserById(DbMock.user.getName()).getToken(service));
             for(MusicService ms : musicService){
                 musicSearchHolders.add(new MusicSearchHolder(ms.getId(), ms.getTitle(), ms.getArtist()));
             }
@@ -59,24 +61,28 @@ public class MusicInterpreter implements IMusicInterpreter {
     }
 
     @Override
-    public MusicSearchHolder getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException {
-        MusicService musicService = musicServiceUser.getInfoFromMusicId(id, serviceName,tokenDB.getTokenFromServiceName(serviceName));
+    public MusicSearchHolder getInfoFromMusicId(String id, String serviceName) throws NoSuchServiceException,
+            GetMusicErrorException, MissingTokenException, NoSuchUserException {
+        MusicService musicService = musicServiceUser.getInfoFromMusicId(id,
+                serviceName,userRegistry.getUserById(DbMock.user.getName()).getToken(serviceName));
         return new MusicSearchHolder(musicService.getId(), musicService.getTitle(), musicService.getArtist());
     }
 
     @Override
     public void addMusic(String idMusic, String serviceName) throws NoSuchServiceException, AddPlaylistException,
-            NoSuchPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException {
+            NoSuchPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException, NoSuchUserException {
         Playlist playlist;
         List<Playlist> playlists = db.getPlaylistList();
         if (playlists.size() == 0){
-            PlaylistService playlistService = musicServiceUser.addPlaylist(serviceName,tokenDB.getTokenFromServiceName(serviceName));
+            PlaylistService playlistService = musicServiceUser.addPlaylist(serviceName,
+                    userRegistry.getUserById(DbMock.user.getName()).getToken(serviceName));
             db.addPlaylist(new Playlist(playlistService.getId(), serviceName));
             playlist = db.getPlaylistFromId(playlistService.getId());
         }
         else{
             playlist = playlists.get(0);
         }
-        musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName,tokenDB.getTokenFromServiceName(serviceName));
+        musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName,
+                userRegistry.getUserById(DbMock.user.getName()).getToken(serviceName));
     }
 }

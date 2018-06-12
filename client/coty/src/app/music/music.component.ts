@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ParametersService} from "../services/parameters.service";
-import {ParametersService} from "../services/parameters.service";
 
 @Component({
   selector: 'app-music',
