@@ -16,7 +16,7 @@ public interface IModule {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     Response sendOAuthCode(@FormParam("code") String code,
                            @FormParam("serviceName") String serviceName,
-                           @FormParam("serviceName") String userId) throws NoSuchServiceException;
+                           @FormParam("userId") String userId) throws NoSuchServiceException;
 
     @GET()
     @Path("retrieveOAuthURL/{service}")

@@ -38,7 +38,7 @@ public class PhotoModule implements IPhotoModule {
             String service = photo.getService();
 
 
-            interpreter.addPhoto(input, name,service, DbMock.user.getName());
+            interpreter.addPhoto(input, name,service, photo.getUserId());
             logger.log(Level.INFO,"finishing photo upload");
             return CorsAdder.addCors(Response.ok()).build();
         } catch (AddPhotoErrorException e) {
@@ -93,11 +93,12 @@ public class PhotoModule implements IPhotoModule {
         photo.setName(body.getAttachmentObject("name",String.class));
         photo.setInput( body.getAttachment("file").getDataHandler().getInputStream());
         photo.setService( body.getAttachmentObject("service",String.class));
-        photo.setUserId(DbMock.user.getName());
+        photo.setUserId(body.getAttachmentObject("userId",String.class));
 
         if(!photo.check()){
             photo.setName(body.getAttachment("name").getDataHandler().getContent().toString());
             photo.setService(body.getAttachment("service").getDataHandler().getContent().toString());
+            photo.setService(body.getAttachment("userId").getDataHandler().getContent().toString());
         }
 
         return photo;
