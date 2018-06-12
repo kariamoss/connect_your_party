@@ -23,6 +23,7 @@ export class UserService {
         } else {
           this.currentUser = this.getIdByName(sessionStorage.getItem('user'));
         }
+
       });
 
 
@@ -56,12 +57,14 @@ export class UserService {
     return this.currentUser;
   }
 
-  isCurrentUser(name: string) {
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].name == name && this.currentUser == i) return true
-    }
-    return false;
+  currentUserIsAdmin(){
+    if(this.users.length >0){
+      return this.users[this.currentUser].role == 'admin';
+    } else return false;
+
   }
+
+
 
 
 }

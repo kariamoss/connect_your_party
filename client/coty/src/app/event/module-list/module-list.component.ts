@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {EventService} from "../../services/events.service";
+import {ParametersService} from "../../services/parameters.service";
 
 @Component({
   selector: 'app-module-list',
@@ -9,7 +11,7 @@ export class ModuleListComponent implements OnInit {
 
   selected;
 
-  constructor() { }
+  constructor(private eventS: EventService, private paramS: ParametersService) { }
 
   ngOnInit() {
     this.selected = 'infos';
@@ -17,6 +19,10 @@ export class ModuleListComponent implements OnInit {
 
   setActive(toto){
     this.selected = toto;
+  }
+
+  isEnabled(){
+    return this.eventS.isTypeOfParty(this.paramS.sharedId)
   }
 
 
