@@ -74,7 +74,6 @@ import { PaymentComponent } from './payment/payment.component';
     MusicPlayerComponent,
     MusicListComponent,
     UserSwitchComponent,
-    PaymentComponent,
   ],
   imports: [
     HttpClientModule,

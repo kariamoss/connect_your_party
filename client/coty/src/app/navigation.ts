@@ -23,7 +23,6 @@ export const appRoutes: Routes = [
       {path: 'photo', component: PhotosComponent},
       {path: 'shopping', component: ShoppingListComponent},
       {path: 'music',component: MusicComponent},
-      {path: 'payment',component: PaymentComponent}
     ]
   },
   {path: 'authentication', component: AuthenticationProcessComponent},
