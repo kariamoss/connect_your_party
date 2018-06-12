@@ -2,6 +2,9 @@ package connectYourParty.services;
 
 import java.net.URL;
 
+/**
+ * Mandatory interface to develop a service
+ */
 public interface IService {
     /**
      * Retrieve the name of the service

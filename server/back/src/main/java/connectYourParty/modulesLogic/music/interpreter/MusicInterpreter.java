@@ -10,7 +10,9 @@ import connectYourParty.exception.music.AddPlaylistException;
 import connectYourParty.exception.music.NoSuchPlaylistException;
 import connectYourParty.exceptions.MissingTokenException;
 import connectYourParty.exceptions.music.CannotCreatePlaylistException;
+import connectYourParty.exceptions.music.CannotGetUserId;
 import connectYourParty.exceptions.music.GetMusicErrorException;
+import connectYourParty.exceptions.music.SearchMusicErrorException;
 import connectYourParty.modulesLogic.music.serviceUser.IMusicServiceUser;
 import connectYourParty.objects.music.MusicService;
 import connectYourParty.objects.music.PlaylistService;
@@ -33,7 +35,7 @@ public class MusicInterpreter implements IMusicInterpreter {
     IUserRegistry userRegistry;
 
     @Override
-    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException, NoSuchUserException {
+    public List<MusicSearchHolder> searchMusic(String search, String service) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException, NoSuchUserException, SearchMusicErrorException {
         List<MusicService> musicService = musicServiceUser.searchMusic(search, service,userRegistry.getUserById(DbMock.user.getName()).getToken(service));
         List<MusicSearchHolder> musicSearchHolders = new ArrayList<>();
         for(MusicService ms : musicService){
@@ -70,7 +72,7 @@ public class MusicInterpreter implements IMusicInterpreter {
 
     @Override
     public void addMusic(String idMusic, String serviceName) throws NoSuchServiceException, AddPlaylistException,
-            NoSuchPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException, NoSuchUserException {
+            NoSuchPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException, NoSuchUserException, CannotGetUserId {
 
         Playlist playlist = getEventPlaylist(serviceName);
         musicServiceUser.addMusicFromId(idMusic, playlist.getId(), serviceName,

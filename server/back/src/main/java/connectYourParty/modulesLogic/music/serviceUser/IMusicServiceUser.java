@@ -4,7 +4,9 @@ import connectYourParty.businessObjects.Token;
 import connectYourParty.exception.NoSuchServiceException;
 import connectYourParty.exceptions.MissingTokenException;
 import connectYourParty.exceptions.music.CannotCreatePlaylistException;
+import connectYourParty.exceptions.music.CannotGetUserId;
 import connectYourParty.exceptions.music.GetMusicErrorException;
+import connectYourParty.exceptions.music.SearchMusicErrorException;
 import connectYourParty.objects.music.MusicService;
 import connectYourParty.objects.music.PlaylistService;
 
@@ -14,11 +16,11 @@ import java.util.Optional;
 
 @Local
 public interface IMusicServiceUser {
-    List<MusicService> searchMusic(String music, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException;
+    List<MusicService> searchMusic(String music, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException, SearchMusicErrorException;
 
     MusicService getInfoFromMusicId(String id, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException;
 
-    void addMusicFromId(String id, String playlist, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException;
+    void addMusicFromId(String id, String playlist, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException, CannotGetUserId;
 
     List<MusicService> getMusicFromPlaylist(String playlist, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException;
 

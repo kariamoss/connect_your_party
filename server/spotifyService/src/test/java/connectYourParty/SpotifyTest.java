@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import connectYourParty.exceptions.MissingTokenException;
 import connectYourParty.exceptions.music.CannotCreatePlaylistException;
 import connectYourParty.exceptions.music.GetMusicErrorException;
+import connectYourParty.exceptions.music.SearchMusicErrorException;
 import connectYourParty.objects.TokenService;
 import connectYourParty.objects.music.MusicService;
 import connectYourParty.objects.music.PlaylistService;
@@ -41,7 +42,7 @@ public class SpotifyTest {
     }
 
     @Test
-    public void SearchRequestGoodLength() throws GetMusicErrorException, MissingTokenException {
+    public void SearchRequestGoodLength() throws GetMusicErrorException, MissingTokenException, SearchMusicErrorException {
         List<MusicService> list = service.searchMusic("booba",Optional.of(
                 new TokenService("code", null, refreshToken)));
         assertEquals(list.size(), service.searchResults);
