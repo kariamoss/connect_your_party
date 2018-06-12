@@ -7,14 +7,14 @@
 
         <jta-data-source>TCFDataSource</jta-data-source>
 
-        <class>ConnectYourParty.businessObjects.photo.Photo</class>
-        <class>ConnectYourParty.businessObjects.music.Music</class>
-        <class>ConnectYourParty.businessObjects.music.Playlist</class>
-        <class>ConnectYourParty.businessObjects.Event</class>
-        <class>ConnectYourParty.businessObjects.User</class>
-        <class>ConnectYourParty.businessObjects.music.Music</class>
-        <class>ConnectYourParty.businessObjects.service.ServiceHolder</class>
-        <class>ConnectYourParty.businessObjects.Token</class>
+        <class>connectYourParty.businessObjects.photo.Photo</class>
+        <class>connectYourParty.businessObjects.music.Music</class>
+        <class>connectYourParty.businessObjects.music.Playlist</class>
+        <class>connectYourParty.businessObjects.Event</class>
+        <class>connectYourParty.businessObjects.User</class>
+        <class>connectYourParty.businessObjects.music.Music</class>
+        <class>connectYourParty.businessObjects.service.ServiceHolder</class>
+        <class>connectYourParty.businessObjects.Token</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
