@@ -24,8 +24,8 @@ public class Module implements IModule {
     public Response sendOAuthCode(String code, String serviceName, String userId) throws NoSuchServiceException {
         // JSONObject object = new JSONObject(text);
         try {
-            logger.log(Level.INFO, "Code reçu : " + code + " et nom du service : " + serviceName);
-            interpreter.sendOAuthCode(code, serviceName, DbMock.user.getName());
+            logger.log(Level.INFO, "Code reçu : " + code + " et nom du service : " + serviceName + " user id :" + userId);
+            interpreter.sendOAuthCode(code, serviceName, userId);
             return CorsAdder.addCors(Response.ok()).build();
         } catch (Exception e){
             return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();

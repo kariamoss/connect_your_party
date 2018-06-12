@@ -23,13 +23,14 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Stateless
-public class PhotoInterpreter implements IPhotoInterpreter {
+public class PhotoInterpreter implements IPhotoInterpreter{
+
+    private Logger logger = Logger.getLogger(PhotoInterpreter.class.getName());
 
     @EJB
     private IPhotoServiceUser services;
@@ -50,9 +51,13 @@ public class PhotoInterpreter implements IPhotoInterpreter {
         Photo photo;
         User user = userRegistry.getUserById(userId);
 
-        if (user.getToken(serviceName).isPresent())
+        if (user.getToken(serviceName).isPresent()) {
             token = Optional.of(user.getToken(serviceName).get());
-        else token = Optional.empty();
+
+        }
+        else{
+            token = Optional.empty();
+        }
 
         photo = new Photo(rName, serviceName, token.isPresent()?token.get():null);
 
@@ -63,6 +68,7 @@ public class PhotoInterpreter implements IPhotoInterpreter {
             stream.read(bin);
             photoChooser.addPhoto(bin, photo, token);
         } catch (Exception e) {
+            logger.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
             db.removePhoto(photo);
         }
 

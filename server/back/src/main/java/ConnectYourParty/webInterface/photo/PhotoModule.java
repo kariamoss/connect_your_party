@@ -31,11 +31,13 @@ public class PhotoModule implements IPhotoModule {
     @Override
     public Response addPhoto(MultipartBody body) {
         try {
-            logger.log(Level.INFO,"starting photo upload");
+
             PhotoAdderBody photo = parseBody(body);
             String name = photo.getName();
             InputStream input = photo.getInput();
             String service = photo.getService();
+
+            logger.log(Level.INFO,"starting photo upload for user :" + photo.getUserId());
 
 
             interpreter.addPhoto(input, name,service, photo.getUserId());
@@ -93,12 +95,12 @@ public class PhotoModule implements IPhotoModule {
         photo.setName(body.getAttachmentObject("name",String.class));
         photo.setInput( body.getAttachment("file").getDataHandler().getInputStream());
         photo.setService( body.getAttachmentObject("service",String.class));
-        photo.setUserId(body.getAttachmentObject("userId",String.class));
+        photo.setUserId(body.getAttachmentObject(   "userId",String.class));
 
         if(!photo.check()){
             photo.setName(body.getAttachment("name").getDataHandler().getContent().toString());
             photo.setService(body.getAttachment("service").getDataHandler().getContent().toString());
-            photo.setService(body.getAttachment("userId").getDataHandler().getContent().toString());
+            photo.setUserId(body.getAttachment("userId").getDataHandler().getContent().toString());
         }
 
         return photo;

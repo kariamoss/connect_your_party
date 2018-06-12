@@ -26,9 +26,6 @@ public class Photo implements Serializable {
     @NotNull
     private String serviceHost;
 
-    @Transient
-    private User user = DbMock.user;
-
     @ManyToOne
     private Token accessToken;
 
@@ -52,10 +49,6 @@ public class Photo implements Serializable {
 
     public String getServiceHost() {
         return serviceHost;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public String getPhotoPath() {

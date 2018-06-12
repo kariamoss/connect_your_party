@@ -5,6 +5,7 @@ import ConnectYourParty.businessObjects.User;
 import ConnectYourParty.businessObjects.photo.Photo;
 import ConnectYourParty.database.DbMock;
 import ConnectYourParty.exception.NoSuchUserException;
+import ConnectYourParty.webInterface.photo.PhotoModule;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -15,12 +16,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Stateless
 public class UserRegistry implements IUserRegistry{
 
     @PersistenceContext private EntityManager manager;
 
+    Logger logger = Logger.getLogger(UserRegistry.class.getName());
     @Override
     public List<User> getUserList() {
 
@@ -44,6 +48,8 @@ public class UserRegistry implements IUserRegistry{
         initCheck();
         user.addToken(token);
         manager.merge(user);
+
+        logger.log(Level.INFO,"token added to user " + user.getName());
     }
 
     @Override
