@@ -1,0 +1,17 @@
+<h3>Changer d'utilisateur</h3>
+<ul>
+  <li #toto *ngFor="let user of users; let i = index" [id]="i" (click)="setAsCurrent(toto.id)"
+      [ngClass]="{'active' : isCurrentUser(toto.id)}">
+    <div class="{{user.role}}" >
+      <div class="icon">
+        <mat-icon *ngIf="user.role == 'default'">face</mat-icon>
+        <mat-icon *ngIf="user.role == 'admin'">security</mat-icon>
+      </div>
+      {{user.name}}
+    </div>
+  </li>
+</ul>
+
+<div class="btn">
+  <button mat-raised-button (click)="closeDialog()">Fermer</button>
+</div>

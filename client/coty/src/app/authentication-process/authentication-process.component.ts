@@ -5,6 +5,7 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {APP_CONFIG, AppConfig} from "../app-config.module";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-authentication-process',
@@ -22,7 +23,8 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private router: Router,
               private httpClient : HttpClient,
-              @Inject(APP_CONFIG) private config: AppConfig,) {
+              @Inject(APP_CONFIG) private config: AppConfig,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -43,6 +45,7 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
          let body = new URLSearchParams();
          body.set('code', code);
          body.set('serviceName', params.service);
+         body.set('userId',this.userService.getCurrentUser().name);
           // '{"code": "'+ code +'", "serviceName": "' + params.service + '"}'
           this.httpClient.post('http://' + this.config.apiEndpoint + "/back-1.0-SNAPSHOT/sendOAuthCode", body.toString(),
             {
