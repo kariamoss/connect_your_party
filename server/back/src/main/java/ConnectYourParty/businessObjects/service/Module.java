@@ -2,11 +2,13 @@ package ConnectYourParty.businessObjects.service;
 
 import ConnectYourParty.exception.NoSuchModuleException;
 import ConnectYourParty.services.IService;
+import ConnectYourParty.services.payment.IPaymentService;
 import ConnectYourParty.services.photo.IPhotoService;
 
 public enum Module {
     PHOTO(IPhotoService.class,"photo"),
-    MUSIC(IService.class,"music");
+    MUSIC(IService.class,"music"),
+    PAYMENT(IPaymentService.class,"payment");
 
     private Class modClass;
     private String id;

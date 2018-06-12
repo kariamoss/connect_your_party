@@ -4,6 +4,7 @@ import ConnectYourParty.exceptions.music.CannotGetUserId;
 import ConnectYourParty.exceptions.music.GetMusicErrorException;
 import ConnectYourParty.objects.music.MusicService;
 import ConnectYourParty.objects.music.PlaylistService;
+import ConnectYourParty.services.IServiceOAuth;
 import ConnectYourParty.services.music.IMusicService;
 
 import java.io.BufferedReader;

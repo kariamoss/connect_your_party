@@ -43,10 +43,7 @@ export class ServiceSelectorComponent implements OnInit, OnDestroy {
     const result = this.httpClient.get<OAuthResult>('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/retrieveOAuthURL/' + newService.name, {headers: headers});
     result.subscribe(data => {
       if (data.OAuthURL) {
-        window.location.href = data.OAuthURL + '?' +
-          'client_id=' + data.client_id +
-          '&redirect_uri=http://localhost:4200/authentication/?service='+ newService.name +
-          '&response_type=code' +
+        window.location.href = data.OAuthURL +
           '&state= ' + this.id +'/'+ this.module;
       }
     },

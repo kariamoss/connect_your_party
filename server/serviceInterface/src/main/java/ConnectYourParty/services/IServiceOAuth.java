@@ -26,7 +26,9 @@ public interface IServiceOAuth extends IService{
      * @param oAuthCode the code retrieved before
      * @return token the valid token
      */
-    TokenService updateToken(String oAuthCode);
+    TokenService getToken(String oAuthCode);
+
+    TokenService refreshToken(String refreshToken);
 
     /**
      * Retrieve the app key of the service if the service needs

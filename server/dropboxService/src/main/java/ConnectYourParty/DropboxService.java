@@ -24,13 +24,10 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
 
     Logger logger = Logger.getLogger(DropboxService.class.getName());
 
-    // private final String token = "3R_uMjczZjAAAAAAAAAAfB2FMQjheEyR89fJsWHUv7pVSI-yV1ai3w4FlsK5M9fP";
     private DbxClientV2 client;
 
 
     public DropboxService() {
-        // DbxRequestConfig conf = DbxRequestConfig.newBuilder("coty").build();
-        // this.client = new DbxClientV2(conf, token);
     }
 
     @Override
@@ -102,7 +99,10 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
     @Override
     public URL getOAuthToken() {
         try {
-            return new URL("https://api.dropboxapi.com/oauth2/token");
+            return new URL("https://api.dropboxapi.com/oauth2/token?" +
+                    "response_type=code" +
+                    "&client_id=" + this.getAppKey() +
+                    "&redirect_uri=http://localhost:4200/authentication/?service=" + this.getServiceName());
         } catch (Exception e) {
             return null;
         }
@@ -119,8 +119,7 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
     }
 
     @Override
-    public TokenService updateToken(String oAuthCode) {
-        // System.setProperty("http.keepAlive", "false");
+    public TokenService getToken(String oAuthCode) {
         StringBuilder result = new StringBuilder();
         JSONObject resultJSON = new JSONObject();
         String parameters = "code=" + oAuthCode +
@@ -167,5 +166,10 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
         }
         return new TokenService(oAuthCode, resultJSON.getString("access_token"), oAuthCode);
 
+    }
+
+    @Override
+    public TokenService refreshToken(String refreshToken) {
+        return null;
     }
 }
