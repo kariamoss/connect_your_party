@@ -8,8 +8,8 @@ import {MusicComponent} from "./music/music.component";
 import {DevelopersComponent} from "./developers/developers.component";
 import {AuthenticationProcessComponent} from "./authentication-process/authentication-process.component";
 import {PaymentComponent} from "./payment/payment.component";
-import {ProcessPaymentComponent} from "./process-payment/process-payment.component";
-import {CancelPaymentComponent} from "./cancel-payment/cancel-payment.component";
+import {ProcessPaymentComponent} from "./payment/process-payment/process-payment.component";
+import {CancelPaymentComponent} from "./payment/cancel-payment/cancel-payment.component";
 
 export const appRoutes: Routes = [
 
