@@ -1,5 +1,6 @@
 package connectYourParty;
 
+import connectYourParty.objects.TokenEntry;
 import connectYourParty.objects.TokenService;
 import connectYourParty.services.IServiceOAuth;
 import connectYourParty.services.payment.IPaymentService;
@@ -106,7 +107,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
         byte[] postData = body.toString().getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
         try {
-            URL url = new URL(token.get().getAdditionalInfos().get("executeURL"));
+            URL url = new URL(token.get().getAdditionalInfos().get(TokenEntry.EXECUTE.key));
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // conn.setInstanceFollowRedirects(false);

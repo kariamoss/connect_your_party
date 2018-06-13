@@ -51,6 +51,18 @@ public class PaymentServiceUser implements IPaymentServiceUser, Subscriber {
         }
     }
 
+    @Override
+    public void confirm(String payerId,Optional<Token> tok,String serviceName) throws NoSuchServiceException {
+        Optional<TokenService> token;
+        if(tok.isPresent()){
+            token = Optional.of(new TokenService(tok.get().getCode(),tok.get().getAccessToken(),tok.get().getRefreshToken()));
+        } else {
+            token = Optional.empty();
+        }
+
+        this.getService(serviceName).confirm(payerId,token);
+    }
+
     private IPaymentService getService(String serviceName) throws NoSuchServiceException {
 
         for (ServiceHolder holder : servicePaymentList) {

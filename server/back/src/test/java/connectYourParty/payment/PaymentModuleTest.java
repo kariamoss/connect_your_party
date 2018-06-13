@@ -95,5 +95,9 @@ public class PaymentModuleTest {
         assertEquals(TestPaymentService.urlToReturn,url.getEntity());
 
 
+        Response confirm = this.module.confirm("salut",DbMock.user.getName(),"Paypal");
+        assertEquals(200,confirm.getStatus());
+
+
     }
 }

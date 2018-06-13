@@ -35,6 +35,12 @@ public class PaymentModule implements IPaymentModule {
 
     @Override
     public Response confirm(String payerId, String userId, String serviceName) {
-        return null;
+        try{
+            this.interpreter.confirm(payerId,userId,serviceName);
+            return CorsAdder.corsResponse().build();
+        } catch (Exception e){
+            logger.log(Level.SEVERE,Arrays.toString(e.getStackTrace()));
+            return CorsAdder.corsResponse().status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

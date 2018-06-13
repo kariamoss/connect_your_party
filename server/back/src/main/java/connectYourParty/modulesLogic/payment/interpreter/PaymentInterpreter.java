@@ -3,8 +3,10 @@ package connectYourParty.modulesLogic.payment.interpreter;
 import connectYourParty.businessObjects.Token;
 import connectYourParty.businessObjects.User;
 import connectYourParty.database.user.IUserRegistry;
+import connectYourParty.exception.NoSuchServiceException;
 import connectYourParty.exception.NoSuchUserException;
 import connectYourParty.modulesLogic.payment.serviceUser.IPaymentServiceUser;
+import connectYourParty.objects.TokenEntry;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -36,11 +38,19 @@ public class PaymentInterpreter implements IPaymentInterpreter {
         URL toSave = findURLToSave(urls);
 
         if(token.isPresent()){
-            token.get().addAdditionalInfo("execute",toSave.toString());
+            token.get().addAdditionalInfo(TokenEntry.EXECUTE.key,toSave.toString());
             this.userRegistry.updateToken(token.get());
         }
 
         return findURLToReturn(urls);
+    }
+
+    @Override
+    public void confirm(String payerId, String userId, String serviceName) throws NoSuchUserException,NoSuchServiceException {
+        Optional<Token> token = this.userRegistry.getUserById(userId).getToken(serviceName);
+
+        this.paymentServiceUser.confirm(payerId,token,serviceName);
+
     }
 
     private URL findURLToSave(List<URL> urls){
