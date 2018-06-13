@@ -12,7 +12,7 @@ import connectYourParty.exception.photo.PhotoAlreadyExistException;
 import connectYourParty.exceptions.photo.AddPhotoErrorException;
 import connectYourParty.exceptions.photo.CannotDeletePhotoException;
 import connectYourParty.exceptions.photo.RetrievePhotoErrorException;
-import connectYourParty.modulesLogic.photo.ServiceUser.IPhotoServiceUser;
+import connectYourParty.modulesLogic.photo.serviceUser.IPhotoServiceUser;
 import connectYourParty.requestObjects.photo.PhotoHolder;
 import connectYourParty.requestObjects.photo.PhotoServiceHolder;
 import org.apache.myfaces.util.FilenameUtils;

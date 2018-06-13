@@ -1,4 +1,4 @@
-package connectYourParty.modulesLogic.photo.ServiceUser;
+package connectYourParty.modulesLogic.photo.serviceUser;
 
 
 import connectYourParty.businessObjects.Token;
