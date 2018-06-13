@@ -33,20 +33,28 @@ public class PaymentInterpreter implements IPaymentInterpreter {
 
         List<URL> urls = paymentServiceUser.pay(target, amount, serviceName, token);
 
-        URL toSave = findURL(urls);
+        URL toSave = findURLToSave(urls);
 
         if(token.isPresent()){
             token.get().addAdditionalInfo("execute",toSave.toString());
             this.userRegistry.updateToken(token.get());
         }
 
-        urls.remove(toSave);
-        return urls.get(0);
+        return findURLToReturn(urls);
     }
 
-    private URL findURL(List<URL> urls){
+    private URL findURLToSave(List<URL> urls){
         for(URL url : urls){
             if (urls.toString().contains("execute")){
+                return url;
+            }
+        }
+        return null;
+    }
+
+    private URL findURLToReturn(List<URL> urls){
+        for(URL url : urls){
+            if (!url.toString().contains("execute")){
                 return url;
             }
         }

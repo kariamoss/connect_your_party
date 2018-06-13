@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +27,7 @@ public class PaymentModule implements IPaymentModule {
             URL url = interpreter.pay(target, amount, serviceName, user);
             return CorsAdder.addCors(Response.ok(url.toString())).build();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            logger.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
             return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();
         }
 
