@@ -22,7 +22,7 @@ public class Token {
 
     @NotNull
     @Column(length = 15000)
-    private String accessToken;OneToOne
+    private String accessToken;
 
     @Column(length = 15000)
     private String refreshToken;
