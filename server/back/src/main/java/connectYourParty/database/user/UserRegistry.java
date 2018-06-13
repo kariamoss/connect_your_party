@@ -70,6 +70,11 @@ public class UserRegistry implements IUserRegistry{
         }
     }
 
+    @Override
+    public void updateToken(Token token) {
+        this.manager.merge(token);
+    }
+
     public void initCheck(){
         if(this.getUserList().size() == 0){
             manager.persist(new User(DbMock.user));

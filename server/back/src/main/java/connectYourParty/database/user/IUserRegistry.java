@@ -14,4 +14,5 @@ public interface IUserRegistry {
     void addToken(User user, Token token);
     User getUserById(String id) throws NoSuchUserException;
     void clean();
+    void updateToken(Token token);
 }

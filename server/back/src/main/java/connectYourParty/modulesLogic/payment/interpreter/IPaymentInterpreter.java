@@ -2,6 +2,8 @@ package connectYourParty.modulesLogic.payment.interpreter;
 
 import connectYourParty.exception.NoSuchUserException;
 
+import java.net.URL;
+
 public interface IPaymentInterpreter {
-    void pay(String target, double amount, String serviceName, String userId) throws NoSuchUserException, NoSuchUserException;
+    URL pay(String target, double amount, String serviceName, String userId) throws NoSuchUserException, NoSuchUserException;
 }

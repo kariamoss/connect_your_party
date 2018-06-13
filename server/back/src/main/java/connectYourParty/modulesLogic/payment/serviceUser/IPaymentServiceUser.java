@@ -4,10 +4,12 @@ package connectYourParty.modulesLogic.payment.serviceUser;
 import connectYourParty.businessObjects.Token;
 
 import javax.ejb.Local;
+import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 @Local
 public interface IPaymentServiceUser {
 
-    void pay(String target, double amount, String serviceName, Optional<Token> token);
+    List<URL> pay(String target, double amount, String serviceName, Optional<Token> token);
 }

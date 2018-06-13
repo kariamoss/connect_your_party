@@ -8,6 +8,8 @@ import connectYourParty.modulesLogic.payment.serviceUser.IPaymentServiceUser;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -20,7 +22,7 @@ public class PaymentInterpreter implements IPaymentInterpreter {
     private IUserRegistry userRegistry;
 
     @Override
-    public void pay(String target, double amount, String serviceName, String userId) throws NoSuchUserException {
+    public URL pay(String target, double amount, String serviceName, String userId) throws NoSuchUserException {
         Optional<Token> token;
 
         User user = userRegistry.getUserById(userId);
@@ -29,6 +31,25 @@ public class PaymentInterpreter implements IPaymentInterpreter {
             token = Optional.of(user.getToken(serviceName).get());
         else token = Optional.empty();
 
-        paymentServiceUser.pay(target, amount, serviceName, token);
+        List<URL> urls = paymentServiceUser.pay(target, amount, serviceName, token);
+
+        URL toSave = findURL(urls);
+
+        if(token.isPresent()){
+            token.get().addAdditionalInfo("execute",toSave.toString());
+            this.userRegistry.updateToken(token.get());
+        }
+
+        urls.remove(toSave);
+        return urls.get(0);
+    }
+
+    private URL findURL(List<URL> urls){
+        for(URL url : urls){
+            if (urls.toString().contains("execute")){
+                return url;
+            }
+        }
+        return null;
     }
 }
