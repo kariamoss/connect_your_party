@@ -12,6 +12,7 @@ import connectYourParty.objects.TokenService;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.net.URL;
 import java.util.*;
 
 @Stateless
@@ -29,7 +30,7 @@ public class PaymentServiceUser implements IPaymentServiceUser, Subscriber {
     @PostConstruct
     public void init() {
         servicePaymentList = new HashSet<>();
-        List<ServiceHolder> serviceHolders = this.serviceRegistry.getServiceHolder();
+        List<ServiceHolder> serviceHolders = this.serviceRegistry.getServiceHolderFromModule(Module.PAYMENT);
         ids = new HashMap<>();
 
         for(ServiceHolder holder : serviceHolders){
@@ -41,11 +42,12 @@ public class PaymentServiceUser implements IPaymentServiceUser, Subscriber {
     }
 
     @Override
-    public void pay(String target, double amount, String serviceName, Optional<Token> token) {
+    public List<URL> pay(String target, double amount, String serviceName, Optional<Token> token) {
         try {
-            this.getService(serviceName).buildPayment(target, amount, Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(), token.get().getRefreshToken())));
+            return this.getService(serviceName).buildPayment(target, amount, Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(), token.get().getRefreshToken())));
         } catch (NoSuchServiceException e) {
             e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 

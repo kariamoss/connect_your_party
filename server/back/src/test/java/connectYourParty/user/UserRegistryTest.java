@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 import javax.ejb.EJB;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class UserRegistryTest {
@@ -88,5 +89,30 @@ public class UserRegistryTest {
 
         user = this.registry.getUserById(DbMock.user.getName());
         assertEquals(1,user.getTokenList().size());
+    }
+
+    @Test
+    public void tokenUpdateTest() throws Exception{
+        User user = this.registry.getUserById(DbMock.user.getName());
+        assertEquals(0,user.getTokenList().size());
+
+        Token token = new Token("salu","Dropbox","aaaa");
+
+        this.registry.addToken(user,token);
+
+        user = this.registry.getUserById(DbMock.user.getName());
+
+        token = user.getToken("Dropbox").get();
+
+        assertNotNull(token);
+
+        token.addAdditionalInfo("salut","salut");
+        this.registry.updateToken(token);
+
+        user = this.registry.getUserById(DbMock.user.getName());
+        token = user.getToken("Dropbox").get();
+
+        assertEquals("salut",token.getInfo("salut"));
+
     }
 }

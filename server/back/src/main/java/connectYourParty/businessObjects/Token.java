@@ -22,11 +22,12 @@ public class Token {
 
     @NotNull
     @Column(length = 15000)
-    private String accessToken;
+    private String accessToken;OneToOne
 
     @Column(length = 15000)
     private String refreshToken;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     private Map<String,String> additionalInfo;
 
     public Token() {
@@ -67,7 +68,6 @@ public class Token {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(code, serviceName);
     }
 

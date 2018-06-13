@@ -7,6 +7,7 @@ import connectYourParty.webInterface.CorsAdder;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,8 +23,8 @@ public class PaymentModule implements IPaymentModule {
     public Response pay(String target, Double amount, String currency, String user, String serviceName) {
 
         try {
-            interpreter.pay(target, amount, serviceName, user);
-            return CorsAdder.addCors(Response.ok()).build();
+            URL url = interpreter.pay(target, amount, serviceName, user);
+            return CorsAdder.addCors(Response.ok(url.toString())).build();
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
             return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();
