@@ -21,7 +21,7 @@ public class PaymentModule implements IPaymentModule {
     private IPaymentInterpreter interpreter;
 
     @Override
-    public Response pay(String target, Double amount, String currency, String user, String serviceName) {
+    public Response pay(String target, double amount, String currency, String user, String serviceName) {
 
         try {
             URL url = interpreter.pay(target, amount, serviceName, user);

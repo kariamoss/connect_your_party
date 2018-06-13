@@ -1,6 +1,5 @@
-package ConnectYourParty;
+package connectYourParty;
 
-import connectYourParty.PaypalService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

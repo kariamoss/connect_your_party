@@ -2,7 +2,6 @@ package connectYourParty.businessObjects.photo;
 
 import connectYourParty.businessObjects.Event;
 import connectYourParty.businessObjects.Token;
-import connectYourParty.businessObjects.User;
 import connectYourParty.database.DbMock;
 
 import javax.persistence.*;
@@ -55,7 +54,7 @@ public class Photo implements Serializable {
     }
 
     public String getPrivatePhotoPath(){
-        return "/ConnectYourParty/"+getPhotoPath();
+        return "/connectYourParty/" +getPhotoPath();
     }
 
     public String getName() {

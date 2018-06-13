@@ -108,6 +108,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
         int postDataLength = postData.length;
         try {
             URL url = new URL(token.get().getAdditionalInfos().get(TokenEntry.EXECUTE.key));
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // conn.setInstanceFollowRedirects(false);
