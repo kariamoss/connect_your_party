@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
@@ -25,13 +27,17 @@ public class Token {
 
     private String refreshToken;
 
+    private Map<String,String> additionalInfo;
+
     public Token() {
+        this.additionalInfo = new HashMap<>();
     }
 
     public Token(String code, String serviceName, String accessToken) {
         this.code = code;
         this.serviceName = serviceName;
         this.accessToken = accessToken;
+        this.additionalInfo = new HashMap<>();
     }
 
     public String getCode() {
@@ -71,5 +77,13 @@ public class Token {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public void addAdditionalInfo(String key, String value){
+        this.additionalInfo.put(key,value);
+    }
+
+    public String getInfo(String key){
+        return this.additionalInfo.get(key);
     }
 }
