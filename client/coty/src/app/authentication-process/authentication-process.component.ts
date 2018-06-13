@@ -62,7 +62,7 @@ export class AuthenticationProcessComponent implements OnInit, OnDestroy {
         }
         setTimeout(() => {
           this.router.navigate(['/events/' + state]);
-        }, 30000 + this.error ? 2000 : 0);
+        }, 1000 + this.error ? 2000 : 0);
       });
     }, 1000);
   }

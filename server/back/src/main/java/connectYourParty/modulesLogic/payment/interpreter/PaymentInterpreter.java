@@ -7,6 +7,7 @@ import connectYourParty.exception.NoSuchServiceException;
 import connectYourParty.exception.NoSuchUserException;
 import connectYourParty.modulesLogic.payment.serviceUser.IPaymentServiceUser;
 import connectYourParty.objects.TokenEntry;
+import connectYourParty.requestObjects.photo.PhotoServiceHolder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -51,6 +52,11 @@ public class PaymentInterpreter implements IPaymentInterpreter {
 
         this.paymentServiceUser.confirm(payerId,token,serviceName);
 
+    }
+
+    @Override
+    public List<PhotoServiceHolder> getServices() {
+        return this.paymentServiceUser.getServiceList();
     }
 
     private URL findURLToSave(List<URL> urls){

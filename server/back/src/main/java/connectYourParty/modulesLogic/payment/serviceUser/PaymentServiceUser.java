@@ -1,5 +1,7 @@
 package connectYourParty.modulesLogic.payment.serviceUser;
 
+import connectYourParty.requestObjects.photo.PhotoServiceHolder;
+import connectYourParty.services.IService;
 import connectYourParty.services.payment.IPaymentService;
 import connectYourParty.businessObjects.Token;
 import connectYourParty.businessObjects.service.Module;
@@ -39,6 +41,22 @@ public class PaymentServiceUser implements IPaymentServiceUser, Subscriber {
         }
 
         this.serviceRegistry.subscribe(this, this.module);
+    }
+
+    @Override
+    public List<PhotoServiceHolder> getServiceList() {
+        List<PhotoServiceHolder> arr = new ArrayList<>();
+        for (ServiceHolder serv : servicePaymentList) {
+            try {
+                IService service = serv.getService();
+                arr.add(new PhotoServiceHolder(service.getServiceName(),
+                        service.getServiceIcon().getHost() + service.getServiceIcon().getPath()));
+            } catch (Exception e){
+
+            }
+        }
+
+        return arr;
     }
 
     @Override

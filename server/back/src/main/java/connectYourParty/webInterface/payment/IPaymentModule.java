@@ -23,7 +23,13 @@ public interface IPaymentModule {
     @POST
     @Path("confirm")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
     Response confirm(@FormParam("payer_id") String payerId,
                      @FormParam("userId") String userId,
                      @FormParam("service") String serviceName);
+
+    @GET()
+    @Path("getServices")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response getServices();
 }

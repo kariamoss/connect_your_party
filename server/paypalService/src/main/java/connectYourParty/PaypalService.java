@@ -30,19 +30,21 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
     public List<URL> buildPayment(String target, double amount, Optional<TokenService> token) {
         StringBuilder result = new StringBuilder();
         JSONObject body = new JSONObject();
-        body.append("intent", "sale");
-        body.append("redirect_urls", new JSONObject()
-                .append("return_url", "http://localhost:4200/processPayment")
-                .append("cancel_url", "http://localhost:4200/cancelPayment"));
-        body.append("payer", new JSONObject().append("payment_method", "paypal"));
-        body.append("transactions", new JSONArray()
+        body.put("intent", "sale");
+        body.put("redirect_urls", new JSONObject()
+                .put("return_url", "http://localhost:4200/processPayment")
+                .put("cancel_url", "http://localhost:4200/cancelPayment"));
+        body.put("payer", new JSONObject().put("payment_method", "paypal"));
+        body.put("transactions", new JSONArray()
                 .put(new JSONObject()
-                        .append("amount", new JSONObject()
-                                .append("total", String.valueOf(amount))
-                                .append("currency", "EUR"))
-                        .append("payee", new JSONObject()
-                                .append("email", target))
-                        .append("description", "Remboursement via connect your party.")));
+                        .put("amount", new JSONObject()
+                                .put("total", String.valueOf(amount))
+                                .put("currency", "EUR"))
+                        .put("payee", new JSONObject()
+                                .put("email", target))
+                        .put("description", "Remboursement via connect your party.")));
+
+        logger.log(Level.INFO, "POST body : " + body.toString());
         JSONObject resultJSON = new JSONObject();
         byte[] postData = body.toString().getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
@@ -68,7 +70,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
             int responseCode = conn.getResponseCode();
             logger.log(Level.INFO, "POST response code : " + responseCode);
 
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpURLConnection.HTTP_CREATED) {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line;
                 while ((line = rd.readLine()) != null) {
@@ -76,6 +78,8 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
                 }
                 rd.close();
                 resultJSON = new JSONObject(result.toString());
+                logger.log(Level.INFO, "POST body : " + resultJSON.toString(1));
+
             } else {
                 throw new RuntimeException("Response from service server : " + responseCode);
             }
@@ -102,7 +106,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
     public void confirm(String payerId, Optional<TokenService> token) {
         StringBuilder result = new StringBuilder();
         JSONObject body = new JSONObject();
-        body.append("payer_id", payerId);
+        body.put("payer_id", payerId);
         JSONObject resultJSON = new JSONObject();
         byte[] postData = body.toString().getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
@@ -148,19 +152,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
     @Override
     public URL getOAuthUrl() {
         try {
-            return new URL("https://www.sandbox.paypal.com/signin/authorize?client_id=AU_e2nxXR4S3nZdpkI6rdqQGLbnxEXbL1glsW9jYF4Vvd_vcvxkv2X6chqA5kzdZLXxpwIGOzFr4VDaC" +
-                    "&response_type=code" +
-                    "&scope=openid" +
-                    "&redirect_uri=http://localhost:4200/authentication/?service=" + this.getServiceName());
-        } catch (MalformedURLException e) {
-            return null;
-        }
-    }
-
-
-    private URL getOAuthToken() {
-        try {
-            return new URL("https://api.sandbox.paypal.com/v1/identity/openidconnect/token");
+            return new URL("http://localhost:4200/authentication/?service=" + this.getServiceName() + "&code=josuepd");
         } catch (MalformedURLException e) {
             return null;
         }
@@ -176,10 +168,10 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
         StringBuilder result = new StringBuilder();
         JSONObject resultJSON = new JSONObject();
         String parameters = "grant_type=client_credentials";
-        URL url = getOAuthToken();
         byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
         try {
+            URL url = new URL("https://api.sandbox.paypal.com/v1/oauth2/token");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // conn.setInstanceFollowRedirects(false);

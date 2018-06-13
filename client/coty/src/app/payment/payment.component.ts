@@ -49,6 +49,7 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit() {
     this.participants = this.eventS.getEventById(this.paramS.sharedId).people;
+    this.selectorService.updateServicesList(this.module);
     this.update();
   }
 
@@ -85,11 +86,11 @@ export class PaymentComponent implements OnInit {
       // '{"code": "'+ code +'", "serviceName": "' + params.service + '"}'
       this.httpClient.post('http://' + this.config.apiEndpoint + "/back-1.0-SNAPSHOT/payment/pay", body.toString(),
         {
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          responseType: 'text',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
         }).subscribe(
         data => {
-          console.log(data);
-          window.location.href = data.toString();
+          window.location.href = data;
         },
         error => console.log(error)
       );

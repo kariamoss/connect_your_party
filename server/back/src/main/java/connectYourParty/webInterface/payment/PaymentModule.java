@@ -43,4 +43,11 @@ public class PaymentModule implements IPaymentModule {
             return CorsAdder.corsResponse().status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @Override
+    public Response getServices() {
+        return CorsAdder.addCors(
+                Response.status(Response.Status.OK).entity(interpreter.getServices()))
+                .build();
+    }
 }
