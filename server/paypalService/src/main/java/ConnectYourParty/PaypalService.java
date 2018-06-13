@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +23,12 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
     Logger logger = Logger.getLogger(PaypalService.class.getName());
 
     @Override
-    public void pay(String target, double amount, Optional<TokenService> token) {
+    public URL buildPayment(String target, double amount, Optional<TokenService> token) {
+        return null;
+    }
+
+    @Override
+    public void confirm(String payerId, Optional<TokenService> token) {
 
     }
 
@@ -40,7 +46,11 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
 
     @Override
     public URL getOAuthToken() {
-        return null;
+        try {
+            return new URL("https://api.sandbox.paypal.com/v1/identity/openidconnect/token");
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
     @Override
@@ -52,11 +62,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
     public TokenService getToken(String oAuthCode) {
         StringBuilder result = new StringBuilder();
         JSONObject resultJSON = new JSONObject();
-        String parameters = "client_id=" + this.getAppKey() +
-                "&client_secret=" + this.getAppSecret() +
-                "&grant_type=authorization_code" +
-                "&redirect_uri=http://localhost:4200/authentication/?service=" + this.getServiceName() +
-                "&code=" + oAuthCode;
+        String parameters = "grant_type=client_credentials";
         URL url = getOAuthToken();
         byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
@@ -65,6 +71,8 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
 
             // conn.setInstanceFollowRedirects(false);
             conn.setRequestMethod("POST");
+            String encoded = Base64.getEncoder().encodeToString((this.getAppKey() + ":" + this.getAppSecret()).getBytes(StandardCharsets.UTF_8));
+            conn.setRequestProperty("Authorization", "Basic " + encoded);
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             // conn.setRequestProperty("charset", "utf-8");
             conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
@@ -94,7 +102,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
         } catch (IOException | RuntimeException e) {
             e.printStackTrace();
         }
-        return new TokenService(oAuthCode, resultJSON.getString("access_token"), oAuthCode);
+        return new TokenService("", resultJSON.getString("access_token"), "");
     }
 
     @Override
@@ -114,6 +122,10 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
 
     @Override
     public URL getServiceIcon() {
-        return null;
+        try {
+            return new URL("http://1000logos.net/wp-content/uploads/2017/05/emblem-Paypal.jpg");
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 }

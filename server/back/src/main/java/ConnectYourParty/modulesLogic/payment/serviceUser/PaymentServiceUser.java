@@ -43,7 +43,7 @@ public class PaymentServiceUser implements IPaymentServiceUser, Subscriber {
     @Override
     public void pay(String target, double amount, String serviceName, Optional<Token> token) {
         try {
-            this.getService(serviceName).pay(target, amount, Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(), token.get().getRefreshToken())));
+            this.getService(serviceName).buildPayment(target, amount, Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(), token.get().getRefreshToken())));
         } catch (NoSuchServiceException e) {
             e.printStackTrace();
         }
