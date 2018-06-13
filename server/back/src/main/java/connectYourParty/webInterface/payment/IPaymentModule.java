@@ -15,7 +15,7 @@ public interface IPaymentModule {
     @Path("pay")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     Response pay(@FormParam("target") String target,
-                 @FormParam("amount") Double amount,
+                 @FormParam("amount") double amount,
                  @FormParam("currency") String currency,
                  @FormParam("userId") String userId,
                  @FormParam("service") String serviceName);

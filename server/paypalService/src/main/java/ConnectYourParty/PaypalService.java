@@ -106,7 +106,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
         byte[] postData = body.toString().getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
         try {
-            URL url = new URL(token.get().getAdditionalInfos().get("executeURL"));
+            URL url = new URL(token.get().getAdditionalInfos().get("execute"));
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // conn.setInstanceFollowRedirects(false);
