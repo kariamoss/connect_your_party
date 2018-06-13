@@ -43,10 +43,10 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
                                 .append("email", target))
                         .append("description", "Remboursement via connect your party.")));
         JSONObject resultJSON = new JSONObject();
-        URL url = getOAuthToken();
         byte[] postData = body.toString().getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
         try {
+            URL url = new URL("https://api.sandbox.paypal.com/v1/payments/payment");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // conn.setInstanceFollowRedirects(false);
@@ -99,7 +99,48 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
 
     @Override
     public void confirm(String payerId, Optional<TokenService> token) {
+        StringBuilder result = new StringBuilder();
+        JSONObject body = new JSONObject();
+        body.append("payer_id", payerId);
+        JSONObject resultJSON = new JSONObject();
+        byte[] postData = body.toString().getBytes(StandardCharsets.UTF_8);
+        int postDataLength = postData.length;
+        try {
+            URL url = new URL(token.get().getAdditionalInfos().get("executeURL"));
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
+            // conn.setInstanceFollowRedirects(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + token.get().getAccessToken());
+            conn.setRequestProperty("Content-Type", "application/json");
+            // conn.setRequestProperty("charset", "utf-8");
+            conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+            conn.setUseCaches(false);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            os.write(postData);
+            os.flush();
+            os.close();
+
+            int responseCode = conn.getResponseCode();
+            logger.log(Level.INFO, "POST response code : " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+                rd.close();
+                resultJSON = new JSONObject(result.toString());
+            } else {
+                throw new RuntimeException("Response from service server : " + responseCode);
+            }
+
+        } catch (IOException | RuntimeException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
