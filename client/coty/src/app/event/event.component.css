@@ -34,3 +34,16 @@ mat-toolbar mat-icon {
   background-color: #fff;
   color:#000;
 }
+
+.users{
+  font-size: 30px;
+}
+
+
+.users:hover{
+  cursor:pointer;
+}
+
+.users:focus{
+  outline: none;
+}

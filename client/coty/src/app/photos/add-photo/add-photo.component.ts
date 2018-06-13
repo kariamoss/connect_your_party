@@ -6,6 +6,7 @@ import {isNull} from "util";
 import {MatDialogRef} from "@angular/material";
 import {PhotoService} from "../../services/photo.service";
 import {APP_CONFIG, AppConfig} from "../../app-config.module";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-add-photo',
@@ -24,7 +25,8 @@ export class AddPhotoComponent implements OnInit {
               private httpClient: HttpClient,
               private dialogRef: MatDialogRef<AddPhotoComponent>,
               private photoService: PhotoService,
-              @Inject(APP_CONFIG) private config: AppConfig,) {
+              @Inject(APP_CONFIG) private config: AppConfig,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class AddPhotoComponent implements OnInit {
     }
     this.formData.append('service', service.name);
     this.formData.append('eventId', this.id.toString());
+    this.formData.append('userId',this.userService.getCurrentUser().name);
     this.uploading = true;
     this.httpClient.post('http://' + this.config.apiEndpoint +'/back-1.0-SNAPSHOT/photo/addPhoto', this.formData, {headers: this.headers})
       .subscribe(

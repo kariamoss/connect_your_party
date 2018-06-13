@@ -34,14 +34,16 @@ export class MusicSearchComponent implements OnInit {
   }
 
   addToPlaylist(id) {
+    let body = new URLSearchParams();
+    body.set('idSong', id);
+    body.set('service', "Spotify");
     let url = "http://localhost:8080/back-1.0-SNAPSHOT/music/addMusic";
-    let idSong = id;
-    let service = "Spotify";
-    const body = {
-      idSong, service
-    };
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.httpClient.post(url, body, {headers: headers}).subscribe();
+    let headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
+    this.httpClient.post(url, body.toString(), {headers: headers}).subscribe(
+      ()=> {},
+      error => {console.log(error )},
+      () => { //TODO call refresh list
+      }
+    );
   }
-
 }

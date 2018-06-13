@@ -4,10 +4,10 @@ import {EventComponent} from "./event/event.component";
 import {EventViewComponent} from "./event-view/event-view.component";
 import {PhotosComponent} from "./photos/photos.component";
 import {EventDetailsComponent} from "./event-details/event-details.component";
-import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {MusicComponent} from "./music/music.component";
 import {DevelopersComponent} from "./developers/developers.component";
 import {AuthenticationProcessComponent} from "./authentication-process/authentication-process.component";
+import {PaymentComponent} from "./payment/payment.component";
 
 export const appRoutes: Routes = [
 
@@ -20,8 +20,8 @@ export const appRoutes: Routes = [
       {path: '', pathMatch: 'full',redirectTo: 'details'},
       {path: 'details', component: EventDetailsComponent},
       {path: 'photo', component: PhotosComponent},
-      {path: 'shopping', component: ShoppingListComponent},
-      {path: 'music',component: MusicComponent}
+      {path: 'music',component: MusicComponent},
+      {path: 'payment',component: PaymentComponent}
     ]
   },
   {path: 'authentication', component: AuthenticationProcessComponent},

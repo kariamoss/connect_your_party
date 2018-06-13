@@ -1,6 +1,8 @@
-
-<mat-card  [ngStyle]="color" routerLink="{{id}}">
-  <mat-card-title>{{title}}</mat-card-title>
+<mat-card [ngStyle]="color" routerLink="{{id}}">
+  <mat-card-title>{{title}}
+    <mat-icon *ngIf="type == 'event'">event</mat-icon>
+    <mat-icon *ngIf="type == 'party'">games</mat-icon>
+  </mat-card-title>
   <img mat-card-image src="{{img_url}}" alt="Photo of René Coty (he is your friend)">
   <mat-chip-list>
     <mat-chip [ngStyle]="color">{{location}}</mat-chip>

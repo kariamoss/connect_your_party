@@ -1,8 +1,8 @@
 package ConnectYourParty;
 
-import ConnectYourParty.objects.TokenService;
-import ConnectYourParty.services.IServiceOAuth;
-import ConnectYourParty.services.payment.IPaymentService;
+import connectYourParty.objects.TokenService;
+import connectYourParty.services.IServiceOAuth;
+import connectYourParty.services.payment.IPaymentService;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -44,8 +44,8 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
         }
     }
 
-    @Override
-    public URL getOAuthToken() {
+
+    private URL getOAuthToken() {
         try {
             return new URL("https://api.sandbox.paypal.com/v1/identity/openidconnect/token");
         } catch (MalformedURLException e) {
@@ -59,7 +59,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
     }
 
     @Override
-    public TokenService getToken(String oAuthCode) {
+    public TokenService generateToken(String oAuthCode) {
         StringBuilder result = new StringBuilder();
         JSONObject resultJSON = new JSONObject();
         String parameters = "grant_type=client_credentials";
@@ -103,11 +103,6 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
             e.printStackTrace();
         }
         return new TokenService("", resultJSON.getString("access_token"), "");
-    }
-
-    @Override
-    public TokenService refreshToken(String refreshToken) {
-        return null;
     }
 
     @Override
