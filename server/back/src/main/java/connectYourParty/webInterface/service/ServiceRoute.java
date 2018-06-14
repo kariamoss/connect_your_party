@@ -9,8 +9,11 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.servlet.ServletContext;
 import javax.ws.rs.core.Response;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +45,24 @@ public class ServiceRoute implements IServiceRoute{
             e.printStackTrace();
             logger.log(Level.WARNING,e.getMessage());
             return CorsAdder.corsResponse().status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+    }
+
+    @Override
+    public Response getServicesInterface() {
+        try {
+            //Process proc = Runtime.getRuntime().exec(String.valueOf(this.getClass().getClassLoader().getResource("resources/getJAR.sh")));
+            //BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
+            String line = "http://207.154.199.162:8081/artifactory/ConnectRelease/ConnectYourParty/serviceInterface/1.0-SNAPSHOT/serviceInterface-1.0-20180613.132458-2.jar";
+            return CorsAdder.addCors(
+                    Response.status(Response.Status.OK).entity(line))
+                    .build();
+        } catch (Exception e) {
+            logger.log(Level.WARNING,e.getMessage());
+            return CorsAdder.addCors(
+                    Response.status(Response.Status.NOT_ACCEPTABLE))
+                    .build();
         }
     }
 

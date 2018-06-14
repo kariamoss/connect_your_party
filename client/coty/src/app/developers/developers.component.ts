@@ -3,6 +3,8 @@ import {MatDialog} from "@angular/material";
 import {SubmitDevComponent} from "./submit-dev/submit-dev.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import { Location } from '@angular/common';
+import {HttpClient} from "@angular/common/http";
+import {MusicModel} from "../../model/music.model";
 
 @Component({
   selector: 'app-developers',
@@ -15,7 +17,7 @@ export class DevelopersComponent implements OnInit {
               private router: Router,
               private location: Location,
               private activatedRoute: ActivatedRoute,
-              ) {
+              public httpClient: HttpClient) {
   }
 
   ngOnInit() {
@@ -46,12 +48,12 @@ export class DevelopersComponent implements OnInit {
     dialogRef.componentInstance.module = id;
   }
 
-  openJavadoc() {
-    //TODO for my bro JEHAN
-  }
-
   downloadInterface(){
-    //TODO for my bro JEHAN
+    let url = "http://localhost:8080/back-1.0-SNAPSHOT/service/getServicesInterface";
+    this.httpClient.get(url, {responseType: 'text'})
+      .subscribe(url =>
+        window.open(url)
+      );
   }
 
 }
