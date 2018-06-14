@@ -90,15 +90,7 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
     @Override
     public URL getOAuthUrl() {
         try {
-            return new URL("https://www.dropbox.com/oauth2/authorize");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private URL getOAuthToken() {
-        try {
-            return new URL("https://api.dropboxapi.com/oauth2/token?" +
+            return new URL("https://www.dropbox.com/oauth2/authorize?"+
                     "response_type=code" +
                     "&client_id=" + this.getAppKey() +
                     "&redirect_uri=http://localhost:4200/authentication/?service=" + this.getServiceName());
@@ -126,10 +118,10 @@ public class DropboxService implements IPhotoService, IServiceOAuth {
                 "&client_id=qmoepnnfjdergql" +
                 "&client_secret=lwlzexl2nnypmlq" +
                 "&redirect_uri=http://localhost:4200/authentication/?service=" + this.getServiceName();
-        URL url = getOAuthToken();
         byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
         try {
+            URL url = new URL("https://api.dropboxapi.com/oauth2/token");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // conn.setInstanceFollowRedirects(false);
