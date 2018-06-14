@@ -2,6 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {UserModel} from "../../model/user.model";
 import {APP_CONFIG, AppConfig} from "../app-config.module";
 import {Inject} from "@angular/core";
+import {SelectorService} from "./selector.service";
 
 export class UserService {
 
@@ -9,7 +10,8 @@ export class UserService {
   private currentUser: number;
 
   constructor(private httpClient: HttpClient,
-              @Inject(APP_CONFIG) public config: AppConfig,) {
+              @Inject(APP_CONFIG) public config: AppConfig,
+              private selectorService: SelectorService,) {
 
     this.httpClient.get("http://localhost:8080/back-1.0-SNAPSHOT/user/list")
       .subscribe(data => {
@@ -50,7 +52,8 @@ export class UserService {
 
   setCurrentUser(num: number) {
     this.currentUser = num;
-    sessionStorage.setItem('user', this.users[num].name)
+    sessionStorage.setItem('user', this.users[num].name);
+    this.selectorService.clearSelectedService();
   }
 
   getCurrentIndex() {

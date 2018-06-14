@@ -100,6 +100,12 @@ export class SelectorService {
   emitServicesSubject(module: string) {
     this.servicesSubject.next(this.getModule(module).moduleServices.slice());
   }
+
+  clearSelectedService() {
+    this.services.forEach((object) => {
+      object.selectedService = null;
+    })
+  }
 }
 
 export interface Module {
