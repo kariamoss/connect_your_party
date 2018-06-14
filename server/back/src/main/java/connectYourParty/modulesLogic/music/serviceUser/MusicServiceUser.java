@@ -5,7 +5,9 @@ import connectYourParty.businessObjects.Token;
 import connectYourParty.exception.NoSuchServiceException;
 import connectYourParty.exceptions.MissingTokenException;
 import connectYourParty.exceptions.music.CannotCreatePlaylistException;
+import connectYourParty.exceptions.music.CannotGetUserId;
 import connectYourParty.exceptions.music.GetMusicErrorException;
+import connectYourParty.exceptions.music.SearchMusicErrorException;
 import connectYourParty.objects.TokenService;
 import connectYourParty.objects.music.MusicService;
 import connectYourParty.objects.music.PlaylistService;
@@ -28,7 +30,7 @@ public class MusicServiceUser implements IMusicServiceUser {
     }
 
     @Override
-    public List<MusicService> searchMusic(String music, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException {
+    public List<MusicService> searchMusic(String music, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException, SearchMusicErrorException {
         if(token.isPresent()) return this.getService(serviceName).searchMusic(
                 music,Optional.of(new TokenService(token.get().getCode(), token.get().getAccessToken(),
                         token.get().getRefreshToken())));
@@ -44,7 +46,7 @@ public class MusicServiceUser implements IMusicServiceUser {
     }
 
     @Override
-    public void addMusicFromId(String id, String playlist, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException {
+    public void addMusicFromId(String id, String playlist, String serviceName,Optional<Token> token) throws NoSuchServiceException, GetMusicErrorException, MissingTokenException, CannotGetUserId {
         if(token.isPresent()) this.getService(serviceName).addMusicFromId(
                 id, playlist,Optional.of(new TokenService(token.get().getCode(),
                         token.get().getAccessToken(), token.get().getRefreshToken())));

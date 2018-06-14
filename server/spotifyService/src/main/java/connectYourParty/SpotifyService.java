@@ -4,6 +4,7 @@ import connectYourParty.exceptions.MissingTokenException;
 import connectYourParty.exceptions.music.CannotCreatePlaylistException;
 import connectYourParty.exceptions.music.CannotGetUserId;
 import connectYourParty.exceptions.music.GetMusicErrorException;
+import connectYourParty.exceptions.music.SearchMusicErrorException;
 import connectYourParty.objects.TokenService;
 import connectYourParty.objects.music.MusicService;
 import connectYourParty.objects.music.PlaylistService;
@@ -39,12 +40,12 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
     }
 
     @Override
-    public void addMusicFromId(String id, String playlist, Optional<TokenService> token) throws GetMusicErrorException, MissingTokenException {
+    public void addMusicFromId(String id, String playlist, Optional<TokenService> token) throws GetMusicErrorException, MissingTokenException, CannotGetUserId {
         TokenService tokenService = getTokenService(token);
         Optional<String> opt = this.getUserId(tokenService);
 
         if (!opt.isPresent()) {
-            throw new GetMusicErrorException();
+            throw new CannotGetUserId("Cannot get user id");
         }
 
         String path = this.baseURL + "/" +
@@ -72,7 +73,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
             if (opt.isPresent()) {
                 uri = this.baseURL + "/users/" + opt.get() + "/playlists";
             } else {
-                throw new CannotGetUserId();
+                throw new CannotGetUserId("Cannot get user id");
             }
 
             JSONObject response = new JSONObject(this.POST(uri, body.toString(), tokenService));
@@ -112,7 +113,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
     }
 
     @Override
-    public List<MusicService> searchMusic(String search, Optional<TokenService> token) throws GetMusicErrorException, MissingTokenException {
+    public List<MusicService> searchMusic(String search, Optional<TokenService> token) throws GetMusicErrorException, MissingTokenException, SearchMusicErrorException {
         TokenService tokenService = getTokenService(token);
 
         List<MusicService> list = new ArrayList<>();
@@ -123,6 +124,7 @@ public class SpotifyService implements IMusicService, IServiceOAuth {
                     URLEncoder.encode(search, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            throw new SearchMusicErrorException("Unsupported Encoding Exception while searching for musics");
         }
 
         JSONObject jo = GET(baseURL + "/search?" + query, tokenService);

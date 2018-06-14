@@ -4,11 +4,14 @@ import connectYourParty.objects.TokenService;
 
 import java.net.URL;
 
+/**
+ * Implements this interface if your service uses oAuth2.0
+ */
 public interface IServiceOAuth extends IService{
     /**
      * Retrieve the URL where the service
      * need to make a GET request to login and retrieve
-     * a user token
+     * the user code
      * Leave blank if there is no OAuth login on your service
      * @return URL where the service need to login
      */

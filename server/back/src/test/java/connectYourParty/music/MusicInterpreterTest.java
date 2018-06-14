@@ -9,6 +9,7 @@ import connectYourParty.exception.music.AddPlaylistException;
 import connectYourParty.exception.music.NoSuchPlaylistException;
 import connectYourParty.exceptions.MissingTokenException;
 import connectYourParty.exceptions.music.CannotCreatePlaylistException;
+import connectYourParty.exceptions.music.CannotGetUserId;
 import connectYourParty.exceptions.music.GetMusicErrorException;
 import connectYourParty.modulesLogic.music.interpreter.IMusicInterpreter;
 import connectYourParty.modulesLogic.music.interpreter.MusicInterpreter;
@@ -60,7 +61,7 @@ public class MusicInterpreterTest {
     }
 
     @Ignore
-    public void createPlaylistWhenEmpty() throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException, NoSuchUserException {
+    public void createPlaylistWhenEmpty() throws NoSuchServiceException, NoSuchPlaylistException, AddPlaylistException, GetMusicErrorException, CannotCreatePlaylistException, MissingTokenException, NoSuchUserException, CannotGetUserId {
 
         assertEquals(0, db.getPlaylistList().size());
 

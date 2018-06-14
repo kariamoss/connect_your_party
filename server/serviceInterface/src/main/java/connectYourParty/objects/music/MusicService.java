@@ -1,5 +1,8 @@
 package connectYourParty.objects.music;
 
+/**
+ * A business object used to send information asked about a music in the service
+ */
 public class MusicService {
     private String id;
 
@@ -7,6 +10,12 @@ public class MusicService {
 
     private String artist;
 
+    /**
+     *
+     * @param id The music id that is stored in the service
+     * @param title
+     * @param artist
+     */
     public MusicService(String id, String title, String artist) {
         this.id = id;
         this.title = title;

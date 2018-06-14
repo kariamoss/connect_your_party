@@ -82,6 +82,12 @@ public class ServiceModuleTest {
     }
 
     @Test
+    public void getServicesTest(){
+        Response response = route.getServicesInterface();
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
     public void addService() throws Exception{
         int nbService = module.getServiceList().size();
 
