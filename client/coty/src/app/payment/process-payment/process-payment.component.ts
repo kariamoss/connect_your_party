@@ -5,6 +5,7 @@ import {APP_CONFIG, AppConfig} from "../../app-config.module";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../services/user.service";
 import {Subscription} from "rxjs/internal/Subscription";
+import {SelectorService} from "../../services/selector.service";
 
 @Component({
   selector: 'app-process-payment',
@@ -21,20 +22,22 @@ export class ProcessPaymentComponent implements OnInit {
               private httpClient : HttpClient,
               @Inject(APP_CONFIG) private config: AppConfig,
               private userService: UserService,
-
+              private selectorService: SelectorService,
               ) { }
 
   ngOnInit() {
-    let payerID;
-    this.updatePass = this.route.queryParams.subscribe(params => payerID = params.PayerID);
+    let payerID, serviceName;
+    this.updatePass = this.route.queryParams.subscribe(params => {
+      payerID = params.PayerID;
+      serviceName = params.service;
+    });
 
     setTimeout(() => {
       this.sub = this.route.queryParams.subscribe(params => {
           let body = new URLSearchParams();
-          body.set('PayerID', payerID);
-          body.set('service', params.service);
+          body.set('payer_id', payerID);
+          body.set('service', serviceName);
           body.set('userId',this.userService.getCurrentUser().name);
-          // '{"code": "'+ code +'", "serviceName": "' + params.service + '"}'
           this.httpClient.post('http://' + this.config.apiEndpoint + "/back-1.0-SNAPSHOT/payment/confirm", body.toString(),
             {
               headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -47,7 +50,7 @@ export class ProcessPaymentComponent implements OnInit {
 
         setTimeout(() => {
           this.router.navigate(['/events/']);
-        }, 30000);
+        }, 3000);
       });
     }, 1000);
 

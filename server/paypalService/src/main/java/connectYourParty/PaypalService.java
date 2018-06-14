@@ -32,7 +32,7 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
         JSONObject body = new JSONObject();
         body.put("intent", "sale");
         body.put("redirect_urls", new JSONObject()
-                .put("return_url", "http://localhost:4200/processPayment")
+                .put("return_url", "http://localhost:4200/processPayment?service=" + this.getServiceName())
                 .put("cancel_url", "http://localhost:4200/cancelPayment"));
         body.put("payer", new JSONObject().put("payment_method", "paypal"));
         body.put("transactions", new JSONArray()
@@ -139,7 +139,6 @@ public class PaypalService implements IPaymentService, IServiceOAuth {
                     result.append(line);
                 }
                 rd.close();
-                resultJSON = new JSONObject(result.toString());
             } else {
                 throw new RuntimeException("Response from service server : " + responseCode);
             }

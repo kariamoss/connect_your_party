@@ -1,5 +1,6 @@
 package connectYourParty.modulesLogic.payment.serviceUser;
 
+import connectYourParty.objects.TokenEntry;
 import connectYourParty.requestObjects.photo.PhotoServiceHolder;
 import connectYourParty.services.IService;
 import connectYourParty.services.payment.IPaymentService;
@@ -74,6 +75,7 @@ public class PaymentServiceUser implements IPaymentServiceUser, Subscriber {
         Optional<TokenService> token;
         if(tok.isPresent()){
             token = Optional.of(new TokenService(tok.get().getCode(),tok.get().getAccessToken(),tok.get().getRefreshToken()));
+            token.get().getAdditionalInfos().put(TokenEntry.EXECUTE.key, tok.get().getInfo(TokenEntry.EXECUTE.key));
         } else {
             token = Optional.empty();
         }

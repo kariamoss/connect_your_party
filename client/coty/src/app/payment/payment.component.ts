@@ -6,7 +6,6 @@ import {HttpClient} from "@angular/common/http";
 import {APP_CONFIG, AppConfig} from "../app-config.module";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material";
-import {AddPhotoComponent} from "../photos/add-photo/add-photo.component";
 import {ServiceSelectorComponent} from "../service-selector/service-selector.component";
 import {SelectorService} from "../services/selector.service";
 
@@ -70,31 +69,38 @@ export class PaymentComponent implements OnInit {
 
   }
 
-  pay() {
+  openServiceDialog() {
     let dialogRef = this.dialog.open(ServiceSelectorComponent, {
       width: '600px',
     });
     dialogRef.componentInstance.module = this.module;
     dialogRef.componentInstance.id = this.parameters.sharedId;
-    dialogRef.afterClosed().subscribe(() => {
-      let body = new URLSearchParams();
-      body.set('target', 'josuepd@gmail.com');
-      body.set('amount', this.pricepp.toString());
-      body.set('currency', 'EUR');
-      body.set('service', this.selectorService.getSelectedService(this.module).name);
-      body.set('userId', this.userS.getCurrentUser().name);
-      // '{"code": "'+ code +'", "serviceName": "' + params.service + '"}'
-      this.httpClient.post('http://' + this.config.apiEndpoint + "/back-1.0-SNAPSHOT/payment/pay", body.toString(),
-        {
-          responseType: 'text',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
-        }).subscribe(
-        data => {
-          window.location.href = data;
-        },
-        error => console.log(error)
-      );
-    });
   }
+
+  pay() {
+    let body = new URLSearchParams();
+    body.set('target', 'josuepd@gmail.com');
+    body.set('amount', this.pricepp.toString());
+    body.set('currency', 'EUR');
+    body.set('service', this.selectorService.getSelectedService(this.module).name);
+    body.set('userId', this.userS.getCurrentUser().name);
+    // '{"code": "'+ code +'", "serviceName": "' + params.service + '"}'
+    this.httpClient.post('http://' + this.config.apiEndpoint + "/back-1.0-SNAPSHOT/payment/pay", body.toString(),
+      {
+        responseType: 'text',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
+      }).subscribe(
+      data => {
+        window.location.href = data;
+      },
+      error => console.log(error)
+    );
+  };
+
+  serviceSelected(): boolean {
+    return !!this.selectorService.getSelectedService(this.module);
+
+  }
+
 
 }

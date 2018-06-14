@@ -14,9 +14,13 @@ import javax.ejb.Stateless;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Stateless
 public class PaymentInterpreter implements IPaymentInterpreter {
+
+    Logger logger = Logger.getLogger(PaymentInterpreter.class.getName());
 
     @EJB
     private IPaymentServiceUser paymentServiceUser;
@@ -61,7 +65,7 @@ public class PaymentInterpreter implements IPaymentInterpreter {
 
     private URL findURLToSave(List<URL> urls){
         for(URL url : urls){
-            if (urls.toString().contains("execute")){
+            if (url.toString().contains("execute")){
                 return url;
             }
         }

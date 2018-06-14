@@ -1,5 +1,6 @@
 <div class="salut">
-  <button id="pay" mat-button (click)="pay()">Participer au remboursement</button>
+  <button id="pay" mat-button (click)="openServiceDialog()">Sélectionner un service de paiement</button>
+  <button *ngIf="serviceSelected()" mat-button (click)="pay()">Payer</button>
 </div>
 
 <mat-card class="costs">
