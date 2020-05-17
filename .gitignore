@@ -13,6 +13,7 @@
 # IDEs and editors
 /.idea
 *.iml
+/.vs
 # misc
 /.sass-cache
 /connect.lock
