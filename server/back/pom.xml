@@ -30,7 +30,7 @@
     <versions.myface>2.2.10</versions.myface>
     <!-- Testing dependencies -->
     <versions.maven.surefire>2.19.1</versions.maven.surefire>
-    <versions.junit>4.12</versions.junit>
+    <versions.junit>4.13.1</versions.junit>
     <versions.mockito>1.10.19</versions.mockito>
     <versions.cukespace>1.6.5</versions.cukespace>
     <versions.arquillian.junit>1.1.12.Final</versions.arquillian.junit>
